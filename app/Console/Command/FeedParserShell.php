@@ -39,17 +39,21 @@ class FeedParserShell extends AppShell {
                                 $this->out("Parser Error");
                                 return;
                         }
-                         
+                         $sortOrder=0;
                         foreach ($rss->channel->item as $feedItem) {
+                                
+                                $feedItem->pubDate = str_replace('UT','',$feedItem->pubDate);
                                 
                                 $feedInfo = array(
                                     'name'=>$feedItem->title,
                                     'external_link'=>$feedItem->link,
                                     'description'=>$feedItem->description,
-                                    'date_published'=>date('Y-m-d H:i:s',strtotime($feedItem->pubDate))
+                                    'date_published'=>date('Y-m-d H:i:s',strtotime($feedItem->pubDate)),
+                                    'sort_order'=>$sortOrder
                                 );
                                 
                                 $this->Article->createArticle($feedId,$feedInfo);
+                                $sortOrder++;
                         }
                 } catch (Exception $e) {
                         $this->out("Unable to pull feed {$e->message}");

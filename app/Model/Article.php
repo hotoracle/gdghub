@@ -37,14 +37,13 @@ class Article extends AppModel {
 
         function createArticle($feedId, $feedInfo) {
 
-                $slug = Inflector::slug($feedId . '_' . $feedInfo['name']);
-
-                $existingArticle = $this->findBySlug($slug);
+                $hash = md5($feedId . '_' . $feedInfo['name']);
+                $existingArticle = $this->findByHash($hash);
                 if ($existingArticle)
                         return $existingArticle['Article']['id'];
 
                 $feedInfo['feed_id'] = $feedId;
-
+                $feedInfo['hash'] = $hash;
                 $this->create($feedInfo);
                 $this->save($feedInfo);
                 return $this->id;
@@ -54,7 +53,7 @@ class Article extends AppModel {
 
                 $conditions = array('Article.feed_id' => $feedId);
                 $limit = 10;
-                $order = array('Article.created' => 'DESC');
+                $order = array('Article.created' => 'DESC','Article.sort_order'=>'ASC');
                 return $this->find('all', compact('conditions','limit','order'));
         }
         
