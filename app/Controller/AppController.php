@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Application level Controller
  *
@@ -19,7 +20,6 @@
  * @since         CakePHP(tm) v 0.2.9
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-
 App::uses('Controller', 'Controller');
 
 /**
@@ -31,21 +31,20 @@ App::uses('Controller', 'Controller');
  * @package       app.Controller
  * @link http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
-class AppController extends Controller 
-{
-	public $components = array('Auth','Session','Error');
+class AppController extends Controller {
 
-	public function beforeFilter()
-	{
-		$this->Auth->authenticate = array('Form');
+        public $components = array( 'Session', 'Error');
 
-		$this->Auth->loginRedirect = array('action' => 'home', 'controller' => 'users');
-		$this->Auth->logoutRedirect = array('action' => 'home', 'controller' => 'pages');
-		$this->Auth->authError = 'You are not allowed to see that.';
+        public function beforeFilter() {
+//                $this->Auth->authenticate = array('Form');
+//                
+//                $this->Auth->loginRedirect = array('action' => 'home', 'controller' => 'users');
+//                $this->Auth->logoutRedirect = array('action' => 'home', 'controller' => 'pages');
+//                $this->Auth->authError = 'You are not allowed to see that.';
 
-		# To enable portuguese language as main
-		#Configure::write('Config.language', 'por');
-	}	
+                # To enable portuguese language as main
+                #Configure::write('Config.language', 'por');
+        }
+
 }
-
 

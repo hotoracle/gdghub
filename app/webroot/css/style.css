@@ -1,17 +1,65 @@
 .center{
-	text-align: center;
+        text-align: center;
 }
 
 .change-themes-list .active{
-	font-weight: bold;
+        font-weight: bold;
 }
 
 .strong{
-	font-weight: bold;
+        font-weight: bold;
 }
 
 /* Modal outline fix */
 *:focus,
 a:focus{
-	outline: none;
+        outline: none;
+}
+
+.threadList li{
+        list-style: none;
+        margin:0;
+        margin:4px;
+        border:1px solid #ddd;
+        font-weight:200;
+        box-shadow: 1px 1px 1px #eeeeff;
+}
+.threadList{
+        margin:0;
+        padding:0;
+}
+.threadList .threadBody{
+        padding:5px;
+}
+.threadList .threadName{
+        font-size:18px;
+        font-weight:200;
+
+}
+.threadList .threadName em{
+        font-size:12px;
+        font-weight:200;
+        color:#ccc;
+        display:block;
+}
+
+
+.threadList .threadLink{
+        font-size:90%;
+        background:#eee;
+}
+
+
+.threadList .threadLink a{
+        display:block;
+        text-align: right;
+        background:#eee;
+        padding:2px;
+}
+
+
+
+
+.leadArticle a{
+        font-weight:500;
 }

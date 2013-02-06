@@ -50,38 +50,11 @@
                   <?php echo $this->Html->link( Configure::read('Application.name') ,"/",array('class' => 'brand')) ?>
                   <div class="nav-collapse">
                     <ul class="nav">
-                      <?php if( AuthComponent::user('id') ) { ?>
-                      <li class="<?php echo $this->params->controller == 'users' && $this->action == 'home' ? 'active' : '';  ?>">
-                        <?php echo $this->Html->link('Home',array('controller' => 'users','action' => 'home')) ?>
-                      </li>
-                      <?php } ?>
-                      <li class="<?php echo $this->action == 'register' ? 'active' : ''; ?>">
-                        <?php echo $this->Html->link(__('Register'),array('controller' => 'users','action' => 'register')) ?>
-                      </li>
-
+ 
                       
                     </ul>
 
-                    <?php if( AuthComponent::user('id') ) { ?>
-                    <ul class="nav pull-right">
-                      <li id="fat-menu" class="dropdown">
-                        <a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown">
-                          <i class="icon-black icon-user"></i> 
-                          <?php echo AuthComponent::user('username') ?> <b class="caret"></b></a>
-                          <ul class="dropdown-menu" role="menu" aria-labelledby="drop3">
-                            <li>
-                              <?php echo $this->Html->link(
-                                '<i class="icon-black icon-off"></i> Logout','/users/logout',
-                                array(
-                                  'tabindex' => '-1',
-                                  'escape' => false
-                                  )
-                                  ) ?>
-                                </li>
-                              </ul>
-                            </li>
-                          </ul>   
-                          <?php } ?>
+             
 
                         </div><!--/.nav-collapse -->
                       </div>
@@ -96,7 +69,7 @@
                     <hr>
 
                     <footer>
-                      <p>&copy; <?php echo Configure::read('Application.name') ?> 2012</p>
+                      <p><?php echo Configure::read('Application.name') ?> </p>
                     </footer>
 
                   </div> <!-- /container -->
