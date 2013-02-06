@@ -27,4 +27,15 @@ class DashboardController extends AppController{
         }
         
         
+        function viewArticle($articleSlug=''){
+                
+        $articleInfo = $this->Article->getArticle($articleSlug);        
+         if(!$articleInfo){
+                 
+                 $this->flash("Unable to find selected article", 'index');
+         }       
+                
+                $this->set(compact('articleInfo'));
+        }
+        
 }

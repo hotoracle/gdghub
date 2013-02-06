@@ -16,9 +16,10 @@ class FeedParserShell extends AppShell {
         function pullFeeds() {
 
                 $feedInfo = $this->Feed->getActiveFeeds();
-
+                $this->out("Feeds Found: ".count($feedInfo));
                 foreach ($feedInfo as $feed) {
                         $feedId = $feed['Feed']['id'];
+                        
                         $this->pullFeedUrl($feedId,$feed['Feed']['url']);
                 }
         }
@@ -30,7 +31,7 @@ class FeedParserShell extends AppShell {
                 }
                 
                 try {
-
+                         $this->out("Pulling from $feedUrl");
                         $content = @file_get_contents($feedUrl);
 
                         $rss = simplexml_load_string($content);
@@ -38,6 +39,7 @@ class FeedParserShell extends AppShell {
                                 $this->out("Parser Error");
                                 return;
                         }
+                         
                         foreach ($rss->channel->item as $feedItem) {
                                 
                                 $feedInfo = array(
