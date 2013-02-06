@@ -11,6 +11,7 @@
                 
                 $feedArticles  = $this->requestAction("/Dashboard/getFeed/$feedId");
                 if(!isset($lead)) $lead = false;
+                if(!isset($summarizeAll)) $summarizeAll = false;
                 $articlesDisplayed = 0;
                 foreach($feedArticles as $article){ ?>
                         <li>
@@ -18,8 +19,13 @@
                                 <span class="threadName <?php if($lead && !$articlesDisplayed) echo 'leadArticle'; ?>"><?php echo $this->Html->link($article['Article']['name'],"viewArticle/{$article['Article']['slug']}"); ?> <em><?php echo date('h:ia D F j, Y', strtotime($article['Article']['created'])); ?></em></span>
                                         <?php if($lead && $articlesDisplayed){
                                          echo substr(strip_tags($article['Article']['description']),0,400).'...';        
-                                        }else{
+                                        }elseif($summarizeAll){
+                                                                                                echo substr(strip_tags($article['Article']['description']),0,400).'...';        
+
+                                         }else{
                                          echo $article['Article']['description']; 
+
+                                                 
                                          } ?>
                                 </div>
                                 <span class="threadLink">

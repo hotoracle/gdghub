@@ -57,5 +57,9 @@ class Article extends AppModel {
                 $order = array('Article.created' => 'DESC');
                 return $this->find('all', compact('conditions','limit','order'));
         }
+        
+        function getArticle($articleSlug){
+                return $this->findBySlug($articleSlug);
+        }
 
 }
