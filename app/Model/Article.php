@@ -37,14 +37,13 @@ class Article extends AppModel {
 
         function createArticle($feedId, $feedInfo) {
 
-                $slug = Inflector::slug($feedId . '_' . $feedInfo['name']);
-
-                $existingArticle = $this->findBySlug($slug);
+                $hash = md5($feedId . '_' . $feedInfo['name']);
+                $existingArticle = $this->findByHash($hash);
                 if ($existingArticle)
                         return $existingArticle['Article']['id'];
 
                 $feedInfo['feed_id'] = $feedId;
-
+                $feedInfo['hash'] = $hash;
                 $this->create($feedInfo);
                 $this->save($feedInfo);
                 return $this->id;

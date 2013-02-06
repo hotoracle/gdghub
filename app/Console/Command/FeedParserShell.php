@@ -42,6 +42,8 @@ class FeedParserShell extends AppShell {
                          $sortOrder=0;
                         foreach ($rss->channel->item as $feedItem) {
                                 
+                                $feedItem->pubDate = str_replace('UT','',$feedItem->pubDate);
+                                
                                 $feedInfo = array(
                                     'name'=>$feedItem->title,
                                     'external_link'=>$feedItem->link,
