@@ -24,7 +24,7 @@ class FeedParserShell extends AppShell {
                       $freshArticles[$feedId] =   $this->pullFeedUrl($feedId,$feed['Feed']['url']);
                 }
                 
-                
+  
                 
         }
 
