@@ -90,7 +90,7 @@ class FeedParserShell extends AppShell {
                                 $sortOrder++;
                         }
                 } catch (Exception $e) {
-                        $this->out("Unable to pull feed {$e->message}");
+                        $this->out("Unable to pull feed ".$e->getMessage());
                 }
                 return $newArticles;
         }

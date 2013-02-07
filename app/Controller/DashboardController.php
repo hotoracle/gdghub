@@ -12,13 +12,16 @@
 class DashboardController extends AppController{
         
         public $uses = array('Article');
+        public $paginate =array(
+           'Article'=>array(
+               'order'=>array('Article.sort_order'=>'ASC','Article.id'=>'DESC'),
+               'limit'=>10
+           ) 
+        );
         function index(){
                 
-                $groupDiscussions = $this->Article->getArticles(2);
-                $gdlArticles = $this->Article->getArticles(3);
-                
-                
-                $this->set(compact("groupDiscussions",'gdlArticles'));
+                $publishedArticles = $this->paginate('Article',array('Article.published'=>1));
+                $this->set(compact('publishedArticles'));
         }
         
         function getFeed($feedId=0){

@@ -6,7 +6,7 @@
  */
 ?>
 <?php if ($freshArticles) { ?>
-        <?php echo $this->Form->create('Approvals', array('url' => $this->Html->url('/AdminApprovals/bulkApproval', true))); ?>
+        <?php echo $this->Form->create('Approvals', array('url' =>Configure::read('Application.base_url')."/AdminApprovals/bulkApproval")); ?>
         <p>Below is a list of the new articles requiring approval</p>
         <?php foreach ($freshArticles as $feedName => $feedArticles) {
                 ?>

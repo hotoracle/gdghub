@@ -143,11 +143,14 @@ Cache::config('default', array('engine' => 'File'));
 /**
  * Your application configuration starts here
  */
+
+$baseUrl= isset($_SERVER['HTTP_HOST'])? $_SERVER['HTTP_HOST']:'hub.gdglagos.com';
 Configure::write(
         'Application', array(
     'name' => 'GDG Lagos Hub',
     'from_email' => 'hub@gdglagos.com',
-    'contact_mail' => 'hub@gdglagos.com'
+    'contact_mail' => 'hub@gdglagos.com',
+            'base_url'=>"http://".$baseUrl
         )
 );
 
