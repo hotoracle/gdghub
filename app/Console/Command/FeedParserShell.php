@@ -32,7 +32,12 @@ class FeedParserShell extends AppShell {
                 
                 try {
                          $this->out("Pulling from $feedUrl");
+                         
+                         
                         $content = @file_get_contents($feedUrl);
+//                             $hash = md5($feedUrl);
+//                        file_put_contents(TMP."/{$hash}.xml",$content);
+//                             $content = file_get_contents(TMP."/{$hash}.xml");
 
                         $rss = simplexml_load_string($content);
                         if (!$rss) {
@@ -41,7 +46,9 @@ class FeedParserShell extends AppShell {
                         }
                          $sortOrder=0;
                         foreach ($rss->channel->item as $feedItem) {
-                                
+                                if(!isset($feedItem->pubDate)){
+                                        $feedItem->pubDate = 'now';
+                                }
                                 $feedItem->pubDate = str_replace('UT','',$feedItem->pubDate);
                                 
                                 $feedInfo = array(
@@ -51,7 +58,7 @@ class FeedParserShell extends AppShell {
                                     'date_published'=>date('Y-m-d H:i:s',strtotime($feedItem->pubDate)),
                                     'sort_order'=>$sortOrder
                                 );
-                                
+                            
                                 $this->Article->createArticle($feedId,$feedInfo);
                                 $sortOrder++;
                         }

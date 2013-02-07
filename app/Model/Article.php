@@ -53,7 +53,7 @@ class Article extends AppModel {
 
                 $conditions = array('Article.feed_id' => $feedId);
                 $limit = 10;
-                $order = array('Article.created' => 'DESC','Article.sort_order'=>'ASC');
+                $order = array('Article.sort_order'=>'ASC','Article.id'=>'DESC');
                 return $this->find('all', compact('conditions','limit','order'));
         }
         

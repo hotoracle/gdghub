@@ -10,10 +10,10 @@
         <div class="span9">
 <h1><?php echo $articleInfo['Article']['name']; ?></h1>
 <?php echo $articleInfo['Article']['description']; ?>
+<?php echo $this->Html->link($articleInfo['Article']['external_link'],$articleInfo['Article']['external_link'],array('target'=>'_blank')); ?>
         </div>
         <div class="span3">
-                                <?php echo $this->element('feed_thread',array('feedId'=>4,'summarizeAll'=>true)); ?>
-
+                <?php echo $this->element('feed_thread',array('feedId'=>4,'summarizeAll'=>true)); ?>
         </div>
         </div>
         
