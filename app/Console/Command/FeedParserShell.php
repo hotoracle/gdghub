@@ -17,14 +17,25 @@ class FeedParserShell extends AppShell {
 
                 $feedInfo = $this->Feed->getActiveFeeds();
                 $this->out("Feeds Found: ".count($feedInfo));
+                $freshArticles  = array();
                 foreach ($feedInfo as $feed) {
                         $feedId = $feed['Feed']['id'];
                         
-                        $this->pullFeedUrl($feedId,$feed['Feed']['url']);
+                      $freshArticles[$feedId] =   $this->pullFeedUrl($feedId,$feed['Feed']['url']);
                 }
+                
+                $indexedFreshArticles = array();
+                foreach($freshArticles as $feedId=>$feedArticles){
+                        
+                        
+                        
+                }
+                
+                
         }
 
         function pullFeedUrl($feedId,$feedUrl = '') {
+                $newArticles = array();
                 if (!$feedUrl){
                         $this->out("Empty Url Error");
                         return;
@@ -59,12 +70,19 @@ class FeedParserShell extends AppShell {
                                     'sort_order'=>$sortOrder
                                 );
                             
-                                $this->Article->createArticle($feedId,$feedInfo);
+                                $articleId = $this->Article->createArticle($feedId,$feedInfo);
+                                
+                                if($this->Article->isNew){
+                                        $feedInfo['id'] = $articleId;
+                                        $newArticles[] = $feedInfo;
+                                }
+                                
                                 $sortOrder++;
                         }
                 } catch (Exception $e) {
                         $this->out("Unable to pull feed {$e->message}");
                 }
+                return $newArticles;
         }
 
         function pullFeedById($feedId) {
