@@ -18,13 +18,29 @@ class FeedParserShell extends AppShell {
                 $feedInfo = $this->Feed->getActiveFeeds();
                 $this->out("Feeds Found: ".count($feedInfo));
                 $freshArticles  = array();
+//                $this->Article->query("Truncate articles");
                 foreach ($feedInfo as $feed) {
                         $feedId = $feed['Feed']['id'];
                         
-                      $freshArticles[$feedId] =   $this->pullFeedUrl($feedId,$feed['Feed']['url']);
+                     $result =   $this->pullFeedUrl($feedId,$feed['Feed']['url']);
+                     if($result){
+                              $freshArticles[$feed['Feed']['name']] = $result;
+                     }
+//                     break;
                 }
+                if(!$freshArticles) return;
                 
-  
+                App::uses('CakeEmail', 'Network/Email');
+
+                $email = new CakeEmail('default');
+                $email->viewVars(array('freshArticles'=>$freshArticles));
+                $email->helpers(array('Html','Text'));
+                $email->template('require_approval', 'default')
+                ->emailFormat('html')
+                ->from('tasks@gdglagos.com')
+                ->subject('New Articles - Approval Required')
+                ->to('dftaiwo@gmail.com')
+                ->send();
                 
         }
 
