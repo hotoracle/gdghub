@@ -18,6 +18,15 @@ class DashboardController extends AppController{
                'limit'=>10
            ) 
         );
+        
+        function beforeFilter(){
+                
+                
+                parent::beforeFilter();
+                $this->_setGPlusActivities();
+                
+        }
+        
         function index(){
                 
                 $publishedArticles = $this->paginate('Article',array('Article.published'=>1));
@@ -37,8 +46,53 @@ class DashboardController extends AppController{
                  
                  $this->flash("Unable to find selected article", 'index');
          }       
-                
-                $this->set(compact('articleInfo'));
+                $latestArticles = $this->Article->getLatestArticles(10,$articleSlug);
+                shuffle($latestArticles);
+                $this->set(compact('articleInfo','latestArticles'));
         }
-        
+ 
+        function _setGPlusActivities(){
+                
+                
+                $gplusActivity = $this->Session->read('page_gplus');
+                $now = time();
+                if($gplusActivity){
+                        $storedAt  = $this->Session->read('page_gplus_stored');
+                        if($storedAt+600<$now){
+                                $gplusActivity=false;
+                        }
+                }
+                
+                if(!$gplusActivity){
+                        
+                        $gplusPageId = Configure::read('Application.gplus_page_id');
+                        $plusUrl = "https://www.googleapis.com/plus/v1/people/$gplusPageId/activities/public?key=AIzaSyAK7vaAWhUADjUInYSer-Ov1ZFZt0duIEQ";
+                        try {
+                              
+                                $contents  = file_get_contents($plusUrl);
+                                
+                                if(!$contents){
+                                     return;   
+                                }
+                                $decodedData = json_decode($contents,true);
+                                $items = $decodedData['items'];
+                                $gplusActivity = array();
+                                foreach($items as $row){
+                                      $gplusActivity[] = array(
+                                          'link'=>$row['url'],
+                                          'title'=>$row['title'],
+                                          'date'=>$row['published']
+                                      );  
+                                }
+                                $this->Session->write('page_gplus',$gplusActivity);
+                                $this->Session->write('page_gplus_stored',$now);
+                                 
+                        }catch(Exception $e){
+                                return;
+                        }
+                }
+                
+                $this->set('gplusActivity',$gplusActivity);
+                
+        }
 }

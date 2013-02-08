@@ -45,6 +45,12 @@ class AppController extends Controller {
                 # To enable portuguese language as main
                 #Configure::write('Config.language', 'por');
         }
+        
+        function beforeRender(){
+                parent::beforeRender();
+                $url = '/'.$this->params->url;
+                $this->set('_thisUrl', $url);
+        }
 
 }
 

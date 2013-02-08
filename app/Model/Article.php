@@ -57,6 +57,12 @@ class Article extends AppModel {
                 $order = array('Article.sort_order' => 'ASC', 'Article.id' => 'DESC');
                 return $this->find('all', compact('conditions', 'limit', 'order'));
         }
+        function getLatestArticles($limit=10,$ignoreArticle=0) {
+
+                $conditions = array('Article.published' => 1,"Article.slug!='$ignoreArticle'");
+                $order = array('Article.id' => 'DESC');
+                return $this->find('all', compact('conditions', 'limit', 'order'));
+        }
 
         function getArticle($articleSlug) {
                 return $this->findBySlug($articleSlug);

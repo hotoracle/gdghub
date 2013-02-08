@@ -150,7 +150,8 @@ Configure::write(
     'name' => 'GDG Lagos Hub',
     'from_email' => 'hub@gdglagos.com',
     'contact_mail' => 'hub@gdglagos.com',
-            'base_url'=>"http://".$baseUrl
+            'base_url'=>"http://".$baseUrl,
+            'gplus_page_id'=>'112227844855698647164'
         )
 );
 
