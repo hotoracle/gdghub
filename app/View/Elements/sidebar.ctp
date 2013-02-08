@@ -13,7 +13,7 @@
         <p>
                 <strong>Mailing List</strong>
                 <br />
-                <span class="smaller">You can join the mailing list and get updates on events, tools, apis and useful links</span>
+                <span class="smaller">You can follow our <?php echo $this->Html->link("G+ Page","https://plus.google.com/".Configure::read('Application.gplus_page_id'),array('class'=>'maroon')); ?> below or enter your email address to join the mailing list and get updates on events, tools, apis and useful links</span>
         <form action="http://groups.google.com/group/lagos-gtug/boxsubscribe" target="_blank">
                 <label for="subscribeEmail"></label> <input placeholder="Your Email Address" id="subscribeEmail" type=email name=email required>
                 <input type=submit name="sub" value="Subscribe" class="btn btn-primary">
