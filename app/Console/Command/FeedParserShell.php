@@ -31,14 +31,14 @@ class FeedParserShell extends AppShell {
                 if(!$freshArticles) return;
                 
                 App::uses('CakeEmail', 'Network/Email');
-
+                $now = date('M d h:i:sa');
                 $email = new CakeEmail('default');
                 $email->viewVars(array('freshArticles'=>$freshArticles));
                 $email->helpers(array('Html','Text'));
                 $email->template('require_approval', 'default')
                 ->emailFormat('html')
                 ->from('tasks@gdglagos.com')
-                ->subject('New Articles - Approval Required')
+                ->subject("New Articles - Approval Required @ $now")
                 ->to('dftaiwo@gmail.com')
                 ->send();
                 
