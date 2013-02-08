@@ -57,7 +57,12 @@
                   <?php echo $this->Html->link( Configure::read('Application.name') ,"/",array('class' => 'brand')) ?>
                   <div class="nav-collapse">
                     <ul class="nav">
- 
+                            <li class="topPlusOne">
+                                    <g:plusone></g:plusone>
+                                </li>
+                                <li>
+                                        <?php echo $this->Html->link('Want to Help?',"/Dashboard/help"); ?>
+                                </li>
                       
                     </ul>
 

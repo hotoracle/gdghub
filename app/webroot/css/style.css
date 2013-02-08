@@ -84,13 +84,26 @@ a:focus{
         margin-bottom:8px;
         font-size:90%;
         list-style:none;
+        border-bottom:1px solid #eee;
 }
 #gplusActivities ul li span{
         color:#ccc;
         font-style: italic;
+        display:block;
+        font-size:90%;
 }
 
 .bordered{
         border:1px solid #ccc;
         padding:8px;
+}
+
+.topPlusOne{
+        padding-top:7px;
+}
+.red{
+        color:red;
+}
+.maroon{
+        color:maroon;
 }

@@ -27,12 +27,17 @@
 <?php if (isset($gplusActivity) && $gplusActivity){ ?>
         <ul>
 <?php
+$limit = 8;
+$a=0;
 foreach($gplusActivity as $row){
+        if($a>$limit) break;
+        $a++;
 ?>
                 <li>
                         <?php echo $this->Html->link($row['title'],$row['link'],array('target'=>'_blank')); ?> <span><?php echo $row['date'];?></span>
                 </li>
                 <?php } ?>
         </ul>
+        <?php echo $this->Html->link("Visit Google+ Page","https://plus.google.com/".Configure::read('Application.gplus_page_id'),array('class'=>'maroon')); ?>
 </div>
 <?php } ?>

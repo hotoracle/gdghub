@@ -75,12 +75,14 @@ class DashboardController extends AppController{
                                      return;   
                                 }
                                 $decodedData = json_decode($contents,true);
+//                                pr($decodedData);
+//                                exit;
                                 $items = $decodedData['items'];
                                 $gplusActivity = array();
                                 foreach($items as $row){
                                       $gplusActivity[] = array(
                                           'link'=>$row['url'],
-                                          'title'=>$row['title'],
+                                          'title'=>isset($row['object']['attachments'][0]['displayName'])? $row['object']['attachments'][0]['displayName']:$row['title'],
                                           'date'=>$row['published']
                                       );  
                                 }
@@ -94,5 +96,9 @@ class DashboardController extends AppController{
                 
                 $this->set('gplusActivity',$gplusActivity);
                 
+        }
+        
+        public function help() {
+
         }
 }
