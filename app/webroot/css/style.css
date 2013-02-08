@@ -60,3 +60,50 @@ a:focus{
 .leadArticle a{
         font-weight:500;
 }
+
+.welcome{
+        font-weight:200;
+        font-size:1.1em;
+        line-height:20px;
+}
+.welcome h1{
+        margin-bottom:10;font-size:30px;line-height:1.2;color:inherit;letter-spacing:-1px;
+}
+#subscribeEmail{
+        margin-top:9px;
+}
+
+
+#gplusActivities ul{
+        margin:0;
+        padding:0;
+}
+
+#gplusActivities ul li{
+        margin:0;
+        margin-bottom:8px;
+        font-size:90%;
+        list-style:none;
+        border-bottom:1px solid #eee;
+}
+#gplusActivities ul li span{
+        color:#ccc;
+        font-style: italic;
+        display:block;
+        font-size:90%;
+}
+
+.bordered{
+        border:1px solid #ccc;
+        padding:8px;
+}
+
+.topPlusOne{
+        padding-top:7px;
+}
+.red{
+        color:red;
+}
+.maroon{
+        color:maroon;
+}
