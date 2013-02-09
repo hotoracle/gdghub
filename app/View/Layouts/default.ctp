@@ -63,10 +63,49 @@
                                 <li>
                                         <?php echo $this->Html->link('Want to Help?',"/Dashboard/help"); ?>
                                 </li>
-                      
+                                <li>
+                                        <?php echo $this->Html->link('Resources',"/Dashboard/help"); ?>
+                                </li>
+                                <li>
+                                        <?php echo $this->Html->link('Technology',"/Dashboard/help"); ?>
+                                </li>
                     </ul>
-
-             
+                     
+                    <ul class="nav pull-left">
+                      <li id="fat-menu" class="dropdown">
+                        <a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown">
+                          <i class="icon-black icon-user"></i>Member Center<b class="caret"></b></a>
+                          <ul class="dropdown-menu" role="menu" aria-labelledby="drop3">
+                            <li>
+                              <?php echo $this->Html->link(
+                                '<i class="icon-black icon-fire"></i>Forum','#',
+                                array(
+                                  'tabindex' => '-1',
+                                  'escape' => false
+                                  )
+                                  ) ?>
+                             </li>
+                            <li>
+                              <?php echo $this->Html->link(
+                                '<i class="icon-black icon-bullhorn"></i>Events','#',
+                                array(
+                                  'tabindex' => '-1',
+                                  'escape' => false
+                                  )
+                                  ) ?>
+                             </li>
+                             <li>
+                              <?php echo $this->Html->link(
+                                '<i class="icon-black icon-book"></i>Blog','#',
+                                array(
+                                  'tabindex' => '-1',
+                                  'escape' => false
+                                  )
+                                  ) ?>
+                             </li>
+                              </ul>
+                            </li>
+                          </ul>   
 
                         </div><!--/.nav-collapse -->
                       </div>
