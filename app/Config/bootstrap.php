@@ -173,7 +173,7 @@ Configure::write(
  */
 Configure::write(
         'Layout', array(
-    'theme' => 'cerulean'
+    'theme' => 'default'
         )
 );
 
