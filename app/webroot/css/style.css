@@ -100,10 +100,15 @@ a:focus{
 
 .topPlusOne{
         padding-top:7px;
+        min-width:120px; /* to prevent the menu from shifting */
 }
 .red{
         color:red;
 }
 .maroon{
         color:maroon;
+}
+
+.ucwords{
+        text-transform: capitalize;
 }
