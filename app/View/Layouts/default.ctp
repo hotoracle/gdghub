@@ -77,7 +77,6 @@
                                                                         <li><?php echo $this->Html->link('learn how to design', '#'); ?></li>
                                                                         <li><?php echo $this->Html->link('learn how to build mobile apps', '#'); ?></li>
                                                                         <li><?php echo $this->Html->link('learn how to build websites', '#'); ?></li>
-                                                                        <li><?php echo $this->Html->link('learn how to build websites', '#'); ?></li>
                                                                 </ul>
                                                         </li>
                                                 </ul>
