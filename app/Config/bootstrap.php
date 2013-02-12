@@ -147,9 +147,9 @@ Cache::config('default', array('engine' => 'File'));
 $baseUrl= isset($_SERVER['HTTP_HOST'])? $_SERVER['HTTP_HOST']:'hub.gdglagos.com';
 Configure::write(
         'Application', array(
-    'name' => 'GDG Lagos Hub',
-    'from_email' => 'hub@gdglagos.com',
-    'contact_mail' => 'hub@gdglagos.com',
+   'name' => '&#8747; dev',
+    'from_email' => 'hub@dev.org.ng',
+    'contact_mail' => 'hub@dev.org.ng',
             'base_url'=>"http://".$baseUrl,
             'gplus_page_id'=>'112227844855698647164'
         )
