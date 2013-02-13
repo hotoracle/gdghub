@@ -8,7 +8,7 @@
 
 class QuestionsController extends AppController{
         
-        public $uses = array('Question','QcVote','QuestionComment','QuestionsTag');
+        public $uses = array('Question','QcVote','QuestionComment','QuestionsTag','Tag');
         
         function beforeFilter(){
                 parent::beforeFilter();
@@ -43,21 +43,31 @@ class QuestionsController extends AppController{
                 
                 if(!empty($this->data) && $this->FormValidator->validate()){
                         
+                        App::uses('Sanitize', 'Utility');
+
                         $subData = $this->data['Ask'];
                         
                         
-                        $tagsProvided = $subData['tags'];
+                        $tagsProvided = explode(',',$subData['tags']);
+                        $tagIds  = array();
+                        foreach($tagsProvided as $tag){
                         
-                        pr($subData);
-                        exit;
+                               $tag =  Sanitize::paranoid($tag);
+                               //@TODO we should remove whitespaces too...
+                                $tagIds[] = $this->Tag->getOrCreateTagId($tag);
+                               
+                        }
+                        
                         $questionData = array(
                             'user_id'=>$this->_thisUserId,
-                            'name'=>$subData['title'],
-                            'description'=>$subData['description']
+                            'name'=>Sanitize::paranoid($subData['title'],array('-','.','/','_')),
+                            'description'=>  Sanitize::stripAll($subData['description'])
                         );
                         
                         $questionId = $this->Question->addQuestion($questionData);
-                        
+                        foreach($tagIds as $tagId){
+                                $this->QuestionsTag->addTag($questionId,$tagId);
+                        }
                         $this->miniFlash("Question Posted","viewQuestion/$questionId");
                         
                         
