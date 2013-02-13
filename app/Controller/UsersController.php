@@ -13,6 +13,12 @@ class UsersController extends AppController
     $this->User->recursive = 0;
     $this->set('users', $this->paginate());
   }
+  
+   public function user_profile()
+  {
+    $this->User->recursive = 0;
+    $this->set('users', $this->paginate());
+  }
 
   public function login() 
   {
@@ -234,5 +240,13 @@ class UsersController extends AppController
     $this->render('/Users/change_password');
     
   }  
+  
+   public function opauth_complete() {
+       debug($this->data);
+          }
+          
 }
+
+ 
+
 ?>

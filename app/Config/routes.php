@@ -35,13 +35,18 @@ Router::connect('/', array('controller' => 'Dashboard', 'action' => 'index'));
 /**
  * ...and connect the rest of 'Pages' controller's urls.
  */
-Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
+Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'home'));
 
 /**
  * Load all plugin routes.  See the CakePlugin documentation on 
  * how to customize the loading of plugin routes.
  */
 CakePlugin::routes();
+
+Router::connect(
+   '/opauth-complete/*', 
+      array('controller' => 'users', 'action' => 'opauth_complete')
+      );
 
 /**
  * Load the CakePHP default routes. Remove this if you do not want to use
