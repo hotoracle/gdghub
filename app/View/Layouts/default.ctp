@@ -15,6 +15,8 @@
                 <meta name="viewport" content="width=device-width">
 
                 <link href="https://plus.google.com/<?php echo Configure::read('Application.gplus_page_id'); ?>" rel="publisher" />
+                <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+                <script>window.jQuery || document.write('<script src="<?php echo $this->params->webroot ?>js/lib/jquery.min.js"><\/script>')</script>
 
                 <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
                 <style>
@@ -71,7 +73,8 @@
                                                         <li class="dropdown">
                                                                 <?php echo $this->Html->link('I Want To', "#", array('class' => 'dropdown-toggle', 'data-toggle' => 'dropdown')); ?>
                                                                 <ul class="dropdown-menu ucwords" role="menu" aria-labelledby="dLabel">
-                                                                        <li><?php echo $this->Html->link('ask a question', '#'); ?></li>
+                                                                        <li><?php echo $this->Html->link('ask a question', '/Questions/ask'); ?></li>
+                                                                        <li><?php echo $this->Html->link('contribute answers', '/Questions'); ?></li>
                                                                         <li><?php echo $this->Html->link('contribute code', '#'); ?></li>
 
                                                                         <li><?php echo $this->Html->link('learn how to design', '#'); ?></li>
@@ -127,8 +130,8 @@
 
                 <div class="container" role="main" id="main">
 
-<?php echo $this->Session->flash(); ?>
-<?php echo $this->fetch('content'); ?>
+                        <?php echo $this->Session->flash(); ?>
+                        <?php echo $this->fetch('content'); ?>
 
                         <hr>
 
@@ -138,9 +141,7 @@
 
                 </div> <!-- /container -->
 
-                <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
-                <script>window.jQuery || document.write('<script src="<?php echo $this->params->webroot ?>js/lib/jquery.min.js"><\/script>')</script>
-
+                
                 <?php
                 if (is_file(WWW_ROOT . 'js' . DS . $this->params->controller . '.js')) {
                         echo $this->Html->script($this->params->controller);
@@ -176,14 +177,14 @@
                                 })();
                 </script>
                 <script>!function(d, s, id) {
-                var js, fjs = d.getElementsByTagName(s)[0];
-                if (!d.getElementById(id)) {
-                        js = d.createElement(s);
-                        js.id = id;
-                        js.src = "https://platform.twitter.com/widgets.js";
-                        fjs.parentNode.insertBefore(js, fjs);
-                }
-        }(document, "script", "twitter-wjs");</script>
+                                var js, fjs = d.getElementsByTagName(s)[0];
+                                if (!d.getElementById(id)) {
+                                        js = d.createElement(s);
+                                        js.id = id;
+                                        js.src = "https://platform.twitter.com/widgets.js";
+                                        fjs.parentNode.insertBefore(js, fjs);
+                                }
+                        }(document, "script", "twitter-wjs");</script>
 
         </body>
 </html>

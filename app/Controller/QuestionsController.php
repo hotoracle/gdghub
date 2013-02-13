@@ -38,6 +38,22 @@ class QuestionsController extends AppController{
                 
                 if(!empty($this->data) && $this->FormValidator->validate()){
                         
+                        $subData = $this->data['Ask'];
+                        
+                        
+                        $tagsProvided = $subData['tags'];
+                        
+                        pr($subData);
+                        exit;
+                        $questionData = array(
+                            'user_id'=>$this->_thisUserId,
+                            'name'=>$subData['title'],
+                            'description'=>$subData['description']
+                        );
+                        
+                        $questionId = $this->Question->addQuestion($questionData);
+                        
+                        $this->miniFlash("Question Posted","viewQuestion/$questionId");
                         
                         
                 }

@@ -34,7 +34,7 @@ App::uses('Controller', 'Controller');
 class AppController extends Controller {
 
         public $components = array( 'Session', 'Error','FormValidator');
-
+        public $_thisUserId = 1; //In Dev mode, once auth is sorted, this should be set in the code
         public function beforeFilter() {
 //                $this->Auth->authenticate = array('Form');
 //                
@@ -58,5 +58,19 @@ class AppController extends Controller {
                 
                 
         }
+        /**
+         *  Session Flash a message and redirect
+         * @param string $msg message to display
+         * @param string $url to redirect to
+         */
+        
+        function miniFlash($msg,$url){
+                
+                $this->Session->setFlash($msg);
+                
+                $this->redirect($url);
+                
+        }
+        
 }
 
