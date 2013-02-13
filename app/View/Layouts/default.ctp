@@ -28,6 +28,7 @@
                 <?php echo $this->Html->css('normalize.css') ?>
                 <?php echo $this->Html->css('bootstrap-' . Configure::read('Layout.theme') . '.min', null, array('data-extra' => 'theme')) ?>
                 <?php echo $this->Html->css('bootstrap-responsive.min') ?>
+                <?php echo $this->Html->css('font-awesome.min') ?>
                 <?php echo $this->Html->css('style') ?>
 
                 <?php
@@ -55,7 +56,7 @@
                                                 <span class="icon-bar"></span>
                                                 <span class="icon-bar"></span>
                                         </a>
-                                        <?php echo $this->Html->link(Configure::read('Application.name'), "/", array('class' => 'brand', 'escape' => false)) ?>
+                                        <?php echo $this->Html->link(Configure::read('Application.name'), "/", array('class' => 'brand')) ?>
                                         <div class="nav-collapse">
                                                 <ul class="nav">
                                                         <li class="topPlusOne">
@@ -65,7 +66,10 @@
                                                                 <?php echo $this->Html->link('Want to Help?', "/Dashboard/help"); ?>
                                                         </li>
                                                         <li>
-                                                                <?php echo $this->Html->link('Resources', "/Dashboard/help"); ?>
+                                                                <?php echo $this->Html->link('Blog', "/Dashboard/help"); ?>
+                                                        </li>
+                                                        <li>
+                                                                <?php echo $this->Html->link('Resources', "/Resources/index"); ?>
                                                         </li>
                                                         <li>
                                                                 <?php echo $this->Html->link('Technology', "/Dashboard/help"); ?>
@@ -109,19 +113,44 @@
                                                                                 )
                                                                                 ?>
                                                                         </li>
-                                                                        <li>
-                                                                                <?php
-                                                                                echo $this->Html->link(
-                                                                                        '<i class="icon-black icon-book"></i>Blog', '#', array(
-                                                                                    'tabindex' => '-1',
-                                                                                    'escape' => false
-                                                                                        )
-                                                                                )
-                                                                                ?>
-                                                                        </li>
                                                                 </ul>
                                                         </li>
-                                                </ul>   
+                                                </ul>  
+                <?php if( AuthComponent::user('id') ) { ?>
+                    <ul class="nav pull-right">
+                      <li id="fat-menu" class="dropdown">
+                        <a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown">
+                          <i class="icon-black icon-user"></i> 
+                          <?php echo AuthComponent::user('username') ?> <b class="caret"></b></a>
+                          <ul class="dropdown-menu" role="menu" aria-labelledby="drop3">
+                            <li>
+                                <?php echo $this->Html->link(
+                                        '<i class="icon-black icon-suitcase"></i>My Profile','/users/user_profile/', //i don't a clean way of fetching just the logged in user....moh
+                                        array(
+                                            'tabindex' => '-1',
+                                            'escape' => false
+                                        )
+                                        ) ?>
+                            </li>
+                            <li>
+                              <?php echo $this->Html->link(
+                                '<i class="icon-black icon-off"></i> Logout','/users/logout',
+                                array(
+                                  'tabindex' => '-1',
+                                  'escape' => false
+                                  )
+                                  ) ?>
+                            
+                                </li>
+                              </ul>
+                            </li>
+                          </ul>   
+                          <?php } ?>
+                                </li>
+                              </ul>
+                            </li>
+                          </ul>   
+                        
 
                                         </div><!--/.nav-collapse -->
                                 </div>
@@ -158,6 +187,7 @@
                             'src/scripts.js'
                 ));
                 ?>
+
                 <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
 <!--                      <script>
                 var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];

@@ -10,6 +10,11 @@ class QuestionsController extends AppController{
         
         public $uses = array('Question','QcVote','QuestionComment','QuestionsTag');
         
+        function beforeFilter(){
+                parent::beforeFilter();
+                $this->Auth->allow('*');
+        }
+        
         function index(){
                 
                 

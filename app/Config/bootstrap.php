@@ -148,9 +148,9 @@ Cache::config('default', array('engine' => 'File'));
 $baseUrl= isset($_SERVER['HTTP_HOST'])? $_SERVER['HTTP_HOST']:'hub.gdglagos.com';
 Configure::write(
         'Application', array(
-   'name' => '&#8747; dev',
-    'from_email' => 'hub@dev.org.ng',
-    'contact_mail' => 'hub@dev.org.ng',
+    'name' => 'GDG Lagos Hub',
+    'from_email' => 'hub@gdglagos.com',
+    'contact_mail' => 'hub@gdglagos.com',
             'base_url'=>"http://".$baseUrl,
             'gplus_page_id'=>'112227844855698647164'
         )
@@ -218,7 +218,30 @@ CakeLog::config('error', array(
     'file' => 'error',
 ));
 
-/**
+ CakePlugin::load('Opauth', array('routes' => true, 'bootstrap' => true));
+
+Configure::write('Opauth.path', '/gdghub/auth/');
+
+Configure::write('Opauth.Strategy.Facebook', array(
+   'app_id' => 'YOUR FACEBOOK APP ID',
+      'app_secret' => 'YOUR FACEBOOK APP SECRET'
+      ));
+      
+Configure::write('Opauth.Strategy.Google', array(
+   'client_id' => 'YOUR FACEBOOK APP ID',
+      'client_secret' => 'YOUR FACEBOOK APP SECRET'
+      ));
+      
+Configure::write('Opauth.Strategy.LInkedIn', array(
+   'app_id' => 'YOUR FACEBOOK APP ID',
+      'app_secret' => 'YOUR FACEBOOK APP SECRET'
+      ));
+
+Configure::write('Opauth.Strategy.Twitter', array(
+   'key' => 'YOUR FACEBOOK APP ID',
+      'secret' => 'YOUR FACEBOOK APP SECRET'
+      ));
+ /**
  * Shortcut to Configure::read function
  * @param string $key
  * @return mixed
@@ -227,3 +250,4 @@ function cRead($key){
         
         return Configure::read($key);
 }
+ 

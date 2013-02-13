@@ -33,14 +33,16 @@ App::uses('Controller', 'Controller');
  */
 class AppController extends Controller {
 
-        public $components = array( 'Session', 'Error','FormValidator');
+
+
+        public $components = array('Auth', 'Session', 'Error','FormValidator');
         public $_thisUserId = 1; //In Dev mode, once auth is sorted, this should be set in the code
+
         public function beforeFilter() {
-//                $this->Auth->authenticate = array('Form');
-//                
-//                $this->Auth->loginRedirect = array('action' => 'home', 'controller' => 'users');
-//                $this->Auth->logoutRedirect = array('action' => 'home', 'controller' => 'pages');
-//                $this->Auth->authError = 'You are not allowed to see that.';
+                $this->Auth->authenticate = array('Form');
+               $this->Auth->loginRedirect = array('action' => 'home', 'controller' => 'users');
+               $this->Auth->logoutRedirect = array('action' => 'home', 'controller' => 'pages');
+              $this->Auth->authError = 'You are not allowed to see that.';
 
                 # To enable portuguese language as main
                 #Configure::write('Config.language', 'por');
