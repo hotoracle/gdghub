@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Africa/Lagos');
 
 /**
  * This file is loaded automatically by the app/webroot/index.php file after core.php
@@ -154,6 +155,7 @@ Configure::write(
             'gplus_page_id'=>'112227844855698647164'
         )
 );
+define('FORMAT_TIMESTAMP','Y-m-d H:i:s');
 
 /**
  * Choose your application theme
@@ -216,7 +218,7 @@ CakeLog::config('error', array(
     'file' => 'error',
 ));
 
-CakePlugin::load('Opauth', array('routes' => true, 'bootstrap' => true));
+ CakePlugin::load('Opauth', array('routes' => true, 'bootstrap' => true));
 
 Configure::write('Opauth.path', '/gdghub/auth/');
 
@@ -239,3 +241,13 @@ Configure::write('Opauth.Strategy.Twitter', array(
    'key' => 'YOUR FACEBOOK APP ID',
       'secret' => 'YOUR FACEBOOK APP SECRET'
       ));
+ /**
+ * Shortcut to Configure::read function
+ * @param string $key
+ * @return mixed
+ */
+function cRead($key){
+        
+        return Configure::read($key);
+}
+ 
