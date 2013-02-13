@@ -7,6 +7,7 @@
 ?>
 <div class="row">
         <div class="span8">
+                <div class="bordered shadowed">
                 <h1><?php echo $articleInfo['Article']['name']; ?></h1>
                 <?php echo $articleInfo['Article']['description']; ?>
                 <p>&nbsp;</p>
@@ -36,6 +37,7 @@
                         ?>
                 </ul>
 
+        </div>
         </div>
         <div class="span4">
                 <?php echo $this->element('sidebar'); ?>

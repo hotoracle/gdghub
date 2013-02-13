@@ -33,7 +33,7 @@ App::uses('Controller', 'Controller');
  */
 class AppController extends Controller {
 
-        public $components = array( 'Session', 'Error');
+        public $components = array( 'Session', 'Error','FormValidator');
 
         public function beforeFilter() {
 //                $this->Auth->authenticate = array('Form');
@@ -52,5 +52,11 @@ class AppController extends Controller {
                 $this->set('_thisUrl', $url);
         }
 
+        //This should ensure that the user is logged in
+        function _requireAuth(){
+                
+                
+                
+        }
 }
 

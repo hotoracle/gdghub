@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Africa/Lagos');
 
 /**
  * This file is loaded automatically by the app/webroot/index.php file after core.php
@@ -154,6 +155,7 @@ Configure::write(
             'gplus_page_id'=>'112227844855698647164'
         )
 );
+define('FORMAT_TIMESTAMP','Y-m-d H:i:s');
 
 /**
  * Choose your application theme
@@ -215,3 +217,13 @@ CakeLog::config('error', array(
     'types' => array('warning', 'error', 'critical', 'alert', 'emergency'),
     'file' => 'error',
 ));
+
+/**
+ * Shortcut to Configure::read function
+ * @param string $key
+ * @return mixed
+ */
+function cRead($key){
+        
+        return Configure::read($key);
+}

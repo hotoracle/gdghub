@@ -9,7 +9,7 @@
 <div class="row">
         <div class="span8">
            <div>
-            <h1>Google Developer Group Lagos</h1>   
+            <h1><?php echo cRead('Application.name'); ?></h1>   
             <p class="lead">Technologies, Developers and Solutions, Learning and Development, APIs and Tools </p>	
                 <hr>
             </div>

@@ -1,3 +1,6 @@
+body{
+        font-weight:200;
+}
 .center{
         text-align: center;
 }
@@ -98,6 +101,10 @@ a:focus{
         padding:8px;
 }
 
+.shadowed{
+       box-shadow: 1px 1px 2px #eee;
+}
+
 .topPlusOne{
         padding-top:7px;
         min-width:120px; /* to prevent the menu from shifting */
@@ -120,4 +127,15 @@ footer{
 .index{
         color:#555;
         
+}
+
+label{
+        font-weight:400;
+}
+
+.fullWidth input,.fullWidth textarea,.fullWidth select{
+        width:98%;
+}
+.fullWidth input[type="submit"]{
+        width:auto;
 }
