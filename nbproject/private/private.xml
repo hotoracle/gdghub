@@ -2,17 +2,19 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
-        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/View/Layouts/default.ctp</file>
-        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/webroot/css/style.css</file>
-        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/View/Dashboard/index.ctp</file>
-        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/Config/bootstrap.php</file>
-        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/View/Elements/sidebar.ctp</file>
-        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/View/Dashboard/view_article.ctp</file>
+        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/Model/Tag.php</file>
         <file>file:/Library/WebServer/Documents/gdg/gdghub/app/Controller/QuestionsController.php</file>
+        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/Model/QuestionsTag.php</file>
+        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/Model/Question.php</file>
+        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/View/Users/register.ctp</file>
+        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/View/Users/login.ctp</file>
+        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/View/Elements/form_login.ctp</file>
         <file>file:/Library/WebServer/Documents/gdg/gdghub/app/Controller/AppController.php</file>
-        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/Config/routes.php</file>
-        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/View/Questions/index.ctp</file>
-        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/View/Questions/ask.ctp</file>
-        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/Controller/Component/FormValidatorComponent.php</file>
+        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/View/Layouts/default.ctp</file>
+        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/Model/AppModel.php</file>
+        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/Model/Article.php</file>
+        <file>file:/Library/WebServer/Documents/gdg/gdghub/sqls/feb14.sql</file>
+        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/View/Questions/view_question.ctp</file>
+        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/webroot/css/style.css</file>
     </open-files>
 </project-private>

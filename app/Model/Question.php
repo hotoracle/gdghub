@@ -18,6 +18,10 @@ class Question extends AppModel {
          */
         public $displayField = 'name';
 
+        public $actsAs = array('Sluggable' => array('label' => 'name', 'overwrite' =>true));
+        //Overwrite set to false because if the question is edited, the links indexed by search engines will be broken
+        //The alternative is to always pass the id which I find uninteresting
+        //The second alternative is to create a permalinks tag for search engines...is that possible?
 
         //The Associations below have been created with all possible keys, those that are not needed can be removed
 
@@ -83,6 +87,24 @@ class Question extends AppModel {
         function addQuestion($questionData){
                 
                 $this->create($questionData);
-                $this->save($questionData);
+                
+                if(!$this->save($questionData)){
+                        return false;
+                }
+                
+                return $this->id;
+        }
+
+        function getSlug($questionId=0){
+                
+                $conditions = array('Question.id'=>$questionId);
+                return $this->field('slug',$conditions);
+                
+        }
+        
+        function getQuestion($questionId=0){
+                
+                return $this->read(null,$questionId);
+                
         }
 }

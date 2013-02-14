@@ -139,3 +139,9 @@ label{
 .fullWidth input[type="submit"]{
         width:auto;
 }
+
+h1.questionTitle{
+        font-size:22px;
+        text-shadow: 1px 1px 1px #ccc;         
+        
+}
