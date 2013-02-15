@@ -18,4 +18,16 @@ class QvHelper extends AppHelper {
                 return date('h:ia l F jS, Y', $t);
         }
 
+        function shortenText($text,$maxLength=150){
+                
+                $text = strip_tags($text);
+                $text = substr($text,0,$maxLength);
+                $textParts = explode(' ',$text);
+                array_pop($textParts);
+                $text  = join(' ',$textParts).' ...';
+                
+                return $text;
+                
+                
+        }
 }

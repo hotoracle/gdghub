@@ -107,4 +107,11 @@ class Question extends AppModel {
                 return $this->read(null,$questionId);
                 
         }
+        
+        function increaseViewCount($questionId){
+                
+                $query="UPDATE questions set views=views+1 where id='$questionId'";
+                $this->query($query);
+                
+        }
 }

@@ -77,4 +77,19 @@ class QTag extends AppModel {
                 return $this->find('all',array('conditions'=>array('QTag.question_id'=>$questionId)));
                 
         }
+        
+        function getIndexedTags($questionIds){
+                
+                $results = $this->find('all',array('conditions'=>array('QTag.question_id'=>$questionIds)));
+                
+                $indexedResults = array();
+                
+                foreach($results as $row){
+                        
+                        $indexedResults[$row['QTag']['question_id']][] = $row;
+                        
+                }
+                
+                return $indexedResults;
+        }
 }

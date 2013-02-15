@@ -2,26 +2,15 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
-        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/Model/Tag.php</file>
-        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/Controller/QuestionsController.php</file>
-        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/Model/QTag.php</file>
-        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/Model/Question.php</file>
-        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/View/Users/register.ctp</file>
-        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/View/Users/login.ctp</file>
-        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/View/Elements/form_login.ctp</file>
-        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/Controller/AppController.php</file>
-        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/View/Layouts/default.ctp</file>
-        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/Model/AppModel.php</file>
-        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/Model/Article.php</file>
         <file>file:/Library/WebServer/Documents/gdg/gdghub/app/View/Questions/view_question.ctp</file>
         <file>file:/Library/WebServer/Documents/gdg/gdghub/app/webroot/css/style.css</file>
-        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/Config/bootstrap.php</file>
-        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/View/Helper/QvHelper.php</file>
-        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/View/Helper/AppHelper.php</file>
-        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/View/Elements/user/basic.ctp</file>
-        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/webroot/css/bootstrap-readable.min.css</file>
-        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/Model/QuestionComment.php</file>
         <file>file:/Library/WebServer/Documents/gdg/gdghub/app/View/Elements/questions/comments.ctp</file>
-        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/Config/core.php</file>
+        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/View/Layouts/default.ctp</file>
+        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/View/Elements/questions/response_form.ctp</file>
+        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/Controller/QuestionsController.php</file>
+        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/View/Questions/post_response.ctp</file>
+        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/Controller/AppController.php</file>
+        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/View/Questions/post_comment.ctp</file>
+        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/Model/Question.php</file>
     </open-files>
 </project-private>

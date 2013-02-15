@@ -31,4 +31,19 @@ App::uses('Model', 'Model');
  * @package       app.Model
  */
 class AppModel extends Model {
+        
+        
+        
+        function extractKeys($data){
+                
+                $keys = array();
+                foreach($data as $row){
+                        
+                        if(isset($row[$this->alias][$this->primaryKey])){
+                                $keys[] = $row[$this->alias][$this->primaryKey];
+                        }
+                        
+                }
+                return $keys;
+        }
 }

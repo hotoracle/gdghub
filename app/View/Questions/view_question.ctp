@@ -4,6 +4,7 @@
   @author: Femi TAIWO [dftaiwo@gmail.com]
   Created: Feb 14, 2013  6:42:47 AM
  */
+$isAnswerable = ($question['Question']['flag'] == 0);
 ?>
 <div class="row">
         <div class="span9">
@@ -17,15 +18,24 @@
                                 <br />Asked @ <?php echo $this->Qv->longTime($question['Question']['created']); ?>
                         </div>
                         <hr />
+                        <div class="tags">
                         Tags: <?php foreach ($questionTags as $tag) { ?>
                                 <span class="badge badge-success">
                                         <?php echo $this->Html->link($tag['Tag']['name'], "browseByTag/{$tag['Tag']['id']}"); ?>
                                 </span>
                         <?php } ?>
+                        </div>
                         <div class="clear"></div>
                         <?php echo $this->element('questions/comments', array('comments' => $directComments)); ?>
                         <div class="clear"></div>
+                        <?php if ($isAnswerable) { ?>
+                                &nbsp;
 
+                                <div class="alignRight">
+                                        <?php echo $this->Html->link('Post Comment', "#", array('class' => 'btn btn-mini btn-primary','data-toggle'=>'modal','data-target'=>'#myModal','data-remote'=>$this->Html->url("postComment/$questionId/$questionSlug"))); ?> | 
+                                        <?php echo $this->Html->link('Post Answer', '#postAnswer', array('class' => 'btn btn-mini btn-success')); ?>
+                                </div>
+                        <?php } ?>
                 </div>
                 <div class="postedAnswers">
                         <h4 class="answersHeader">Answers</h4>
@@ -34,7 +44,9 @@
                                 ?>
                                 <div class="">
                                         <?php foreach ($postedAnswers as $postedAnswer) {
+                                                $answerId = $postedAnswer['QuestionComment']['id'];
                                                 ?>
+                                                <a name="<?php echo md5($answerId); ?>"></a>
                                                 <div class="postedAnswer bordered">
                                                         <div class="votingOptions">
 
@@ -45,38 +57,45 @@
                                                                 <?php echo $this->element('user/basic', array('user' => $postedAnswer['User'])); ?>
                                                                 <br />Asked @ <?php echo $this->Qv->longTime($postedAnswer['QuestionComment']['created']); ?>
                                                         </div>
+                                                        <hr />
+
                                                         <div class="clear"></div>
                                                         <?php
-                                                        $answerId = $postedAnswer['QuestionComment']['id'];
                                                         if (isset($postedComments[$answerId])) {
                                                                 echo $this->element('questions/comments', array('comments' => $postedComments[$answerId]));
                                                         }
                                                         ?>
+                                                        <?php if ($isAnswerable) { ?>
+                                                                &nbsp;
+
+                                                                <div class="alignRight">
+                                                                        
+                                                                        <?php echo $this->Html->link('Post Comment', "#", array('class' => 'btn btn-mini btn-primary','data-toggle'=>'modal','data-target'=>'#myModal','data-remote'=>$this->Html->url("postComment/$questionId/$questionSlug/$answerId"))); ?> | 
+                                                                        <?php echo $this->Html->link('Post Answer', '#postAnswer', array('class' => 'btn btn-mini btn-success')); ?>
+                                                                </div>
+                                                        <?php } ?>
                                                 </div>
                                         <?php } ?>
 
                                 </div>
                         <?php } ?>
                 </div>
-                <?php if ($question['Question']['flag'] == 0) { //still open for replies ?>
-                        <h4 class="answersHeader">Post an Answer</h4>
-
-                        <div class="answerForm bordered"><pre>
-        Your Answer
-        Thanks for contributing an answer to this question.
-
-        Please be sure to answer the question. Provide details and share your research!
-        But avoid …
-
-        - Asking for help, clarification, or responding to other answers.
-        - Making statements based on opinion; back them up with references or personal experience.
-                                </pre>
-                                <?php echo $this->element('form_validator'); ?>
-                                <?php echo $this->Form->create('Answer'); ?>
-                                <?php echo $this->Form->textarea('answer'); ?>
-                                <?php echo $this->Form->submit('Post Your Answer', array('class' => 'btn btn-success')); ?>
-                        </div>
+                <?php if ($isAnswerable) { //still open for replies ?>
+                        <a name="postAnswer"></a>
+                        <?php echo $this->element('questions/response_form'); ?>
+                       
                 <?php } ?>
 
+        </div>
+</div>
+<div class="modal hide custom-width-modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        </div>
+        <div class="modal-body">
+                <!-- content will be loaded here -->
+        </div>
+        <div class="modal-footer">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
         </div>
 </div>

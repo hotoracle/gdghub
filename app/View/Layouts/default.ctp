@@ -1,4 +1,4 @@
-<?php $isLocalhost = ($_SERVER['HTTP_HOST']=='localhost'); ?>
+<?php $isLocalhost = ($_SERVER['HTTP_HOST'] == 'localhost'); ?>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -7,27 +7,26 @@
         <head>
                 <meta charset="utf-8">
                 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-                <title><?php
+                <title>
+                        <?php echo Configure::read('Application.name') ?>
+                        <?php
                         if (isset($articleInfo)) {
-                                echo $articleInfo['Article']['name'] . ' - ';
+                                echo ' - ' . $articleInfo['Article']['name'];
                         }
-                        ?><?php echo Configure::read('Application.name') ?></title>
+                        if (isset($question)) {
+                                echo ' - ' . $question['Question']['name'];
+                        }
+                        ?></title>
                 <meta name="description" content="">
                 <meta name="viewport" content="width=device-width">
 
                 <link href="https://plus.google.com/<?php echo Configure::read('Application.gplus_page_id'); ?>" rel="publisher" />
-                <?php if(!$isLocalhost){ ?>
-                <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+                <?php if (!$isLocalhost) { ?>
+                        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
                 <?php } ?>
                 <script>window.jQuery || document.write('<script src="<?php echo $this->params->webroot ?>js/lib/jquery.min.js"><\/script>')</script>
 
                 <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-                <style>
-                        body {
-                                padding-top: 60px;
-                                padding-bottom: 40px;
-                        }
-                </style>
                 <?php echo $this->Html->css('normalize.css') ?>
                 <?php echo $this->Html->css('bootstrap-' . Configure::read('Layout.theme') . '.min', null, array('data-extra' => 'theme')) ?>
                 <?php echo $this->Html->css('bootstrap-responsive.min') ?>
@@ -51,7 +50,7 @@
                     <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
                     <![endif]-->
 
-                <div class="navbar navbar-fixed-top">
+                <div class="navbar navbar-static">
                         <div class="navbar-inner">
                                 <div class="container">
                                         <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -153,7 +152,7 @@
                                                                         </ul>
                                                                 </li>
                                                         </ul>   
-<?php } ?>
+                                                <?php } ?>
                                                 </li>
                                                 </ul>
                                                 </li>
@@ -167,8 +166,14 @@
 
                 <div class="container" >
                         <div role="main" id="main">
-<?php echo $this->Session->flash(); ?>
-<?php echo $this->fetch('content'); ?>
+                                <?php 
+                                
+                                $flashMessage =  $this->Session->flash(); 
+                                if($flashMessage){
+                                ?>
+                                <div class="alert alert-block alert-info"><?php echo $flashMessage; ?></div>
+                                <?php } ?>
+                                <?php echo $this->fetch('content'); ?>
                         </div>
                         <hr>
 
@@ -204,28 +209,28 @@
                   s.parentNode.insertBefore(g,s)}(document,'script'));
                 </script>
                 -->
-        <?php if(!$isLocalhost){ ?>
+                <?php if (!$isLocalhost) { ?>
 
-                <script type="text/javascript">
-                                (function() {
-                                        var po = document.createElement('script');
-                                        po.type = 'text/javascript';
-                                        po.async = true;
-                                        po.src = 'https://apis.google.com/js/plusone.js';
-                                        var s = document.getElementsByTagName('script')[0];
-                                        s.parentNode.insertBefore(po, s);
-                                })();
-                </script>
-                <script>!function(d, s, id) {
-                                var js, fjs = d.getElementsByTagName(s)[0];
-                                if (!d.getElementById(id)) {
-                                        js = d.createElement(s);
-                                        js.id = id;
-                                        js.src = "https://platform.twitter.com/widgets.js";
-                                        fjs.parentNode.insertBefore(js, fjs);
-                                }
-                        }(document, "script", "twitter-wjs");</script>
-        <?php } ?>
+                        <script type="text/javascript">
+                                        (function() {
+                                                var po = document.createElement('script');
+                                                po.type = 'text/javascript';
+                                                po.async = true;
+                                                po.src = 'https://apis.google.com/js/plusone.js';
+                                                var s = document.getElementsByTagName('script')[0];
+                                                s.parentNode.insertBefore(po, s);
+                                        })();
+                        </script>
+                        <script>!function(d, s, id) {
+                                        var js, fjs = d.getElementsByTagName(s)[0];
+                                        if (!d.getElementById(id)) {
+                                                js = d.createElement(s);
+                                                js.id = id;
+                                                js.src = "https://platform.twitter.com/widgets.js";
+                                                fjs.parentNode.insertBefore(js, fjs);
+                                        }
+                                }(document, "script", "twitter-wjs");</script>
+                <?php } ?>
                 <?php echo $this->element('sql_dump'); ?>
         </body>
 </html>
