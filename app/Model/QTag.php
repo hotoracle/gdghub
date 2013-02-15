@@ -8,8 +8,9 @@ App::uses('AppModel', 'Model');
  * @property Question $Question
  * @property Tag $Tag
  */
-class QuestionsTag extends AppModel {
+class QTag extends AppModel {
 
+        public $useTable = 'questions_tags';
         /**
          * Validation rules
          *
@@ -50,14 +51,14 @@ class QuestionsTag extends AppModel {
                 'className' => 'Question',
                 'foreignKey' => 'question_id',
                 'conditions' => '',
-                'fields' => '',
+                'fields' => array('Question.id'),
                 'order' => ''
             ),
             'Tag' => array(
                 'className' => 'Tag',
                 'foreignKey' => 'tag_id',
                 'conditions' => '',
-                'fields' => '',
+                'fields' => array('Tag.id','Tag.name','Tag.published'),
                 'order' => ''
             )
         );
@@ -68,6 +69,12 @@ class QuestionsTag extends AppModel {
                 $data = array('question_id'=>$questionId,'tag_id'=>$tagId);
                 $this->create($data);
                 $this->save($data);
+                
+        }
+        
+        function questionTags($questionId){
+                
+                return $this->find('all',array('conditions'=>array('QTag.question_id'=>$questionId)));
                 
         }
 }

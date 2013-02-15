@@ -145,3 +145,109 @@ h1.questionTitle{
         text-shadow: 1px 1px 1px #ccc;         
         
 }
+
+#main{
+        min-height:500px;
+}
+
+.badge{
+        font-weight:200;
+}
+.floatRight{
+        float:right;
+}
+
+.posterInfo{
+        margin:10px 5px;
+        text-align: right;
+        background:#ffFFEE;
+        padding:3px 3px 4px 8px;
+        border-radius: 2px;
+        border:1px solid #ddd;
+        box-shadow: 1px 1px 2px #eee;
+        font-size:0.9em;
+}
+.posterInfo a:hover{
+ text-decoration: none;       
+}
+
+.gravatar-small{
+        margin:0px 0px 0px 6px ;
+        box-shadow: 1px 1px 2px #eee;
+
+}
+.clear{
+        clear:both;
+}
+
+.badge {
+        margin-right:3px;
+        border-radius: 3px;
+}
+.badge a:link{
+        color:#fff;
+        
+}
+
+.nearFull{
+        width:75%;
+}
+
+.dotBordered{
+        border:1px dotted #ccc;
+}
+
+.alignRight{
+        text-align:right;
+}
+
+.directCommentsBody{
+        padding:8px;
+        font-size:13px;
+}
+
+.directComments h4{
+        font-size:13px;
+        background:#eee;
+        padding:2px 4px;
+        line-height: 1em; 
+        margin:0px;
+}
+
+.votingOptions{
+        float:left;
+        width:75px;
+        height:120px;
+         border:1px solid #ccc;
+         margin-right:8px;
+         margin-bottom:8px;
+         display:none;
+}
+
+.postedAnswers .postedAnswer:nth-of-type(even) {
+background:#f9f9f9;  
+}
+
+.postedAnswer{
+        
+        padding-bottom:16px;
+        margin:6px 0px 6px 10px;
+}
+.answersHeader{
+        background:#666;
+        padding:3px;
+        color:#fff;
+        font-weight:500;
+        text-shadow: 1px 1px 2px #000;
+        box-shadow: 1px 1px 1px #000;
+        
+}
+.answerForm{
+         margin:6px 0px 6px 10px;
+       
+}
+.answerForm textarea{
+        width:96%;
+        height:300px;
+        font-weight:200;
+}

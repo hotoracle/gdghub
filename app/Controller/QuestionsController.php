@@ -7,8 +7,8 @@
  */
 class QuestionsController extends AppController {
 
-        public $uses = array('Question', 'QcVote', 'QuestionComment', 'QuestionsTag', 'Tag');
-
+        public $uses = array('Question', 'QcVote', 'QuestionComment', 'QTag', 'Tag');
+        public $helpers = array('Qv');
         /**
          * To allow action to all methods without login
          * @TODO restrict asking to authenticated users
@@ -80,7 +80,7 @@ class QuestionsController extends AppController {
                                 return;
                         }
                         foreach ($tagIds as $tagId) {
-                                $this->QuestionsTag->addTag($questionId, $tagId);
+                                $this->QTag->addTag($questionId, $tagId);
                         }
 
                         $questionSlug = $this->Question->getSlug($questionId);
@@ -96,7 +96,51 @@ class QuestionsController extends AppController {
         public function viewQuestion($questionId = '',$questionSlug='') {
 
                 $question = $this->_getQuestion($questionId);
-                $this->set(compact('questionId', 'question'));
+                $questionTags  = $this->QTag->questionTags($questionId);
+                $rules = array(
+                   'Answer'=>array(
+                       'answer'=>array(
+                           FV_REQUIRED=>'You must provide a response to submit this',
+                           )
+                   ) 
+                );
+                $this->FormValidator->setRules($rules);
+                if(!empty($this->data) && $this->FormValidator->validate()){
+                
+                        $subData = $this->data['Answer'];
+                        
+                        $dbData =  array(
+                            'is_comment'=>0,
+                            'question_id'=>$questionId,
+                            'user_id'=>$this->_thisUserId,
+                            'description'=>$subData['answer']
+                        );
+                        
+                        
+                        
+                        if(isset($subData['question_comment_id']) & !empty($subData['question_comment_id'])){
+                                $relCommentId = $subData['question_comment_id'];
+                                if(!$this->QuestionComment->exists($relCommentId)){
+                                        $this->miniFlash("Invalid Question Comment Link","viewQuestion/$questionId/$questionSlug");
+                                }
+                                $dbData['question_comment_id'] = $relCommentId;
+                        }
+                        if($this->QuestionComment->addComment($dbData)){
+                                $this->miniFlash("Posted successfully","viewQuestion/$questionId/$questionSlug");
+                        }else{
+                                $this->sFlash("An unexpected errror occurred. Please try again later");
+                        }
+   
+                }
+                
+                $directComments = $this->QuestionComment->getDirectComments($questionId);
+                
+                $postedAnswers = $this->QuestionComment->getPostedAnswers($questionId);
+                
+                $postedComments = $this->QuestionComment->getPostedComments($questionId);
+                
+                $this->set(compact('questionId', 'question','questionTags','directComments','postedAnswers','postedComments'));
+                
         }
 
         /**
