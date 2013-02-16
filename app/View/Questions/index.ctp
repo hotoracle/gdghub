@@ -19,6 +19,19 @@
                                 </div>
                         <?php } else {
                                 ?>
+<!--                        <ul class="nav nav-tabs" id="myTab">
+                                        <li class="active"><a href="#home">Home</a></li>
+                                        <li><a href="#profile">Profile</a></li>
+                                        <li><a href="#messages">Messages</a></li>
+                                        <li><a href="#settings">Settings</a></li>
+                                </ul>
+
+                                <div class="tab-content">
+                                        <div class="tab-pane active" id="home">...</div>
+                                        <div class="tab-pane" id="profile">...</div>
+                                        <div class="tab-pane" id="messages">...</div>
+                                        <div class="tab-pane" id="settings">...</div>
+                                </div>-->
                                 <div class="postedQuestions">
                                         <?php
                                         foreach ($questions as $question) {
@@ -26,7 +39,7 @@
                                                 ?>
                                                 <div class="postedQuestion">
 
-                                                        <span class="questionTitle"><?php echo $question['Question']['name']; ?></span>
+                                                        <span class="questionTitle"><?php echo $this->Html->link($question['Question']['name'],"viewQuestion/{$question['Question']['id']}/{$question['Question']['slug']}"); ?></span>
                                                         <?php echo $this->Qv->shortenText($question['Question']['description']); ?>
                                                         <br />
                                                         <?php
@@ -47,12 +60,18 @@
                         <?php } ?>
 
 
+                <?php echo $this->element('paginator'); ?>
 
                 </div>
         </div>
         <div class="span3">
                 <div class="bordered minH600">
-                        <h3>Tags</h3>
+                        <h4>Tags</h4>
+                        <?php foreach($storedTags as $tag){ ?>
+                        <span class="badge badge-success">
+                                <?php echo $this->Html->link($tag['Tag']['name'],"browseByTag/{$tag['Tag']['id']}",array('escape'=>false)); ?>
+                        </span><span class="qCount"> x <?php echo $tag['QTag']['qcount']; ?> </span> &nbsp;     
+                        <? } ?>
                 </div>
         </div>
 </div>

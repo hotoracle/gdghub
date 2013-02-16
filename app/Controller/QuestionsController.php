@@ -31,15 +31,20 @@ class QuestionsController extends AppController {
                 
                 switch($sortBy){
                         case 'new':
-                                $orderBy = array('Question.created');//Is this the best ?
+                                $orderBy = array('Question.created'=>'DESC');//Is this the best ?
                                 break;
                         default:
-                                $orderBy = array('Question.views');//Is this the best ?
+                                $orderBy = array('Question.views'=>'DESC');//Is this the best ?
                                 
                 }
                 
                 $conditions = array(
                     'Question.published'=>1
+                );
+                
+                $this->paginate = array('Question'=>array(
+                    'order'=>$orderBy
+                        )
                 );
                 
                 $questions = $this->paginate('Question',$conditions);
@@ -49,6 +54,14 @@ class QuestionsController extends AppController {
                 $questionsTags = $this->QTag->getIndexedTags($questionIds);
                 
                 $this->set(compact('questions','questionsTags'));
+                
+//                $storedTags = $this->Session->read('storedTags');
+//                if(!$storedTags){
+//                        
+//                }
+                $storedTags = $this->QTag->listTagsWithStats();//We should cache this....
+                
+                $this->set('storedTags',$storedTags);
                 
         }
 
@@ -82,8 +95,9 @@ class QuestionsController extends AppController {
 
                         $subData = $this->data['Ask'];
 
-
-                        $tagsProvided = explode(',', $subData['tags']);
+                        
+                        $tagsProvided = str_replace(' ',',', $subData['tags']);
+                        $tagsProvided = explode(',', $tagsProvided);
                         $tagIds = array();
                         foreach ($tagsProvided as $tag) {
 

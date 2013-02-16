@@ -92,4 +92,19 @@ class QTag extends AppModel {
                 
                 return $indexedResults;
         }
+        
+        function listTagsWithStats(){
+                
+                $this->virtualFields = array('qcount'=>'COUNT(QTag.question_id)');
+                $results = $this->find('all',array(
+                    'fields'=>array('Tag.id','Tag.name', 'qcount'),
+                'group'=>array('QTag.tag_id'),
+                    'order'=>array('qcount'=>'DESC','Tag.name')
+                        )
+                );
+                
+              return $results;
+                
+                
+        }
 }
