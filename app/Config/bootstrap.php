@@ -218,7 +218,13 @@ CakeLog::config('error', array(
 
 CakePlugin::load('Opauth', array('routes' => true, 'bootstrap' => true));
 
-Configure::write('Opauth.path', '/auth/');
+$appUrl  = isset($_SERVER['REQUEST_URI'])? $_SERVER['REQUEST_URI']:'';
+if(stripos($appUrl,'auth')!==false){
+        $pos = stripos($appUrl,'auth')+5;
+        $appUrl = substr($appUrl,0,$pos);
+}
+
+Configure::write('Opauth.path', $appUrl);
 
 Configure::write('Opauth.Strategy.Facebook', array(
    'app_id' => '141716812655517',
