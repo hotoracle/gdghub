@@ -143,15 +143,14 @@ Cache::config('default', array('engine' => 'File'));
 /**
  * Your application configuration starts here
  */
-
-$baseUrl= isset($_SERVER['HTTP_HOST'])? $_SERVER['HTTP_HOST']:'hub.gdglagos.com';
+$baseUrl = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'hub.gdglagos.com';
 Configure::write(
         'Application', array(
     'name' => '&#8747; dev',
     'from_email' => 'hub@gdglagos.com',
     'contact_mail' => 'hub@gdglagos.com',
-            'base_url'=>"http://".$baseUrl,
-            'gplus_page_id'=>'112227844855698647164'
+    'base_url' => "http://" . $baseUrl,
+    'gplus_page_id' => '112227844855698647164'
         )
 );
 
@@ -218,41 +217,49 @@ CakeLog::config('error', array(
 
 CakePlugin::load('Opauth', array('routes' => true, 'bootstrap' => true));
 
-$appUrl  = isset($_SERVER['REQUEST_URI'])? $_SERVER['REQUEST_URI']:'';
-if(stripos($appUrl,'auth')!==false){
-        $pos = stripos($appUrl,'auth')+5;
-        $appUrl = substr($appUrl,0,$pos);
+$appUrl = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
+if (stripos($appUrl, 'auth') !== false) {
+        $pos = stripos($appUrl, 'auth') + 5;
+        $appUrl = substr($appUrl, 0, $pos);
 }
 
 Configure::write('Opauth.path', $appUrl);
 
 Configure::write('Opauth.Strategy.Facebook', array(
-   'app_id' => '141716812655517',
-      'app_secret' => 'f6dea36626b6cc634745a8795a013271',
-	'scope' => 'email'
-      ));
-      
-Configure::write('Opauth.Strategy.Google', array(
-   'client_id' => '354523643987.apps.googleusercontent.com',
-      'client_secret' => 'bcFKod_vgjuA4F_AiZlplaIy'
-      ));
-      
+    'app_id' => '141716812655517',
+    'app_secret' => 'f6dea36626b6cc634745a8795a013271',
+    'scope' => 'email'
+));
+
+if (isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST'] == 'localhost') {
+        Configure::write('Opauth.Strategy.Google', array(
+            'client_id' => '354523643987-lu90ptpblkudmnb7068a32gfqdov2pkr.apps.googleusercontent.com',
+            'client_secret' => 'XH6MWuAiORO15EFHbJlp8foh'
+        ));
+} else {
+        Configure::write('Opauth.Strategy.Google', array(
+            'client_id' => '354523643987.apps.googleusercontent.com',
+            'client_secret' => 'bcFKod_vgjuA4F_AiZlplaIy'
+        ));
+}
+
 Configure::write('Opauth.Strategy.LinkedIn', array(
-   'api_key' => 'zvlq5i0xpc72',
-      'secret_key' => 'UbVrfWCPpuIK3dCz'
-      ));
+    'api_key' => 'zvlq5i0xpc72',
+    'secret_key' => 'UbVrfWCPpuIK3dCz'
+));
 
 Configure::write('Opauth.Strategy.Twitter', array(
-   'key' => 'gNPRuxWB7Tg8DhuoZBuQ',
-      'secret' => 'p7xZPFcUk29OvwZyUAFRuNnNlHPNMpcT4SCqknsDiA'
-      ));
+    'key' => 'gNPRuxWB7Tg8DhuoZBuQ',
+    'secret' => 'p7xZPFcUk29OvwZyUAFRuNnNlHPNMpcT4SCqknsDiA'
+));
 
- /**
+CakePlugin::load('DebugKit');
+/**
  * Shortcut to Configure::read function
  * @param string $key
  * @return mixed
  */
-function cRead($key){
-        
+function cRead($key) {
+
         return Configure::read($key);
 }
