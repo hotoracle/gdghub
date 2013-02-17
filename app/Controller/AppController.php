@@ -33,7 +33,7 @@ App::uses('Controller', 'Controller');
  */
 class AppController extends Controller {
 
-        public $components = array('Auth', 'Session', 'Error', 'FormValidator', 'RequestHandler', 'DebugKit.Toolbar');
+        public $components = array('Auth', 'Session', 'Error', 'FormValidator', 'RequestHandler');
         public $_thisUserId = 'cdf2310c-7611-11e2-8eec-17ba60b0528a'; //In Dev mode, once auth is sorted, this should be set in the code
 
         public function beforeFilter() {
