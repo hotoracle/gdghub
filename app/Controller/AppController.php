@@ -33,23 +33,67 @@ App::uses('Controller', 'Controller');
  */
 class AppController extends Controller {
 
-        public $components = array( 'Session', 'Error');
+        public $components = array('Auth', 'Session', 'Error', 'FormValidator', 'RequestHandler', 'DebugKit.Toolbar');
+        public $_thisUserId = 'cdf2310c-7611-11e2-8eec-17ba60b0528a'; //In Dev mode, once auth is sorted, this should be set in the code
 
         public function beforeFilter() {
-//                $this->Auth->authenticate = array('Form');
-//                
-//                $this->Auth->loginRedirect = array('action' => 'home', 'controller' => 'users');
-//                $this->Auth->logoutRedirect = array('action' => 'home', 'controller' => 'pages');
-//                $this->Auth->authError = 'You are not allowed to see that.';
+                $this->Auth->authenticate = array('Form' => array(
+                        'username', 'id', 'name', 'email'
+                ));
+                $this->Auth->loginRedirect = array('action' => 'index', 'controller' => 'MyAccount');
+                $this->Auth->logoutRedirect = array('action' => 'index', 'controller' => 'Dashboard');
+                $this->Auth->authError = 'You are required to login to proceed to the requested page';
+
+                $userInfo = $this->Auth->user();
+
+                if ($userInfo) {
+
+                        $this->_thisUserId = $userInfo['User']['id'];
+                }
 
                 # To enable portuguese language as main
                 #Configure::write('Config.language', 'por');
         }
-        
-        function beforeRender(){
+
+        function beforeRender() {
                 parent::beforeRender();
-                $url = '/'.$this->params->url;
+                $url = '/' . $this->params->url;
                 $this->set('_thisUrl', $url);
+                $this->set('_userInfo', $this->_getAuthedUser());
+        }
+
+        function _getAuthedUser() {
+                return $this->Auth->user();
+        }
+
+        //This should ensure that the user is logged in
+        function _requireAuth() {
+                
+        }
+
+        /**
+         *  Session Flash a message and redirect
+         * @param string $msg message to display
+         * @param string $url to redirect to
+         */
+        function miniFlash($msg, $url) {
+
+                $this->Session->setFlash($msg);
+
+                $this->redirect($url);
+        }
+
+        /**
+         *  Session Flash a message 
+         * @param string $msg message to display
+         */
+        function sFlash($msg,$isError = false) {
+                $flashDoc = 'flash_success';
+                if($isError){
+                        $flashDoc = 'flash_fail';
+                }
+
+                $this->Session->setFlash($msg,$flashDoc);
         }
 
 }

@@ -1,3 +1,4 @@
+<?php $isLocalhost = ($_SERVER['HTTP_HOST'] == 'localhost'); ?>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -6,26 +7,30 @@
         <head>
                 <meta charset="utf-8">
                 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-                <title><?php
+                <title>
+                        <?php echo Configure::read('Application.name') ?>
+                        <?php
                         if (isset($articleInfo)) {
-                                echo $articleInfo['Article']['name'] . ' - ';
+                                echo ' - ' . $articleInfo['Article']['name'];
                         }
-                        ?><?php echo Configure::read('Application.name') ?></title>
+                        if (isset($question)) {
+                                echo ' - ' . $question['Question']['name'];
+                        }
+                        ?></title>
                 <meta name="description" content="">
                 <meta name="viewport" content="width=device-width">
 
                 <link href="https://plus.google.com/<?php echo Configure::read('Application.gplus_page_id'); ?>" rel="publisher" />
+                <?php if (!$isLocalhost) { ?>
+                        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+                <?php } ?>
+                <script>window.jQuery || document.write('<script src="<?php echo $this->params->webroot ?>js/lib/jquery.min.js"><\/script>')</script>
 
                 <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-                <style>
-                        body {
-                                padding-top: 60px;
-                                padding-bottom: 40px;
-                        }
-                </style>
                 <?php echo $this->Html->css('normalize.css') ?>
                 <?php echo $this->Html->css('bootstrap-' . Configure::read('Layout.theme') . '.min', null, array('data-extra' => 'theme')) ?>
                 <?php echo $this->Html->css('bootstrap-responsive.min') ?>
+                <?php //echo $this->Html->css('font-awesome.min') ?>
                 <?php echo $this->Html->css('style') ?>
 
                 <?php
@@ -45,7 +50,7 @@
                     <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
                     <![endif]-->
 
-                <div class="navbar navbar-fixed-top">
+                <div class="navbar navbar-static">
                         <div class="navbar-inner">
                                 <div class="container">
                                         <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -53,7 +58,9 @@
                                                 <span class="icon-bar"></span>
                                                 <span class="icon-bar"></span>
                                         </a>
+
                                         <?php echo $this->Html->link(Configure::read('Application.name'), "/", array('class' => 'brand', 'escape' => false)) ?>
+
                                         <div class="nav-collapse">
                                                 <ul class="nav">
                                                         <li class="topPlusOne">
@@ -63,7 +70,10 @@
                                                                 <?php echo $this->Html->link('Want to Help?', "/Dashboard/help"); ?>
                                                         </li>
                                                         <li>
-                                                                <?php echo $this->Html->link('Resources', "/Dashboard/help"); ?>
+                                                                <?php echo $this->Html->link('Blog', "/Dashboard/help"); ?>
+                                                        </li>
+                                                        <li>
+                                                                <?php echo $this->Html->link('Resources', "/Resources/index"); ?>
                                                         </li>
                                                         <li>
                                                                 <?php echo $this->Html->link('Technology', "/Dashboard/help"); ?>
@@ -71,7 +81,8 @@
                                                         <li class="dropdown">
                                                                 <?php echo $this->Html->link('I Want To', "#", array('class' => 'dropdown-toggle', 'data-toggle' => 'dropdown')); ?>
                                                                 <ul class="dropdown-menu ucwords" role="menu" aria-labelledby="dLabel">
-                                                                        <li><?php echo $this->Html->link('ask a question', '#'); ?></li>
+                                                                        <li><?php echo $this->Html->link('ask a question', '/Questions/ask'); ?></li>
+                                                                        <li><?php echo $this->Html->link('contribute answers', '/Questions'); ?></li>
                                                                         <li><?php echo $this->Html->link('contribute code', '#'); ?></li>
 
                                                                         <li><?php echo $this->Html->link('learn how to design', '#'); ?></li>
@@ -106,30 +117,61 @@
                                                                                 )
                                                                                 ?>
                                                                         </li>
-                                                                        <li>
-                                                                                <?php
-                                                                                echo $this->Html->link(
-                                                                                        '<i class="icon-black icon-book"></i>Blog', '#', array(
-                                                                                    'tabindex' => '-1',
-                                                                                    'escape' => false
-                                                                                        )
-                                                                                )
-                                                                                ?>
-                                                                        </li>
                                                                 </ul>
                                                         </li>
+                                                </ul>  
+                                                <?php if (isset($_userInfo) && $_userInfo) { ?>
+                                                        <ul class="nav pull-right">
+                                                                <li id="fat-menu" class="dropdown">
+                                                                        <a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown">
+                                                                                <i class="icon-black icon-user"></i> 
+                                                                                <?php echo $_userInfo['User']['name'] ?> <b class="caret"></b></a>
+                                                                        <ul class="dropdown-menu" role="menu" aria-labelledby="drop3">
+                                                                                <li>
+                                                                                        <?php
+                                                                                        echo $this->Html->link(
+                                                                                                '<i class="icon-black icon-suitcase"></i>My Profile', '/users/user_profile/', //i don't a clean way of fetching just the logged in user....moh
+                                                                                                array(
+                                                                                            'tabindex' => '-1',
+                                                                                            'escape' => false
+                                                                                                )
+                                                                                        )
+                                                                                        ?>
+                                                                                </li>
+                                                                                <li>
+                                                                                        <?php
+                                                                                        echo $this->Html->link(
+                                                                                                '<i class="icon-black icon-off"></i> Logout', '/users/logout', array(
+                                                                                            'tabindex' => '-1',
+                                                                                            'escape' => false
+                                                                                                )
+                                                                                        )
+                                                                                        ?>
+
+                                                                                </li>
+                                                                        </ul>
+                                                                </li>
+                                                        </ul>   
+                                                <?php } ?>
+                                                </li>
+                                                </ul>
+                                                </li>
                                                 </ul>   
+
 
                                         </div><!--/.nav-collapse -->
                                 </div>
                         </div>
                 </div>
 
-                <div class="container" role="main" id="main">
-
-<?php echo $this->Session->flash(); ?>
-<?php echo $this->fetch('content'); ?>
-
+                <div class="container" >
+                        <div role="main" id="main">
+                                <?php 
+                                
+                               echo  $this->Session->flash(); 
+                               ?>
+                                <?php echo $this->fetch('content'); ?>
+                        </div>
                         <hr>
 
                         <footer>
@@ -138,8 +180,6 @@
 
                 </div> <!-- /container -->
 
-                <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
-                <script>window.jQuery || document.write('<script src="<?php echo $this->params->webroot ?>js/lib/jquery.min.js"><\/script>')</script>
 
                 <?php
                 if (is_file(WWW_ROOT . 'js' . DS . $this->params->controller . '.js')) {
@@ -157,6 +197,7 @@
                             'src/scripts.js'
                 ));
                 ?>
+
                 <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
 <!--                      <script>
                 var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
@@ -165,25 +206,27 @@
                   s.parentNode.insertBefore(g,s)}(document,'script'));
                 </script>
                 -->
-                <script type="text/javascript">
-                                (function() {
-                                        var po = document.createElement('script');
-                                        po.type = 'text/javascript';
-                                        po.async = true;
-                                        po.src = 'https://apis.google.com/js/plusone.js';
-                                        var s = document.getElementsByTagName('script')[0];
-                                        s.parentNode.insertBefore(po, s);
-                                })();
-                </script>
-                <script>!function(d, s, id) {
-                var js, fjs = d.getElementsByTagName(s)[0];
-                if (!d.getElementById(id)) {
-                        js = d.createElement(s);
-                        js.id = id;
-                        js.src = "https://platform.twitter.com/widgets.js";
-                        fjs.parentNode.insertBefore(js, fjs);
-                }
-        }(document, "script", "twitter-wjs");</script>
+                <?php if (!$isLocalhost) { ?>
 
+                        <script type="text/javascript">
+                                        (function() {
+                                                var po = document.createElement('script');
+                                                po.type = 'text/javascript';
+                                                po.async = true;
+                                                po.src = 'https://apis.google.com/js/plusone.js';
+                                                var s = document.getElementsByTagName('script')[0];
+                                                s.parentNode.insertBefore(po, s);
+                                        })();
+                        </script>
+                        <script>!function(d, s, id) {
+                                        var js, fjs = d.getElementsByTagName(s)[0];
+                                        if (!d.getElementById(id)) {
+                                                js = d.createElement(s);
+                                                js.id = id;
+                                                js.src = "https://platform.twitter.com/widgets.js";
+                                                fjs.parentNode.insertBefore(js, fjs);
+                                        }
+                                }(document, "script", "twitter-wjs");</script>
+                <?php } ?>
         </body>
 </html>
