@@ -5,7 +5,7 @@ class UsersController extends AppController
   public function beforeFilter()
   {
     parent::beforeFilter();
-    $this->Auth->allow('register','logout','change_password','remember_password','remember_password_step_2');
+    $this->Auth->allow('register','logout','change_password','remember_password','remember_password_step_2','opauth_complete');
   }
 
   public function home()
@@ -242,7 +242,54 @@ class UsersController extends AppController
   }  
   
    public function opauth_complete() {
-       debug($this->data);
+	
+	$myData = $this->data;
+	//debug($this->data);
+	$auth = $myData['auth'];
+	$info = array($auth['info']['name'],
+			$auth['info']['image'],
+                        $auth['info']['first_name'],
+                        $auth['info']['last_name']);
+        $raw = array($auth['raw']['email'],
+                    $auth['raw']['link'],
+                    $auth['raw']['gender']);
+        $credential = array($auth['credentials']['token']);
+        $provider = array($auth['provider']);
+ //       echo "<pre>";
+//die(print_r($provider));
+//echo "</pre>";
+	$data = array('User' => array(
+					'name'=>$info[0],
+					'image'=>$info[1],
+					'username'=>$info[0],
+                                        'first_name'=>$info[2],
+                                        'last_name'=>$info[3],
+                                        'email'=>$raw[0],
+                                        'link'=>$raw[1],
+                                        'gender'=>$raw[2],
+                                        'token'=>$credential[0],
+                                        'provider'=>$provider[0],
+                                        'password'=>$credential[0]
+					)
+			);
+//echo "<pre>";
+//die(print_r($data));
+//echo "</pre>";
+       $this->User->save($data); 
+       $loginUser = $this->User->find('first', array('fields'=>array('User.username', 'User.password')));
+	//die(print_r($loginUser));
+       //$this->set('user',$loginUser);
+     	//$this->Auth->login($loginUser);
+	if ($this->Auth->login($loginUser)) 
+      {
+        $this->redirect($this->Auth->redirect());
+      } 
+      else 
+      {
+        $this->Session->setFlash(__('Invalid username or password, try again'),'flash_fail');
+      }
+	//$this->Auth->login($loginUser);
+       //debug($this->data);
           }
           
 }
