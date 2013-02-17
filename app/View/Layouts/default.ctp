@@ -168,11 +168,8 @@
                         <div role="main" id="main">
                                 <?php 
                                 
-                                $flashMessage =  $this->Session->flash(); 
-                                if($flashMessage){
-                                ?>
-                                <div class="alert alert-block alert-info"><?php echo $flashMessage; ?></div>
-                                <?php } ?>
+                               echo  $this->Session->flash(); 
+                               ?>
                                 <?php echo $this->fetch('content'); ?>
                         </div>
                         <hr>
