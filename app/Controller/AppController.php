@@ -87,9 +87,13 @@ class AppController extends Controller {
          *  Session Flash a message 
          * @param string $msg message to display
          */
-        function sFlash($msg) {
+        function sFlash($msg,$isError = false) {
+                $flashDoc = 'flash_success';
+                if($isError){
+                        $flashDoc = 'flash_fail';
+                }
 
-                $this->Session->setFlash($msg);
+                $this->Session->setFlash($msg,$flashDoc);
         }
 
 }

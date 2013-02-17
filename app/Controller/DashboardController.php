@@ -24,7 +24,7 @@ class DashboardController extends AppController{
                 
                 parent::beforeFilter();
                 $this->_setGPlusActivities();
-                $this->Auth->allow('index');
+                $this->Auth->allow('*');
                 
         }
         

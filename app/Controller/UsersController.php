@@ -28,6 +28,7 @@ class UsersController extends AppController {
         }
 
         public function logout() {
+                $this->sFlash('You have been logged out successfully');
                 $this->redirect($this->Auth->logout());
         }
 
@@ -192,39 +193,59 @@ class UsersController extends AppController {
         public function opauth_complete() {
 
                 $myData = $this->data;
-//                pr($myData);
-//                exit;
-//                //debug($this->data);
+                
+                    //debug($this->data);
+                if(!isset($myData['auth']) || !$myData['auth']){
+                        $this->sFlash("An error occurred. Unable to find the right credentials to authenticate you.",true);
+                        $this->redirect('/Users/login');
+                        return;
+                }
                 $auth = $myData['auth'];
                 
-
-                $data = array('User' => array(
-                        'name' => $auth['info']['name'],
-                        'image' => $auth['info']['image'],
-                        'username' => $auth['raw']['email'],
-                        'first_name' => $auth['info']['first_name'],
-                        'last_name' => $auth['info']['last_name'],
-                        'email' =>$auth['raw']['email'],
-                        'link' => $auth['raw']['link'],
-                        'gender' => $auth['raw']['gender'],
-                        'token' => $auth['credentials']['token'],
-                        'provider' => $auth['provider'],
-                        'password' =>  $auth['credentials']['token'],
-                    'raw_data' =>json_encode($auth)
-                    )
-                );
-                
+                switch($auth['provider']){
+                        
+                        case 'Twitter':
+                                $data = array('User' => array(
+                                        'name' => $auth['info']['name'],
+                                        'image' => $auth['info']['image'],
+                                        'username' => $auth['info']['nickname'].'_'.$auth['raw']['id'],
+                                        'name' => $auth['info']['name'],
+                                        'link' => $auth['info']['urls']['twitter'],
+                                        'token' => $auth['credentials']['token'],
+                                        'provider' => $auth['provider'],
+                                        'password' =>  $auth['credentials']['secret'],
+                                    'raw_data' =>json_encode($auth)
+                                    )
+                                );
+                                break;
+                        default:
+                                $data = array('User' => array(
+                                        'name' => $auth['info']['name'],
+                                        'image' => $auth['info']['image'],
+                                        'username' => $auth['raw']['email'],
+                                        'email' =>$auth['raw']['email'],
+                                        'link' => $auth['raw']['link'],
+                                        'gender' => $auth['raw']['gender'],
+                                        'token' => $auth['credentials']['token'],
+                                        'provider' => $auth['provider'],
+                                        'password' =>  $auth['credentials']['token'],
+                                    'raw_data' =>json_encode($auth)
+                                    )
+                                );
+                }
+//                exit;
+//            
                 
                 
                 $this->User->save($data);
                 $fields = null;
-                $conditions = array('User.email' => $auth['raw']['email']); //How does this work ?
+                $conditions = array('User.username' => $data['User']['username']); //How does this work ?
                 $loginUser = $this->User->find('first', compact('fields', 'conditions'));
 
                 if ($this->Auth->login($loginUser)) {
                         $this->redirect($this->Auth->redirect());
                 } else {
-                        $this->Session->setFlash(__('Invalid username or password, try again'), 'flash_fail');
+                        $this->Session->setFlash(__('Unable to find the right credentials'), 'flash_fail');
                 }
         }
 
