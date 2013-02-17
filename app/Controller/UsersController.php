@@ -47,7 +47,7 @@ class UsersController extends AppController {
 
                         if ($this->User->save($this->request->data)) {
                                 $this->Session->setFlash(__('The user has been saved'), 'flash_success');
-                                $this->redirect(array('controller' => 'pages', 'action' => 'home'));
+                                $this->redirect(array('controller' => 'Dashboard', 'action' => 'index'));
                         } else {
                                 # Create a loop with validation errors
                                 $this->Error->set($this->User->invalidFields());
@@ -192,49 +192,40 @@ class UsersController extends AppController {
         public function opauth_complete() {
 
                 $myData = $this->data;
-                //debug($this->data);
+//                pr($myData);
+//                exit;
+//                //debug($this->data);
                 $auth = $myData['auth'];
-                $info = array($auth['info']['name'],
-                    $auth['info']['image'],
-                    $auth['info']['first_name'],
-                    $auth['info']['last_name']);
-                $raw = array($auth['raw']['email'],
-                    $auth['raw']['link'],
-                    $auth['raw']['gender']);
-                $credential = array($auth['credentials']['token']);
-                $provider = array($auth['provider']);
-                //       echo "<pre>";
-//die(print_r($provider));
-//echo "</pre>";
+                
+
                 $data = array('User' => array(
-                        'name' => $info[0],
-                        'image' => $info[1],
-                        'username' => $info[0],
-                        'first_name' => $info[2],
-                        'last_name' => $info[3],
-                        'email' => $raw[0],
-                        'link' => $raw[1],
-                        'gender' => $raw[2],
-                        'token' => $credential[0],
-                        'provider' => $provider[0],
-                        'password' => $credential[0]
+                        'name' => $auth['info']['name'],
+                        'image' => $auth['info']['image'],
+                        'username' => $auth['raw']['email'],
+                        'first_name' => $auth['info']['first_name'],
+                        'last_name' => $auth['info']['last_name'],
+                        'email' =>$auth['raw']['email'],
+                        'link' => $auth['raw']['link'],
+                        'gender' => $auth['raw']['gender'],
+                        'token' => $auth['credentials']['token'],
+                        'provider' => $auth['provider'],
+                        'password' =>  $auth['credentials']['token'],
+                    'raw_data' =>json_encode($auth)
                     )
                 );
-//echo "<pre>";
-//die(print_r($data));
-//echo "</pre>";
+                
+                
+                
                 $this->User->save($data);
-                $loginUser = $this->User->find('first', array('fields' => array('User.username', 'User.password')));
-                //die(print_r($loginUser));
-                //$this->set('user',$loginUser);
-                //$this->Auth->login($loginUser);
+                $fields = null;
+                $conditions = array('User.email' => $auth['raw']['email']); //How does this work ?
+                $loginUser = $this->User->find('first', compact('fields', 'conditions'));
+
                 if ($this->Auth->login($loginUser)) {
                         $this->redirect($this->Auth->redirect());
                 } else {
                         $this->Session->setFlash(__('Invalid username or password, try again'), 'flash_fail');
                 }
-                //$this->Auth->login($loginUser);
-                //debug($this->data);
         }
 
 }

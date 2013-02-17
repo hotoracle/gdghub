@@ -120,12 +120,12 @@
                                                                 </ul>
                                                         </li>
                                                 </ul>  
-                                                <?php if (AuthComponent::user('id')) { ?>
+                                                <?php if (isset($_userInfo) && $_userInfo) { ?>
                                                         <ul class="nav pull-right">
                                                                 <li id="fat-menu" class="dropdown">
                                                                         <a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown">
                                                                                 <i class="icon-black icon-user"></i> 
-                                                                                <?php echo AuthComponent::user('username') ?> <b class="caret"></b></a>
+                                                                                <?php echo $_userInfo['User']['name'] ?> <b class="caret"></b></a>
                                                                         <ul class="dropdown-menu" role="menu" aria-labelledby="drop3">
                                                                                 <li>
                                                                                         <?php
@@ -231,6 +231,5 @@
                                         }
                                 }(document, "script", "twitter-wjs");</script>
                 <?php } ?>
-                <?php echo $this->element('sql_dump'); ?>
         </body>
 </html>
