@@ -1,5 +1,4 @@
 <?php
-date_default_timezone_set('Africa/Lagos');
 
 /**
  * This file is loaded automatically by the app/webroot/index.php file after core.php
@@ -148,15 +147,13 @@ Cache::config('default', array('engine' => 'File'));
 $baseUrl= isset($_SERVER['HTTP_HOST'])? $_SERVER['HTTP_HOST']:'hub.gdglagos.com';
 Configure::write(
         'Application', array(
-   'name' => '&#8747; dev',
-    'from_email' => 'hub@dev.org.ng',
-    'contact_mail' => 'hub@dev.org.ng',
+    'name' => '&#8747; dev',
+    'from_email' => 'hub@gdglagos.com',
+    'contact_mail' => 'hub@gdglagos.com',
             'base_url'=>"http://".$baseUrl,
             'gplus_page_id'=>'112227844855698647164'
         )
 );
-
-define('FORMAT_TIMESTAMP','Y-m-d H:i:s');
 
 /**
  * Choose your application theme
@@ -219,36 +216,27 @@ CakeLog::config('error', array(
     'file' => 'error',
 ));
 
- CakePlugin::load('Opauth', array('routes' => true, 'bootstrap' => true));
+CakePlugin::load('Opauth', array('routes' => true, 'bootstrap' => true));
 
-Configure::write('Opauth.path', '/gdghub/auth/');
+Configure::write('Opauth.path', '/auth/');
 
 Configure::write('Opauth.Strategy.Facebook', array(
-   'app_id' => 'YOUR FACEBOOK APP ID',
-      'app_secret' => 'YOUR FACEBOOK APP SECRET'
+   'app_id' => '141716812655517',
+      'app_secret' => 'f6dea36626b6cc634745a8795a013271',
+	'scope' => 'email'
       ));
       
 Configure::write('Opauth.Strategy.Google', array(
-   'client_id' => 'YOUR FACEBOOK APP ID',
-      'client_secret' => 'YOUR FACEBOOK APP SECRET'
+   'client_id' => '354523643987.apps.googleusercontent.com',
+      'client_secret' => 'bcFKod_vgjuA4F_AiZlplaIy'
       ));
       
-Configure::write('Opauth.Strategy.LInkedIn', array(
-   'app_id' => 'YOUR FACEBOOK APP ID',
-      'app_secret' => 'YOUR FACEBOOK APP SECRET'
+Configure::write('Opauth.Strategy.LinkedIn', array(
+   'api_key' => 'zvlq5i0xpc72',
+      'secret_key' => 'UbVrfWCPpuIK3dCz'
       ));
 
 Configure::write('Opauth.Strategy.Twitter', array(
-   'key' => 'YOUR FACEBOOK APP ID',
-      'secret' => 'YOUR FACEBOOK APP SECRET'
+   'key' => 'gNPRuxWB7Tg8DhuoZBuQ',
+      'secret' => 'p7xZPFcUk29OvwZyUAFRuNnNlHPNMpcT4SCqknsDiA'
       ));
- /**
- * Shortcut to Configure::read function
- * @param string $key
- * @return mixed
- */
-function cRead($key){
-        
-        return Configure::read($key);
-}
- 
