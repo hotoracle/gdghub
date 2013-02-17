@@ -35,8 +35,8 @@ class AppController extends Controller {
 
 
 
-        public $components = array('Auth', 'Session', 'Error','FormValidator');
-        public $_thisUserId = 1; //In Dev mode, once auth is sorted, this should be set in the code
+        public $components = array('Auth', 'Session', 'Error','FormValidator','RequestHandler');
+        public $_thisUserId = 'cdf2310c-7611-11e2-8eec-17ba60b0528a'; //In Dev mode, once auth is sorted, this should be set in the code
 
         public function beforeFilter() {
                 $this->Auth->authenticate = array('Form');
@@ -71,6 +71,16 @@ class AppController extends Controller {
                 $this->Session->setFlash($msg);
                 
                 $this->redirect($url);
+                
+        }
+        /**
+         *  Session Flash a message 
+         * @param string $msg message to display
+         */
+        
+        function sFlash($msg){
+                
+                $this->Session->setFlash($msg);
                 
         }
         

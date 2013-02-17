@@ -7,18 +7,18 @@
  */
 App::uses('Component', 'Controller');
 
-define('FV_REQUIRED','required');
-define('FV_EMAIL','email');
-define('FV_EMPTY_OR_EMAIL','empty_or_email');
-define('FV_DATE','date');
-define('FV_NUMERIC','numeric');
-define('FV_ALPHANUMERIC','alphanum');
-define('FV_DOUBLE','double');
-define('FV_ALPHA','alpha');
-define('FV_RANGE','range');
-define('FV_MIN_LENGTH','minlength');
-define('FV_MAX_LENGTH','maxlength');
-define('FV_URL','website');
+define('FV_REQUIRED', 'required');
+define('FV_EMAIL', 'email');
+define('FV_EMPTY_OR_EMAIL', 'empty_or_email');
+define('FV_DATE', 'date');
+define('FV_NUMERIC', 'numeric');
+define('FV_ALPHANUMERIC', 'alphanum');
+define('FV_DOUBLE', 'double');
+define('FV_ALPHA', 'alpha');
+define('FV_RANGE', 'range');
+define('FV_MIN_LENGTH', 'minlength');
+define('FV_MAX_LENGTH', 'maxlength');
+define('FV_URL', 'website');
 
 class FormValidatorComponent extends Component {
 

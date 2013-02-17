@@ -1,5 +1,6 @@
 body{
         font-weight:200;
+        padding-bottom: 40px;
 }
 .center{
         text-align: center;
@@ -102,7 +103,7 @@ a:focus{
 }
 
 .shadowed{
-       box-shadow: 1px 1px 2px #eee;
+        box-shadow: 1px 1px 2px #eee;
 }
 
 .topPlusOne{
@@ -126,7 +127,7 @@ footer{
 }
 .index{
         color:#555;
-        
+
 }
 
 label{
@@ -138,4 +139,207 @@ label{
 }
 .fullWidth input[type="submit"]{
         width:auto;
+}
+
+h1.questionTitle{
+        font-size:22px;
+        text-shadow: 1px 1px 1px #ccc;         
+
+}
+
+#main{
+        min-height:500px;
+}
+
+.badge{
+        font-weight:200;
+}
+.floatRight{
+        float:right;
+}
+
+.posterInfo{
+        margin:10px 5px;
+        text-align: right;
+        background:#ffFFEE;
+        padding:3px 3px 4px 8px;
+        border-radius: 2px;
+        border:1px solid #ddd;
+        box-shadow: 1px 1px 2px #eee;
+        font-size:0.9em;
+}
+.posterInfo a:hover{
+        text-decoration: none;       
+}
+
+.gravatar-small{
+        margin:0px 0px 0px 6px ;
+        box-shadow: 1px 1px 2px #eee;
+
+}
+.clear{
+        clear:both;
+}
+
+.badge {
+        margin-right:3px;
+        border-radius: 3px;
+}
+.badge a:link{
+        color:#fff;
+
+}
+
+.nearFull{
+        width:90%;
+}
+
+.dotBordered{
+        border:1px dotted #ccc;
+}
+
+.alignRight{
+        text-align:right;
+}
+
+.alignCenter{
+        text-align: center;
+}
+.directCommentsBody{
+        padding:8px;
+        font-size:13px;
+}
+
+.directComments h4{
+        font-size:13px;
+        background:#eee;
+        padding:2px 4px;
+        line-height: 1em; 
+        margin:0px;
+}
+
+.votingOptions{
+        float:left;
+        width:75px;
+        height:120px;
+        border:1px solid #ccc;
+        margin-right:8px;
+        margin-bottom:8px;
+        display:none;
+}
+
+.postedAnswers .postedAnswer:nth-of-type(even), .postedQuestions .postedQuestion:nth-of-type(even) {
+        background:#f9f9f9;  
+}
+
+.postedAnswer{
+
+        padding-bottom:16px;
+        margin:6px 0px 6px 10px;
+}
+
+.postedQuestion{
+        padding:4px;
+        padding-bottom:16px;
+        margin:6px 0px 6px 10px;
+        border:1px solid #eee;
+        
+}
+.postedQuestion .questionTitle{
+        font-weight:500;
+        font-size:1.1em;
+        display:block;
+}
+
+
+
+.answersHeader{
+        background:#666;
+        padding:3px;
+        color:#fff;
+        font-weight:500;
+        text-shadow: 1px 1px 2px #000;
+        box-shadow: 1px 1px 1px #000;
+
+}
+.answerForm{
+        margin:6px 0px 6px 10px;
+
+}
+.answerForm textarea{
+        width:96%;
+        height:200px;
+        font-weight:200;
+}
+.answerForm label{
+        font-weight:bold;
+}
+.tags{
+        padding:6px 0px;
+}
+@media(max-width:500px){
+        .nearFull{
+                width:auto;
+        }
+
+
+}
+
+.custom-width-modal{
+        width: 900px; /* SET THE WIDTH OF THE MODAL */
+        margin: -250px 0 0 -450px; /* CHANGE MARGINS TO ACCOMODATE THE NEW WIDTH (original = margin: -250px 0 0 -280px;) */
+}
+
+h3 span{
+        color:#006dcc;
+}
+
+.minH600{
+        min-height: 600px;
+}
+
+.qCount{
+        font-size:0.8em;
+        color:#999;
+}
+
+.smaller{
+        font-size:0.9em;
+}
+
+.miniPosted{
+        color:#999;
+        border:1px solid #ccc;
+        padding:2px 5px;
+}
+
+.badge a:link,.badge a:visited{
+        color:#fff;
+}
+.pagination span.disabled{
+        display:none;
+}
+
+.strong{
+        font-weight:bold;
+}
+input.searchBox{
+        width:120px;
+        height:20px;
+        padding:1px 2px;
+        margin-top:8px;
+        
+}
+input.searchBox:focus{
+        width:200px;
+}        
+
+.questionPanel{
+}
+.questionH1{
+        line-height: 1em;
+        margin-top:0;
+        margin-bottom:20px;
+        font-size:32px;
+        text-shadow: 1px 1px 2px #ccc;
 }
