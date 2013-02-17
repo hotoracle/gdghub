@@ -253,7 +253,7 @@ Configure::write('Opauth.Strategy.Twitter', array(
     'secret' => 'p7xZPFcUk29OvwZyUAFRuNnNlHPNMpcT4SCqknsDiA'
 ));
 
-CakePlugin::load('DebugKit');
+//CakePlugin::load('DebugKit');
 /**
  * Shortcut to Configure::read function
  * @param string $key
