@@ -246,3 +246,13 @@ Configure::write('Opauth.Strategy.Twitter', array(
    'key' => 'gNPRuxWB7Tg8DhuoZBuQ',
       'secret' => 'p7xZPFcUk29OvwZyUAFRuNnNlHPNMpcT4SCqknsDiA'
       ));
+
+ /**
+ * Shortcut to Configure::read function
+ * @param string $key
+ * @return mixed
+ */
+function cRead($key){
+        
+        return Configure::read($key);
+}
