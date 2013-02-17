@@ -12,6 +12,6 @@
         if(!isset($noPhoto) || (isset($noPhoto) && $noPhoto==false)){
                 echo $this->Html->image('gravatar.gif',array('width'=>64,'alt'=>$user['name'],'align'=>'right','class'=>'gravatar-small')); 
         }
-        echo $user['full_name']; ?>
+        echo $user['name']; ?>
 </a>
         
