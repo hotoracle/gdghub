@@ -18,7 +18,7 @@ class QvHelper extends AppHelper {
                 return date('h:ia l F jS, Y', $t);
         }
 
-        function shortenText($text,$maxLength=150){
+        function shortenText($text,$maxLength=350){
                 
                 $text = strip_tags($text);
                 $text = substr($text,0,$maxLength);

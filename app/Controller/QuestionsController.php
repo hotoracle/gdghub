@@ -30,7 +30,7 @@ class QuestionsController extends AppController {
                 
                 
                 switch($sortBy){
-                        case 'new':
+                        case 'newest':
                                 $orderBy = array('Question.created'=>'DESC');//Is this the best ?
                                 break;
                         default:
@@ -42,8 +42,51 @@ class QuestionsController extends AppController {
                     'Question.published'=>1
                 );
                 
+                if(isset($this->params['named'])){
+                        
+                        $namedParams = $this->params['named'];
+                        
+                        $tagId = isset($namedParams['tag'])? $namedParams['tag']+0:false;//+0 to force to numeric
+                        
+                        if($tagId){
+                                
+                                $conditions[] = "Question.id IN (SELECT question_id FROM questions_tags WHERE tag_id='$tagId')";
+                                
+                        }
+                        
+                }
+                
+                if(!empty($this->data) && isset($this->data['Search']['keywords'])){
+                       
+                        $keywords = $this->data['Search']['keywords'];
+                        
+                        App::uses('Sanitize', 'Utility');
+                        $keywords = Sanitize::paranoid($keywords, array(' '));
+                        $keywords = explode(' ',$keywords);
+                        $usableKeywords = false;
+                        //This is the temporary search process.
+                        //@TODO Change to a cool search feature
+                        foreach($keywords as $keyword){
+                                
+                                $keyword = trim($keyword);
+                                if(strlen($keyword)< 3) {
+                                        $this->sFlash('');
+                                        continue;
+                                }
+                                $usableKeywords = true;
+                                $conditions[]="( Question.name LIKE '%$keyword%' OR Question.description LIKE '%$keyword%') "; 
+                        }
+                        
+                        if(!$usableKeywords){
+                                $this->sFlash('Please use longer words for your search criteria');
+                        }
+                        
+                }
+                
+                
                 $this->paginate = array('Question'=>array(
-                    'order'=>$orderBy
+                    'order'=>$orderBy,
+                    'limit'=>25,
                         )
                 );
                 
@@ -272,4 +315,10 @@ class QuestionsController extends AppController {
                 $this->set(compact('questionId', 'questionSlug', 'question'));
 
         }
+        
+        
+        public function browseByTag($tagId=0) {
+                
+        }
+        
 }

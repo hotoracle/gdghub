@@ -306,3 +306,40 @@ h3 span{
 .smaller{
         font-size:0.9em;
 }
+
+.miniPosted{
+        color:#999;
+        border:1px solid #ccc;
+        padding:2px 5px;
+}
+
+.badge a:link,.badge a:visited{
+        color:#fff;
+}
+.pagination span.disabled{
+        display:none;
+}
+
+.strong{
+        font-weight:bold;
+}
+input.searchBox{
+        width:120px;
+        height:20px;
+        padding:1px 2px;
+        margin-top:8px;
+        
+}
+input.searchBox:focus{
+        width:200px;
+}        
+
+.questionPanel{
+}
+.questionH1{
+        line-height: 1em;
+        margin-top:0;
+        margin-bottom:20px;
+        font-size:32px;
+        text-shadow: 1px 1px 2px #ccc;
+}

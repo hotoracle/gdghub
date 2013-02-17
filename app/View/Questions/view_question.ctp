@@ -19,11 +19,11 @@ $isAnswerable = ($question['Question']['flag'] == 0);
                         </div>
                         <hr />
                         <div class="tags">
-                        Tags: <?php foreach ($questionTags as $tag) { ?>
-                                <span class="badge badge-success">
-                                        <?php echo $this->Html->link($tag['Tag']['name'], "browseByTag/{$tag['Tag']['id']}"); ?>
-                                </span>
-                        <?php } ?>
+                                Tags: <?php foreach ($questionTags as $tag) { ?>
+                                        <span class="badge badge-success">
+                                                <?php echo $this->Html->link($tag['Tag']['name'], "index/tag:{$tag['Tag']['id']}"); ?>
+                                        </span>
+                                <?php } ?>
                         </div>
                         <div class="clear"></div>
                         <?php echo $this->element('questions/comments', array('comments' => $directComments)); ?>
@@ -32,7 +32,8 @@ $isAnswerable = ($question['Question']['flag'] == 0);
                                 &nbsp;
 
                                 <div class="alignRight">
-                                        <?php echo $this->Html->link('Post Comment', "#", array('class' => 'btn btn-mini btn-primary','data-toggle'=>'modal','data-target'=>'#myModal','data-remote'=>$this->Html->url("postComment/$questionId/$questionSlug"))); ?> | 
+                                        <?php echo $this->Html->link('Share', "#",array('class'=> 'btn btn-mini')); ?> | 
+                                        <?php echo $this->Html->link('Post Comment', "#", array('class' => 'btn btn-mini btn-primary', 'data-toggle' => 'modal', 'data-target' => '#myModal', 'data-remote' => $this->Html->url("postComment/$questionId/$questionSlug"))); ?> | 
                                         <?php echo $this->Html->link('Post Answer', '#postAnswer', array('class' => 'btn btn-mini btn-success')); ?>
                                 </div>
                         <?php } ?>
@@ -43,7 +44,8 @@ $isAnswerable = ($question['Question']['flag'] == 0);
                         if ($postedAnswers) {
                                 ?>
                                 <div class="">
-                                        <?php foreach ($postedAnswers as $postedAnswer) {
+                                        <?php
+                                        foreach ($postedAnswers as $postedAnswer) {
                                                 $answerId = $postedAnswer['QuestionComment']['id'];
                                                 ?>
                                                 <a name="<?php echo md5($answerId); ?>"></a>
@@ -69,8 +71,9 @@ $isAnswerable = ($question['Question']['flag'] == 0);
                                                                 &nbsp;
 
                                                                 <div class="alignRight">
+
                                                                         
-                                                                        <?php echo $this->Html->link('Post Comment', "#", array('class' => 'btn btn-mini btn-primary','data-toggle'=>'modal','data-target'=>'#myModal','data-remote'=>$this->Html->url("postComment/$questionId/$questionSlug/$answerId"))); ?> | 
+                                                                        <?php echo $this->Html->link('Post Comment', "#", array('class' => 'btn btn-mini btn-primary', 'data-toggle' => 'modal', 'data-target' => '#myModal', 'data-remote' => $this->Html->url("postComment/$questionId/$questionSlug/$answerId"))); ?> | 
                                                                         <?php echo $this->Html->link('Post Answer', '#postAnswer', array('class' => 'btn btn-mini btn-success')); ?>
                                                                 </div>
                                                         <?php } ?>
@@ -80,10 +83,9 @@ $isAnswerable = ($question['Question']['flag'] == 0);
                                 </div>
                         <?php } ?>
                 </div>
-                <?php if ($isAnswerable) { //still open for replies ?>
+                <?php if ($isAnswerable) { //still open for replies  ?>
                         <a name="postAnswer"></a>
                         <?php echo $this->element('questions/response_form'); ?>
-                       
                 <?php } ?>
 
         </div>
