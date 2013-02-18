@@ -35,7 +35,7 @@ class Question extends AppModel {
                 'className' => 'User',
                 'foreignKey' => 'user_id',
                 'conditions' => '',
-                'fields' => array('User.id','User.name','User.photo_url'),
+                'fields' => array('User.id','User.name','User.image'),
                 'order' => ''
             )
         );
