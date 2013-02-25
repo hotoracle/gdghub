@@ -32,6 +32,7 @@
                 <?php echo $this->Html->css('bootstrap-responsive.min') ?>
                 <?php //echo $this->Html->css('font-awesome.min') ?>
                 <?php echo $this->Html->css('style') ?>
+  
 
                 <?php
                 if (is_file(WWW_ROOT . 'css' . DS . $this->params->controller . '.css')) {
@@ -44,6 +45,7 @@
 
 
                 <?php echo $this->Html->script('lib/modernizr') ?>
+                
         </head>
         <body>
                 <!--[if lt IE 7]>

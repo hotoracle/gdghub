@@ -12,7 +12,18 @@ $isAnswerable = ($question['Question']['flag'] == 0);
                         <h1 class="questionTitle">
                                 <?php echo $question['Question']['name']; ?>
                         </h1>
-                        <?php echo $question['Question']['description']; ?>
+                      
+  <?php 
+  
+      $fullDescription = $question['Question']['description']; 
+//echo highlight_string($fullDescription);
+
+      echo $this->Qv->highlight($fullDescription);
+  
+  ?>
+                      
+                      
+                      
                         <div class="floatRight posterInfo">
                                 <?php echo $this->element('user/basic', array('user' => $question['User'])); ?>
                                 <br />Asked @ <?php echo $this->Qv->longTime($question['Question']['created']); ?>
@@ -101,3 +112,5 @@ $isAnswerable = ($question['Question']['flag'] == 0);
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
         </div>
 </div>
+
+<?php echo $this->element('syntax_highlighter'); ?>
