@@ -73,8 +73,8 @@ This is test code outside php
                         
                         var preCodeTag = postCodeTag = '';
                         if (selectedCodeType) {
-                              preCodeTag = '\n[code_' + selectedCodeType + '_code]\n';
-                              postCodeTag = '\n[/code_' + selectedCodeType + '_code]\n';
+                              preCodeTag = '\n<srccode type="' + selectedCodeType + '">\n';
+                              postCodeTag = '\n</srccode>\n';
                         }
                         var completeCode = preCodeTag + enteredCode + postCodeTag;
                         

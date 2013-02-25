@@ -98,7 +98,6 @@ $isAnswerable = ($question['Question']['flag'] == 0);
                         <a name="postAnswer"></a>
                         <?php echo $this->element('questions/response_form'); ?>
                 <?php } ?>
-
         </div>
 </div>
 <div class="modal hide custom-width-modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
