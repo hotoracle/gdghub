@@ -39,12 +39,15 @@ $isAnswerable = ($question['Question']['flag'] == 0);
                   <div class="clear"></div>
 <?php echo $this->element('questions/comments', array('comments' => $directComments)); ?>
                   <div class="clear"></div>
-                  <?php if ($isAnswerable) { ?>
+                  
                         &nbsp;
 
                         <div class="alignRight">
-      <?php echo $this->Html->link('Share', "#", array('class' => 'btn btn-mini')); ?> | 
+      <?php echo $this->Html->link('Share', "#", array('class' => 'btn btn-mini')); ?>
                               <?php
+                              if($isAnswerable){
+                                    ?>
+                                         |   <?php
                               if ($_userInfo) {
                                     echo $this->Html->link('Post Comment', "#", array('class' => 'btn btn-mini btn-primary', 'data-toggle' => 'modal', 'data-target' => '#myCommentModal', 'data-remote' => $this->Html->url("postComment/$questionId/$questionSlug")));
                               } else {
