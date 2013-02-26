@@ -69,7 +69,7 @@ if ($postedAnswers) {
                                     <div class="postedAnswer bordered">
                                           <div class="votingOptions">
             <?php
-            echo $this->Html->link('Vote Up',"voteForAnswer/$questionId/$questionSlug/$answerId/1",array('class'=>'block')); 
+            echo $this->Html->link('Vote Up',"voteForAnswer/$questionId/$questionSlug/$answerId/1",array('class'=>'block','title'=>'This answer is  useful','class'=>'block','data-toggle'=>'tooltip')); 
             
             if($isAnswerable){
                   if ($_thisUserId == $question['Question']['user_id']) {
@@ -82,7 +82,7 @@ if ($postedAnswers) {
                   <?php
                   }
             }
-      echo $this->Html->link('Vote Down',"voteForAnswer/$questionId/$questionSlug/$answerId/0",array('title'=>'This answer is useful','class'=>'block')); 
+      echo $this->Html->link('Vote Down',"voteForAnswer/$questionId/$questionSlug/$answerId/0",array('title'=>'This answer is not useful','class'=>'block','data-toggle'=>'tooltip')); 
 
             ?>
                                           </div>

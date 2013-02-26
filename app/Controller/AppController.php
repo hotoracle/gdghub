@@ -77,9 +77,12 @@ class AppController extends Controller {
          * @param string $msg message to display
          * @param string $url to redirect to
          */
-        function miniFlash($msg, $url) {
-
-                $this->Session->setFlash($msg);
+        function miniFlash($msg, $url,$isSuccess=false) {
+                  $flashDoc = 'flash';
+                if($isSuccess){
+                        $flashDoc = 'flash_success';
+                }
+                $this->Session->setFlash($msg,$flashDoc);
 
                 $this->redirect($url);
         }
