@@ -71,8 +71,12 @@ if ($postedAnswers) {
             <?php
             echo $this->Html->link('Vote Up',"voteForAnswer/$questionId/$questionSlug/$answerId/1",array('class'=>'block','title'=>'This answer is  useful','class'=>'block','data-toggle'=>'tooltip')); 
             
-            if($isAnswerable){
+            echo '<span class="answerVoteCount">'.($postedAnswer['QuestionComment']['vote_ups'] - $postedAnswer['QuestionComment']['vote_downs']).'</span>';
+            
+      echo $this->Html->link('Vote Down',"voteForAnswer/$questionId/$questionSlug/$answerId/0",array('title'=>'This answer is not useful','class'=>'block','data-toggle'=>'tooltip')); 
+if($isAnswerable){
                   if ($_thisUserId == $question['Question']['user_id']) {
+                        echo '<hr />';
                         echo $this->Html->link('Choose as Best Answer', "chooseAnswer/{$questionId}/{$questionSlug}/$answerId", array('class' => 'btn btn-mini btn-success','data-toggle'=>'tooltip','title'=>'As the owner of this question, you can choose which is the best clue or solution among the ones submitted'));
                   }
             }else{
@@ -82,8 +86,6 @@ if ($postedAnswers) {
                   <?php
                   }
             }
-      echo $this->Html->link('Vote Down',"voteForAnswer/$questionId/$questionSlug/$answerId/0",array('title'=>'This answer is not useful','class'=>'block','data-toggle'=>'tooltip')); 
-
             ?>
                                           </div>
                                                 <?php

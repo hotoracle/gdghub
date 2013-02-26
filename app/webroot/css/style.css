@@ -227,6 +227,12 @@ h1.questionTitle{
         text-align:center;
  
 }
+.votingOptions .answerVoteCount{
+       display:block;
+      padding:15px;
+       font-size:25px;
+ font-weight:bold;
+}
 
 .postedAnswers .postedAnswer:nth-of-type(even), .postedQuestions .postedQuestion:nth-of-type(even) {
         background:#f9f9f9;  

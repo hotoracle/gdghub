@@ -47,7 +47,7 @@ class QcVote extends AppModel {
             $data['vote_type'] = $voteFlag;
             
             $this->create($data);
-            return $this->save($data);
-            
+            $this->save($data);
+            return true;
       }
 }
