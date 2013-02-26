@@ -7,7 +7,7 @@
  */
 class QuestionsController extends AppController {
 
-      public $uses = array('Question', 'QcVote', 'QuestionComment', 'QTag', 'Tag');
+      public $uses = array('Question', 'QcVote', 'QuestionComment', 'QTag', 'Tag','OutgoingMessage');
       public $helpers = array('Qv');
 
       /**
@@ -227,6 +227,7 @@ class QuestionsController extends AppController {
       }
 
       public function postResponse($questionId, $questionSlug) {
+            
             $question = $this->_getQuestion($questionId);
             if ($question['Question']['flag'] != 0) {
                   $this->miniFlash('This question is no longer open for comments or answers', "viewQuestion/$questionId/$questionSlug");
@@ -255,6 +256,23 @@ class QuestionsController extends AppController {
 
                   if ($this->QuestionComment->addComment($dbData)) {
                         $hash = md5($this->QuestionComment->id);
+                        
+                        $comment = $this->QuestionComment->read(null,$this->QuestionComment->id);
+                        $recipients = array($question['User']['email']);
+                        
+                        $notificationData = array(
+                           'subject'=>'New Answer Posted to '.$question['Question']['name'],
+                            'variables'=>array( //Isn't it better to store ids?
+                                'question'=>$question,
+                                'comment'=>$comment
+                            ),
+                            'recipients'=>$recipients,
+                            'created_by'=>$this->_thisUserId,
+                            'email_template'=>'question_answer_posted'
+                        );
+                        
+                        $this->OutgoingMessage->addMessage($notificationData);
+                        
                         $this->miniFlash("Posted successfully", "viewQuestion/$questionId/$questionSlug/#{$hash}");
                   } else {
                         $this->sFlash("An unexpected errror occurred. Please try again later");
@@ -357,5 +375,7 @@ class QuestionsController extends AppController {
             $this->miniFlash("Your vote has been cast successfully.", "viewQuestion/$questionId/$questionSlug", true);
       }
 
+      
+      
 }
 
