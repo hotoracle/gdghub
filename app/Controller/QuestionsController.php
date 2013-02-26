@@ -16,7 +16,8 @@ class QuestionsController extends AppController {
          */
         function beforeFilter() {
                 parent::beforeFilter();
-                $this->Auth->allow('*');
+                $this->Auth->allow(array('index','viewQuestion'));
+                $this->Auth->deny(array('ask'));
         }
 
         /**
@@ -195,7 +196,7 @@ class QuestionsController extends AppController {
 
                 $question = $this->_getQuestion($questionId);
                 $questionTags = $this->QTag->questionTags($questionId);
-
+                
                 $directComments = $this->QuestionComment->getDirectComments($questionId);
 
                 $postedAnswers = $this->QuestionComment->getPostedAnswers($questionId);
@@ -216,10 +217,14 @@ class QuestionsController extends AppController {
 
                 $this->set(compact('questionId', 'questionSlug', 'question', 'questionTags', 'directComments', 'postedAnswers', 'postedComments'));
 
-
+               if(!$this->_thisUserId) return;
                 if ($question['Question']['flag'] == 0) {
                         $this->postResponse($questionId, $questionSlug); //To set values into form
                 }
+                $highlighterSettings = cRead('syntaxHighlighter');
+                $this->set('codeTypes',$highlighterSettings['supportedTypes'] );
+              
+                
         }
 
         public function postResponse($questionId, $questionSlug) {
@@ -310,4 +315,29 @@ class QuestionsController extends AppController {
                 $this->set(compact('questionId', 'questionSlug', 'question'));
         }
 
+      public function chooseAnswer($questionId, $questionSlug, $relCommentId = 0) {
+                $question = $this->_getQuestion($questionId);
+                
+                if($this->_thisUserId!=$question['Question']['user_id']){
+                        $this->miniFlash("I'm not sure this question belongs to you :( - so you cannot choose the answer", "viewQuestion/$questionId/$questionSlug");
+                }
+                
+                if ($question['Question']['flag'] != 0) {
+                        $this->miniFlash('This question is no longer open for comments or answers or choices', "viewQuestion/$questionId/$questionSlug");
+                }
+                if(!$this->QuestionComment->exists($relCommentId)){
+                        $this->miniFlash('Invalid answer selected', "viewQuestion/$questionId/$questionSlug");
+                }
+                
+                $this->QuestionComment->setAsAnswer($relCommentId);
+                $this->Question->setAsAnswered($questionId);
+                $this->miniFlash('You have selected an answer. Thank you', "viewQuestion/$questionId/$questionSlug");
+      }
+
+      
+      public function voteForAnswer() {
+
+      }
+      
 }
+

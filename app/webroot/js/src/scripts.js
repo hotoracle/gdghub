@@ -70,3 +70,34 @@ function insertAtCaret(areaId, text) {
       }
       txtarea.scrollTop = scrollPos;
 }
+
+ function insertCode(targetId) {
+
+      var enteredCode = $('#codeEditor').val();
+      
+      var selectedCodeType = $('#selCodeType').val();
+
+      $('#codeEditor').val('');
+
+      $('#selCodeType').val('');
+
+
+      var preCodeTag = postCodeTag = '';
+      if (selectedCodeType) {
+            preCodeTag = '\n<srccode type="' + selectedCodeType + '">\n';
+            postCodeTag = '\n</srccode>\n';
+      }
+      var completeCode = preCodeTag + enteredCode + postCodeTag;
+
+ 
+      try {
+            insertAtCaret(targetId, completeCode);
+      } catch (e) {
+            var currentText = $('#'+targetId).val();
+            $('#'+targetId).val(currentText + completeCode);
+            
+      }
+      $('#myModal').modal('hide');
+
+
+}

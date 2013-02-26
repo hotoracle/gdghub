@@ -1,4 +1,6 @@
+<!--
 <?php
+
 echo $this->Form->create
         (
         'User', array
@@ -21,35 +23,12 @@ echo $this->Form->create
 echo $this->Form->input('username', array('placeholder' => __('Username'), 'class' => 'span12'));
 echo $this->Form->input('password', array('placeholder' => __('Password'), 'type' => 'password', 'class' => 'span12'));
 ?> 
+
 <div class="control-group">
         <div class="controls">
                 <button type="submit" class="btn btn-success"><i class="icon-play-circle icon-white"></i> Login</button>      
         </div>
 </div>
-
-<div class="control-group">
-        <a class="btn btn-primary" href="<?php echo $this->Html->url('/auth/facebook'); ?>">
-                <i class="icon-facebook"></i>Login With Facebook
-        </a>
-</div>
-<div class="control-group">
-        <a class="btn btn-danger" href="<?php echo $this->Html->url('/auth/google'); ?>">
-                <i class="icon-google-plus"></i>Login With Google
-        </a>
-</div>
-<div class="control-group">
-        <a class="btn btn-info" href="<?php echo $this->Html->url('/auth/twitter'); ?>">
-                <i class="icon-twitter"></i>Login With Twitter
-        </a>
-</div>
-<div class="control-group">
-        <a class="btn btn-info" href="<?php echo $this->Html->url('/auth/linkedin'); ?>">
-                <i class="icon-linkedin"></i>Login With LinkedIn
-        </a>
-</div>
-
-
-
 <div class="control-group">
         <div class="controls">
                 <span><?php echo __('Forgot your password?') ?><br/> <?php echo $this->Html->link(__('Remember my password'), array('controller' => 'users', 'action' => 'remember_password')) ?></span>
@@ -58,6 +37,28 @@ echo $this->Form->input('password', array('placeholder' => __('Password'), 'type
         <div class="<?php echo $this->action == 'register' ? 'active' : ''; ?>">
 <?php echo $this->Html->link(__('Register'), array('controller' => 'users', 'action' => 'register')) ?>
         </div>
-
 </div> 
 </form>
+-->
+<div class="well">
+<div class="control-group">
+        <a class="btn btn-primary" href="<?php echo $this->Html->url('/auth/facebook'); ?>">
+                <i class="icon-facebook"></i> Login With Facebook
+        </a>
+</div>
+<div class="control-group">
+        <a class="btn btn-danger" href="<?php echo $this->Html->url('/auth/google'); ?>">
+                <i class="icon-google-plus"></i> Login With Google
+        </a>
+</div>
+<div class="control-group">
+        <a class="btn btn-info" href="<?php echo $this->Html->url('/auth/twitter'); ?>">
+                <i class="icon-twitter"></i> Login With Twitter
+        </a>
+</div>
+<div class="control-group">
+        <a class="btn btn-info" href="<?php echo $this->Html->url('/auth/linkedin'); ?>">
+                <i class="icon-linkedin"></i> Login With LinkedIn
+        </a>
+</div>
+</div>

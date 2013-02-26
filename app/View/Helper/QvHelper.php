@@ -62,5 +62,17 @@ function highlightSnippets($element) {
                 "</pre>"
             );
             $element->outertext = join("\n", $parts);
+      }elseif($element->tag=='img'){ 
+            //prevent people just placing images and scripts need to go too!
+            if(isset($element->src)){
+                  $element->outertext = "[img]".$element->src."[/img]";
+            }
+      }elseif($element->tag=='script'){ 
+            //prevent people just placing images and scripts need to go too!
+            
+            $element->outertext = "[script]".htmlentities($element->innertext)."[/script]";
+            
+      }elseif($element->tag!='text'){
+            $element->outertext = '['.$element->tag.']'.($element->innertext).'[/'.$element->tag.']';
       }
 }

@@ -164,4 +164,13 @@ class QuestionComment extends AppModel {
                 return $this->save($commentData);
                 
         }
+        function setAsAnswer($commentId){
+              
+              $data = array('accepted_answer'=>1);
+              $this->id = $commentId;
+              $this->save($data);
+              
+              
+              
+        }
 }
