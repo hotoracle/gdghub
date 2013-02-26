@@ -20,6 +20,11 @@
         </form>
 </p>
 </div>
+<div class="bordered alignCenter" id="sideAskQuestion">
+      <p class="lead"><a href="<?php echo $this->Html->url('/Questions'); ?>">Do you have a question?<br />Get answers from Experts in the Community.</a></p>
+      
+</div>
+
 <div id="gplusActivities" class="bordered">
         <div class="center">
 <g:plus href="https://plus.google.com/112227844855698647164" ></g:plus>

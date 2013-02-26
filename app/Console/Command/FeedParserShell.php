@@ -28,18 +28,23 @@ class FeedParserShell extends AppShell {
                      }
 //                     break;
                 }
-                if(!$freshArticles) return;
+                if(!$freshArticles) {
+                      echo "No fresh articles";
+                      return;
+                }
+                
+                echo "Found fresh articles: ".count($freshArticles);
                 
                 App::uses('CakeEmail', 'Network/Email');
                 $now = date('M d h:i:sa');
                 $email = new CakeEmail('default');
                 $email->viewVars(array('freshArticles'=>$freshArticles));
                 $email->helpers(array('Html','Text'));
-                $email->template('require_approval', 'default')
+                $result = $email->template('require_approval', 'default')
                 ->emailFormat('html')
                 ->from('tasks@gdglagos.com')
                 ->subject("New Articles - Approval Required @ $now")
-                ->to('dftaiwo@gmail.com')
+                ->to('dev@gdglagos.com')
                 ->send();
                 
         }

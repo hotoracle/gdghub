@@ -59,7 +59,7 @@ class DashboardController extends AppController{
                 $now = time();
                 if($gplusActivity){
                         $storedAt  = $this->Session->read('page_gplus_stored');
-                        if($storedAt+600<$now){
+                        if($storedAt+900<$now){
                                 $gplusActivity=false;
                         }
                 }
