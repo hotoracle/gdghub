@@ -253,6 +253,42 @@ Configure::write('Opauth.Strategy.Twitter', array(
     'secret' => 'p7xZPFcUk29OvwZyUAFRuNnNlHPNMpcT4SCqknsDiA'
 ));
 
+
+
+Configure::write('syntaxHighlighter',
+array(
+          'tag'=>'srccode',
+          'supportedTypes'=>  array( 
+          'as3' => 'ActionScript3',
+            'bash' => 'Bash/shell',
+            'cf' => 'ColdFusion',
+            'c-sharp' => 'C#',
+            'cpp' => 'C++',
+            'css' => 'CSS',
+            'delphi' => 'Delphi',
+            'diff' => 'Diff',
+            'erl' => 'Erlang',
+            'groovy' => 'Groovy',
+            'xml'=>'HTML',
+            'js' => 'JavaScript',
+            'java' => 'Java',
+            'jfx' => 'JavaFX',
+            'perl' => 'Perl',
+            'php' => 'PHP',
+            'text' => 'Plain',
+            'ps' => 'PowerShell',
+            'py' => 'Python',
+            'rails' => 'Ruby',
+            'scala' => 'Scala',
+            'sql' => 'SQL',
+            'basic' => 'Visual',
+            'xml' => 'XML',
+            'text' => 'Other',
+      )
+      )
+);
+
+
 //CakePlugin::load('DebugKit');
 /**
  * Shortcut to Configure::read function

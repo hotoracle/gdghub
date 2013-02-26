@@ -164,4 +164,23 @@ class QuestionComment extends AppModel {
                 return $this->save($commentData);
                 
         }
+        function setAsAnswer($commentId){
+              
+              $data = array('accepted_answer'=>1);
+              $this->id = $commentId;
+              $this->save($data);
+        }
+        
+        function increaseVotes($commentId,$direction=0){
+              
+              if($direction){
+                    $query="UPDATE question_comments set vote_ups =vote_ups+1 where id='$commentId'";
+              }else{
+                  $query="UPDATE question_comments set vote_downs =vote_downs+1 where id='$commentId'";
+
+              }
+                  $this->query($query);
+
+        }
+        
 }

@@ -24,5 +24,12 @@ But avoid …
                                 </pre>
                                 
                                 <?php echo $this->Form->textarea('answer'); ?>
+                              <div class="normalWidth">
+                        <input type="button" value="Insert Code" class="btn btn-inverse btn-mini"  data-toggle="modal" data-target="#myModal" />
+                        
+                  </div>
+                              <hr />
                                 <?php echo $this->Form->submit('Post Your Answer', array('class' => 'btn btn-success')); ?>
                         </div>
+ 
+ <?php echo $this->element('questions/insert_code',array('insertTargetId'=>'AnswerAnswer')); ?>

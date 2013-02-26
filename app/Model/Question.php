@@ -114,4 +114,14 @@ class Question extends AppModel {
                 $this->query($query);
                 
         }
+        
+        function setAsAnswered($questionId=0){
+              $data= array(
+                 'flag'=>1 
+              );
+              
+              $this->id = $questionId;
+              $this->save($data);
+              
+        }
 }
