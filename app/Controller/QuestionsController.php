@@ -28,8 +28,6 @@ class QuestionsController extends AppController {
        */
       function index($sortBy = 'hottest') {
 
-
-
             switch ($sortBy) {
                   case 'newest':
                         $orderBy = array('Question.created' => 'DESC'); //Is this the best ?
@@ -225,7 +223,11 @@ class QuestionsController extends AppController {
             $highlighterSettings = cRead('syntaxHighlighter');
             $this->set('codeTypes', $highlighterSettings['supportedTypes']);
       }
-
+/**
+ * Submit an Answer
+ * @param type $questionId
+ * @param type $questionSlug
+ */
       public function postResponse($questionId, $questionSlug) {
             
             $question = $this->_getQuestion($questionId);
@@ -282,6 +284,7 @@ class QuestionsController extends AppController {
       }
 
       /**
+       * Submit a response to an answer
        * I chose to duplicate this function on purpose for the sake of simplicity
        * It could have been handled by postResonse instead
        * @param type $questionId
