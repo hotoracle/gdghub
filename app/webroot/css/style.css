@@ -69,6 +69,7 @@ a:focus{
         font-weight:200;
         font-size:1.1em;
         line-height:20px;
+        margin-bottom:10px;
 }
 .welcome h1{
         margin-bottom:10;font-size:30px;line-height:1.2;color:inherit;letter-spacing:-1px;
@@ -354,4 +355,21 @@ input.searchBox:focus{
 }
 .block{
       display:block;
+}
+
+#sideAskQuestion{
+      background:#8aa6c1;
+      
+      margin-bottom:10px;
+      border:0px ;
+      text-shadow: 1px 1px 2px #333;
+}
+#sideAskQuestion a,#sideAskQuestion a:link,#sideAskQuestion a:visited{
+      color:#fff;
+      display:block;
+}
+#sideAskQuestion a:hover{
+      text-decoration:none;
+      text-shadow: 1px 1px 2px #000;
+
 }

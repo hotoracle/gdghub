@@ -24,8 +24,8 @@ But avoid …
                                 </pre>
                                 
                                 <?php echo $this->Form->textarea('answer'); ?>
-                              <div class="normalWidth">
-                        <input type="button" value="Insert Code" class="btn btn-inverse btn-mini"  data-toggle="modal" data-target="#myModal" />
+                       <div class="normalWidth bordered">
+                        Click on "Insert Code" to paste your code  - if part of your question contains code : <input type="button" value="Insert Code" class="btn btn-success btn-primary"  data-toggle="modal" data-target="#myModal" />
                         
                   </div>
                               <hr />

@@ -6,9 +6,9 @@
  */
 ?>
 <div>
-      
-<h1>Ask a Question</h1>
-<div class="floatRight"><?php echo $this->Html->link('Browse Questions','index'); ?></div>
+
+      <h1>Ask a Question</h1>
+      <div class="floatRight"><?php echo $this->Html->link('Browse Questions', 'index'); ?></div>
       <p>
             This portion should explain the rules and provide tips for asking questions
       </p>
@@ -18,9 +18,10 @@
                   <?php echo $this->Form->create('Ask'); ?>
                   <?php echo $this->element('form_validator'); ?>
                   <?php echo $this->Form->input('title'); ?>
-                  <?php echo $this->Form->input('description', array('type' => 'textarea','rows'=>10)); ?>
-                  <div class="normalWidth">
-                        <input type="button" value="Insert Code" class="btn btn-inverse btn-mini"  data-toggle="modal" data-target="#myModal" />
+
+                  <?php echo $this->Form->input('description', array('type' => 'textarea', 'rows' => 10)); ?>
+                  <div class="normalWidth bordered">
+                        Click on "Insert Code" to paste your code  - if part of your question contains code : <input type="button" value="Insert Code" class="btn btn-success btn-primary"  data-toggle="modal" data-target="#myModal" />
                   </div>
 
                   <?php echo $this->Form->input('tags'); ?>
