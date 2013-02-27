@@ -147,6 +147,7 @@ $baseUrl = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'hub.gdglagos.
 Configure::write(
         'Application', array(
     'name' => '&#8747; dev',
+    'safe_name' => '∫ dev',
     'from_email' => 'hub@gdglagos.com',
     'contact_mail' => 'hub@gdglagos.com',
     'base_url' => "http://" . $baseUrl,
@@ -288,7 +289,11 @@ array(
       )
 );
 
-
+Configure::write('Application.MailConfig',array(
+    'enabled'=>true,
+    'limit_per_run'=>120,
+    
+));
 //CakePlugin::load('DebugKit');
 /**
  * Shortcut to Configure::read function

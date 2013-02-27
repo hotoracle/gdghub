@@ -183,4 +183,11 @@ class QuestionComment extends AppModel {
 
         }
         
+        function getComment($commentId=0,$recursive = -1){
+              
+              return $this->find('first',array('recursive'=>$recursive,'conditions'=>array('QuestionComment.id'=>$commentId)));
+              
+              
+              
+        }
 }
