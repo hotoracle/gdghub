@@ -34,6 +34,9 @@ class QvHelper extends AppHelper {
             $r->set_callback('highlightSnippets');
             return $r;
       }
+      function highlightSnippets($rawHtml='') {
+            return $this->highlight($rawHtml);
+      }
 
 }
 

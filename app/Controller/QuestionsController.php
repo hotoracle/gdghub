@@ -7,7 +7,7 @@
  */
 class QuestionsController extends AppController {
 
-      public $uses = array('Question', 'QcVote', 'QuestionComment', 'QTag', 'Tag');
+      public $uses = array('Question', 'QcVote', 'QuestionComment', 'QTag', 'Tag', 'OutgoingMessage');
       public $helpers = array('Qv');
 
       /**
@@ -223,12 +223,14 @@ class QuestionsController extends AppController {
             $highlighterSettings = cRead('syntaxHighlighter');
             $this->set('codeTypes', $highlighterSettings['supportedTypes']);
       }
-/**
- * Submit an Answer
- * @param type $questionId
- * @param type $questionSlug
- */
+
+      /**
+       * Submit an Answer
+       * @param type $questionId
+       * @param type $questionSlug
+       */
       public function postResponse($questionId, $questionSlug) {
+
             $question = $this->_getQuestion($questionId);
             if ($question['Question']['flag'] != 0) {
                   $this->miniFlash('This question is no longer open for comments or answers', "viewQuestion/$questionId/$questionSlug");
@@ -257,6 +259,29 @@ class QuestionsController extends AppController {
 
                   if ($this->QuestionComment->addComment($dbData)) {
                         $hash = md5($this->QuestionComment->id);
+
+                        $comment = $this->QuestionComment->read(null, $this->QuestionComment->id);
+                        $ownerEmail = $this->Question->User->getEmail($question['User']['id']);
+                        $recipients = array($ownerEmail);
+                        $emailQuestion = $question;
+                        
+                        unset($emailQuestion['Question']['description']);
+                        
+                        $notificationData = array(
+                            'subject' => 'New Answer Posted to ' . $question['Question']['name'],
+                            'variables' => json_encode(
+                                    array(//Isn't it better to store ids?
+                                        'question' => $emailQuestion,
+                                        'comment' => $comment
+                                    )
+                            ),
+                            'recipients' => json_encode($recipients),
+                            'created_by' => $this->_thisUserId,
+                            'email_template' => 'question_answer_posted'
+                        );
+
+                        $this->OutgoingMessage->addMessage($notificationData);
+
                         $this->miniFlash("Posted successfully", "viewQuestion/$questionId/$questionSlug/#{$hash}");
                   } else {
                         $this->sFlash("An unexpected errror occurred. Please try again later");
@@ -309,6 +334,41 @@ class QuestionsController extends AppController {
                   }
                   $hash = md5($relCommentId);
                   if ($this->QuestionComment->addComment($dbData)) {
+
+                        $comment = $this->QuestionComment->read(null, $this->QuestionComment->id);
+
+                        $ownerEmail = $this->Question->User->getEmail($question['User']['id']);
+                        $recipients = array($ownerEmail);
+
+                        $hostComment = array();
+
+                        if ($relCommentId) {
+                              $hostComment = $this->QuestionComment->getComment($relCommentId, -1);
+                              if ($hostComment) {
+
+                                    $recipients[] = $this->Question->User->getEmail($hostComment['QuestionComment']['user_id']);
+                              }
+                        }
+                        $emailQuestion = $question;
+                        unset($emailQuestion['Question']['description']);
+                        $notificationData = array(
+                            'subject' => 'New Comment on ' . $question['Question']['name'],
+                            'variables' => json_encode(
+                                    array(//Isn't it better to store ids?
+                                        'question' => $emailQuestion,
+                                        'host_comment' => $comment,
+                                        'comment' => $hostComment
+                                    )
+                            ),
+                            'recipients' => json_encode($recipients),
+                            'created_by' => $this->_thisUserId,
+                            'email_template' => 'question_comment_posted'
+                        );
+
+                        $this->OutgoingMessage->addMessage($notificationData);
+
+
+
                         $this->miniFlash("Posted successfully", "viewQuestion/$questionId/$questionSlug/#{$hash}");
                   } else {
                         $this->sFlash("An unexpected errror occurred. Please try again later");
@@ -333,6 +393,29 @@ class QuestionsController extends AppController {
 
             $this->QuestionComment->setAsAnswer($relCommentId);
             $this->Question->setAsAnswered($questionId);
+            $comment =  $this->QuestionComment->read(null,$relCommentId);
+
+            $commentOwnerEmail = $this->Question->User->getEmail($comment['QuestionComment']['user_id']);
+            
+            $recipients = array($commentOwnerEmail);
+            $emailQuestion = $question;
+
+            unset($emailQuestion['Question']['description']);
+            
+            $notificationData = array(
+            'subject' => 'Your Answer was chosen for - ' . $question['Question']['name'],
+            'variables' => json_encode(
+                    array(//Isn't it better to store ids?
+                        'question' => $emailQuestion,
+                        'comment' => $comment
+                    )
+            ),
+            'recipients' => json_encode($recipients),
+            'created_by' => $this->_thisUserId,
+            'email_template' => 'question_answer_chosen'
+        );
+            
+            
             $this->miniFlash('You have selected an answer. Thank you', "viewQuestion/$questionId/$questionSlug");
       }
 
@@ -348,16 +431,76 @@ class QuestionsController extends AppController {
 
             $result = $this->QcVote->castVote($this->_thisUserId, $relCommentId, $voteFlag);
 
-            if ($result!==true) {
-                  
-                  $previousVote = ($result['QcVote']['vote_type'])? 'UP':'DOWN';
-                  
+            if ($result !== true) {
+
+                  $previousVote = ($result['QcVote']['vote_type']) ? 'UP' : 'DOWN';
+
                   $this->miniFlash("You can only vote once. You already voted this answer $previousVote on {$result['QcVote']['created']}", "viewQuestion/$questionId/$questionSlug");
             }
-            
+
 
             $this->QuestionComment->increaseVotes($relCommentId, $voteFlag);
             $this->miniFlash("Your vote has been cast successfully.", "viewQuestion/$questionId/$questionSlug", true);
+      }
+
+      public function notifyTest() {
+
+            $config = cRead('Application.MailConfig');
+
+            if (!$config['enabled']) {
+                  $this->out("Mail is disabled in Application.MailConfig in bootstrap.php");
+                  return;
+            }
+
+            $limit = $config['limit_per_run'];
+
+            $conditions = array(
+                'OutgoingMessage.sent' => 0,
+                'OutgoingMessage.id' => 1,
+            );
+
+            $outgoingMessages = $this->OutgoingMessage->find('all', compact('limit', 'conditions'));
+
+            if (!$outgoingMessages) {
+                  $this->out("No pending messages");
+                  return;
+            }
+
+
+            foreach ($outgoingMessages as $message) {
+                  break;
+            }
+            $message = $message['OutgoingMessage'];
+            $recipients = json_decode($message['recipients'], true);
+            if (!$recipients) {
+                  $this->OutgoingMessage->setAsInvalid($message['id']);
+                  continue;
+            }
+
+            $templateVariables = json_decode($message['variables'], true);
+            if (!$templateVariables) {
+                  $this->OutgoingMessage->setAsInvalid($message['id']);
+                  continue;
+            }
+            $validRecipients = array();
+
+            foreach ($recipients as $recipient) {
+                  $recipient = trim($recipient);
+
+                  if (!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $recipient)) {
+                        continue;
+                  }
+                  $validRecipients[] = $recipient;
+            }
+            if (!$validRecipients) {
+                  $this->OutgoingMessage->setAsInvalid($message['id']);
+                  continue;
+            }
+            foreach ($templateVariables as $key => $values) {
+                  $this->set($key, $values);
+            }
+
+            $this->layout = 'Emails/html/default';
       }
 
 }

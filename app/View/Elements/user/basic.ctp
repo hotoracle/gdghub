@@ -7,7 +7,7 @@
  */
 
 ?>
-<a href="<?php echo $this->Html->url("/Developers/viewProfile/{$user['id']}"); ?>">
+<a href="<?php echo $this->Html->url("/Developers/viewProfile/{$user['id']}",true); ?>">
         <?php 
         if(!isset($noPhoto) || (isset($noPhoto) && $noPhoto==false)){
                 $imageUrl = (isset($user['image']) && $user['image'])? $user['image']:'gravatar.gif';

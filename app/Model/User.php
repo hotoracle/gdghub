@@ -62,5 +62,10 @@ class User extends AppModel
 
     return $hash;
   }   
+  
+  function getEmail($userId){
+        
+        return $this->field("email",array('User.id'=>$userId));
+        
+  }
 }
-?>
