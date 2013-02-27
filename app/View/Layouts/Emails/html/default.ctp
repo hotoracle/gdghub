@@ -48,7 +48,12 @@
 
                 </style>
         </head>
-        <body>
+        <body  style="font-family:'Helvetica Neue',Helvetica;font-weight:200;font-size:14px;">
                 <?php echo $content_for_layout; ?>
+              <p>&nbsp;</p>
+              <hr />
+              <p style="color:#999">
+              This mail was sent from <?php echo $this->Html->link(cRead('Application.safe_name'),$this->Html->url('/',true)); ?> @ <?php echo date('h:ia l F jS, Y'); ?>
+              </p>
         </body>
 </html>
