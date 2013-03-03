@@ -166,6 +166,8 @@ class QuestionsController extends AppController {
 
                   $this->miniFlash("Question Posted", "viewQuestion/$questionId/$questionSlug");
             }
+            $possibleTags = $this->Tag->listTagsByName();
+            $this->set('possibleTags',$possibleTags);
       }
 
       /**
