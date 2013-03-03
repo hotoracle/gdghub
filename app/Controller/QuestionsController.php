@@ -166,6 +166,8 @@ class QuestionsController extends AppController {
 
                   $this->miniFlash("Question Posted", "viewQuestion/$questionId/$questionSlug");
             }
+            $possibleTags = $this->Tag->listTagsByName();
+            $this->set('possibleTags',$possibleTags);
       }
 
       /**
@@ -235,6 +237,9 @@ class QuestionsController extends AppController {
             if ($question['Question']['flag'] != 0) {
                   $this->miniFlash('This question is no longer open for comments or answers', "viewQuestion/$questionId/$questionSlug");
             }
+            $highlighterSettings = cRead('syntaxHighlighter');
+            $this->set('codeTypes', $highlighterSettings['supportedTypes']);
+            
             $rules = array(
                 'Answer' => array(
                     'answer' => array(

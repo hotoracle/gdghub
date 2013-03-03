@@ -57,4 +57,8 @@ class Tag extends AppModel {
                 }
                 return $tagId;
         }
+        
+        function listTagsByName(){
+              return array_values($this->find('list',array('order'=>'Tag.name')));
+        }
 }

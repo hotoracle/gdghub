@@ -25,9 +25,23 @@
                         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
                 <?php } ?>
                 <script>window.jQuery || document.write('<script src="<?php echo $this->params->webroot ?>js/lib/jquery.min.js"><\/script>')</script>
-
+                
+                <?php
+                $scriptsToLoad = array(
+                            'lib/bootstrap.min',
+                            'src/scripts.js',
+                            
+                );
+                if($this->name=='Questions' && $this->action=='ask'){
+                      $scriptsToLoad[] = 'lib/jquery-ui';
+                }
+                echo $this->Html->script(
+                        $scriptsToLoad);
+                ?>
+                
                 <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
                 <?php echo $this->Html->css('normalize.css') ?>
+                <?php echo $this->Html->css('jquery-ui.css') ?>
                 <?php echo $this->Html->css('bootstrap-' . Configure::read('Layout.theme') . '.min', null, array('data-extra' => 'theme')) ?>
                 <?php echo $this->Html->css('bootstrap-responsive.min') ?>
                 <?php echo $this->Html->css('font-awesome.min') ?>
@@ -192,13 +206,7 @@
                 }
                 ?>
 
-                <?php
-                echo $this->Html->script(
-                        array(
-                            'lib/bootstrap.min',
-                            'src/scripts.js'
-                ));
-                ?>
+                
 
                 <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
 <!--                      <script>

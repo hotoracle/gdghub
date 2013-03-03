@@ -24,7 +24,9 @@
                         Click on "Insert Code" to paste your code  - if part of your question contains code : <input type="button" value="Insert Code" class="btn btn-success btn-primary"  data-toggle="modal" data-target="#myModal" />
                   </div>
 
-                  <?php echo $this->Form->input('tags'); ?>
+                  <div class="ui-widget">
+                <?php echo $this->Form->input('tags', array('id' => 'tags', 'label' => 'Tags <span class="smaller">Used to identity technologies, platforms and products. Separate different tags using commas</span>')); ?> 
+        </div>
                   <?php echo $this->Form->submit('Submit'); ?>
                   <?php echo $this->Form->end(); ?>
             </div>
@@ -39,4 +41,48 @@
 <?php echo $this->element("questions/insert_code"); ?>
 <script>
 
+</script>
+<script>
+        $(function() {
+                var availableTags = <?php echo json_encode($possibleTags); ?>
+                
+                function split( val ) {
+                        return val.split( /,\s*/ );
+                }
+                function extractLast( term ) {
+                        return split( term ).pop();
+                }
+ 
+                $( "#tags" )
+                // don't navigate away from the field on tab when selecting an item
+                .bind( "keydown", function( event ) {
+                        if ( event.keyCode === $.ui.keyCode.TAB &&
+                                $( this ).data( "autocomplete" ).menu.active ) {
+                                event.preventDefault();
+                        }
+                })
+                .autocomplete({
+                        minLength: 0,
+                        source: function( request, response ) {
+                                // delegate back to autocomplete, but extract the last term
+                                response( $.ui.autocomplete.filter(
+                                availableTags, extractLast( request.term ) ) );
+                        },
+                        focus: function() {
+                                // prevent value inserted on focus
+                                return false;
+                        },
+                        select: function( event, ui ) {
+                                var terms = split( this.value );
+                                // remove the current input
+                                terms.pop();
+                                // add the selected item
+                                terms.push( ui.item.value );
+                                // add placeholder to get the comma-and-space at the end
+                                terms.push( "" );
+                                this.value = terms.join( ", " );
+                                return false;
+                        }
+                });
+        });
 </script>
