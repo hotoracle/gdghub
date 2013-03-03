@@ -37,10 +37,12 @@
                                                 <div class="postedQuestion">
 
                                                         <span class="questionTitle"><?php echo $this->Html->link($question['Question']['name'], "viewQuestion/{$question['Question']['id']}/{$question['Question']['slug']}"); ?></span>
-                                                        <?php echo $this->Qv->shortenText($question['Question']['description']); ?>
+                                                        <?php echo $this->Html->link($this->Qv->shortenText($question['Question']['description']),"viewQuestion/{$question['Question']['id']}/{$question['Question']['slug']}",array('escape'=>false,'class' => 'textLikeLink')); ?>
                                                         <div class="clear"></div>
                                                         <span class="badge badge-info floatRight">
-                                                                posted by <?php echo $this->element('user/basic', array('user' => $question['User'], 'noPhoto' => true)); ?>
+                                                                posted by <?php echo $this->element('user/basic', array('user' => $question['User'], 'noPhoto' => true)); ?> </span>
+                                                        <span class="badge floatRight">
+                                                        <?php echo $this->Qv->longTime($question['Question']['created']); ?>        
                                                         </span>
                                                         <?php
                                                         $thisQuestionTags = isset($questionsTags[$questionId]) ? $questionsTags[$questionId] : array();

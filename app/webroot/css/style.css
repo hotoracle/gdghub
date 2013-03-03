@@ -310,8 +310,9 @@ h3 span{
         color:#999;
 }
 
-.smaller{
+.smaller,label .smaller{
         font-size:0.9em;
+        color:#777;
 }
 
 .miniPosted{
@@ -372,4 +373,12 @@ input.searchBox:focus{
       text-decoration:none;
       text-shadow: 1px 1px 2px #000;
 
+}
+
+.textLikeLink:hover{
+      text-decoration: none;
+      color:#555;
+}
+.textLikeLink{
+      color:#555;
 }
