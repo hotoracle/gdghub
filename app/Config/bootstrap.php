@@ -294,6 +294,10 @@ Configure::write('Application.MailConfig',array(
     'limit_per_run'=>120,
     
 ));
+
+Configure::write('Application.upload.abs_projects',APP.'webroot'.DS.'uploads'.DS.'projects');
+Configure::write('Application.upload.url_projects','/uploads/projects/');
+    
 //CakePlugin::load('DebugKit');
 /**
  * Shortcut to Configure::read function
