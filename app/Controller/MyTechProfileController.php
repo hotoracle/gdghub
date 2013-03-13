@@ -13,7 +13,6 @@ class MyTechProfileController extends AppController {
             /** Show the users dashboard the same way the general public sees it */
             $userSkillsets = $this->UsersSkill->getUserSkills($this->_thisUserId);
             $myProjects = $this->Project->getUserProjects($this->_thisUserId,1);
-            pr($myProjects);
             $this->set(compact('userSkillsets', 'myProjects'));
       }
 

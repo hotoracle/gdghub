@@ -378,6 +378,16 @@ input.searchBox:focus{
       color:#fff;
       display:block;
 }
+#sideProfiles{
+      background:#a6c18a;
+      margin-bottom:10px;
+      border:0px ;
+      text-shadow: 1px 1px 2px #333;
+}
+#sideProfiles a,#sideProfiles a:link,#sideProfiles a:visited{
+      color:#fff;
+      display:block;
+}
 #sideAskQuestion a:hover{
       text-decoration:none;
       text-shadow: 1px 1px 2px #000;
