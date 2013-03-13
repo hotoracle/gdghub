@@ -24,6 +24,12 @@
       <p class="lead"><a href="<?php echo $this->Html->url('/Questions'); ?>">Do you have a question?<br />Get answers from Experts in the Community.</a></p>
       
 </div>
+<div class="bordered alignCenter" id="sideProfiles">
+      <h3>Tech Profiles</h3>
+      <p class="lead">
+            <a class="textLikeLink" href="<?php echo $this->Html->url('/MyTechProfile'); ?>">Are you listed?</a></p>
+      
+</div>
 
 <div id="gplusActivities" class="bordered">
         <div class="center">
