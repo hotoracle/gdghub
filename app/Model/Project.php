@@ -2,10 +2,37 @@
 
 class Project extends AppModel{
     
-    function getUserProjects($userId=0){
+      public $hasMany= array('ProjectPhoto','ProjectsTechnology');
+      
+    function getUserProjects($userId=0,$recursive = 0){
         
             $conditions =  array('Project.created_by'=>$userId);
-            return $this->find('all',array('conditions'=>$conditions));
+            $results =  $this->find('all',array('conditions'=>$conditions,'recursive'=>$recursive));
+//            if($includePhoto){
+//                
+//                  foreach($results as $index=>$project){
+//                        $mainPhoto = $this->ProjectPhoto->find('first',array('conditions'=>array('ProjectPhoto.project_id'=>$project['Project']['id']),'recursive'=>-1));
+//                        if(!$mainPhoto) continue;
+//                        $results[$index]['MainPhoto'] = $mainPhoto['ProjectPhoto'];
+//
+//                  }
+//            }
+//            if($includeTech){
+//                
+//                  foreach($results as $index=>$project){
+//                        $projectTechs = $this->ProjectsTechnology->listProjectTech($project['Project']['id']);
+//                        $results[$index]['ProjectsTechnology'] =$projectTechs;
+//
+//                  }
+//            }
+//            
+        return $results;
+            
+    }
+    function countUserProjects($userId=0){
+        
+            $conditions =  array('Project.created_by'=>$userId);
+            return $this->find('count',array('conditions'=>$conditions));
         
             
     }

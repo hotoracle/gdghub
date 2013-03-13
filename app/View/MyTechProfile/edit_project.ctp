@@ -1,6 +1,6 @@
 <?php
 
-echo $this->element('projects/my_nav');
+echo $this->element('breadcrumb');
 $projectId = $projectInfo['Project']['id'];
 
 
@@ -10,6 +10,6 @@ $projectId = $projectInfo['Project']['id'];
 
 <h4>Edit Project</h4>
 <?php
-echo $this->element('projects/form');
+echo $this->element('user/project_form');
 
 ?>

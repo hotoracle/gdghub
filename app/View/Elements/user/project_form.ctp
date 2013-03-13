@@ -26,7 +26,7 @@
         </div>
         <div data-role="fieldcontain">
             <fieldset data-role="controlgroup">
-                <?php echo $this->Form->input('website', array('placeholder' => 'Website', 'label' => 'Website <span>If this project has a website.</span>')); ?>
+                <?php echo $this->Form->input('project_url', array('placeholder' => 'Website', 'label' => 'Website <span>If this project has a website.</span>')); ?>
             </fieldset>
         </div>
         <div data-role="fieldcontain">

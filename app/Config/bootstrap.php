@@ -297,6 +297,8 @@ Configure::write('Application.MailConfig',array(
 
 Configure::write('Application.upload.abs_projects',APP.'webroot'.DS.'uploads'.DS.'projects');
 Configure::write('Application.upload.url_projects','/uploads/projects/');
+Configure::write('Application.upload.max_project_photos',4);
+Configure::write('Application.upload.max_projects',25);
     
 //CakePlugin::load('DebugKit');
 /**
