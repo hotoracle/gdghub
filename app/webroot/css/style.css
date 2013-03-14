@@ -423,6 +423,20 @@ input.searchBox:focus{
       margin:4px;
 
 }
+.pendingUserSkills span{
+      padding:2px;
+      background:#9955ff;
+      font-weight:300;
+      font-size:0.8em;
+      color:#fff;
+      border:1px solid #888;
+      text-shadow: 1px 1px 1px #555;
+      border-radius: 2px;
+      display:block;
+      float:left;
+      margin:4px;
+
+}
 .devNotes{
       color:orange;
       background:#eee;

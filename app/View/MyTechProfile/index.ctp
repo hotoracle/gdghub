@@ -18,13 +18,17 @@
 
       <div class="span3 dashboardBox">
             <div class="bordered">
-                  <h1>My Public Profile</h1>            
+                  <h1>My Public Profile</h1>
+                  <div class="alignRight">
+                  <?php echo $this->Html->link('Edit','editProfile', array('class' => 'btn btn-mini btn-inverse wideBtn')); ?>
+                  </div>
             </div>
             <div class="bordered">
                   <h1>My Skills</h1>                
                   <?php
                   if ($userSkillsets) {
-                        ?><div class="userSkills">
+                        ?>
+                  <div class="userSkills">
                         <?php
                         foreach ($userSkillsets as $skillRow) {
                               ?><span>&Because;<?php echo $skillRow['Skillset']['name']; ?></span>
@@ -33,6 +37,20 @@
                               ?></div>
 
                         <div class="clear"></div>
+                        <?php if($pendingSkillsets){ ?>
+                        <hr />
+                        <strong>Pending Approval</strong>
+                        <div class="pendingUserSkills">
+                        <?php foreach($pendingSkillsets as $skillRow){ ?>
+                        <span>&Because;<?php echo $skillRow['SkillsetSubmission']['name']; ?></span>
+                                    <?php
+                              }
+                              ?>
+                        <?php } ?>
+                        <div class="clear"></div>
+                        <hr />
+
+                        </div>
                         <p>&nbsp;</p>
                         <div class="alignRight">
                               <?php

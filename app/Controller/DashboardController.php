@@ -70,7 +70,7 @@ class DashboardController extends AppController{
                         $plusUrl = "https://www.googleapis.com/plus/v1/people/$gplusPageId/activities/public?key=AIzaSyAK7vaAWhUADjUInYSer-Ov1ZFZt0duIEQ";
                         try {
                               
-                                $contents  = file_get_contents($plusUrl);
+                                $contents  = @file_get_contents($plusUrl);
                                 
                                 if(!$contents){
                                      return;   
@@ -91,6 +91,7 @@ class DashboardController extends AppController{
                                 $this->Session->write('page_gplus_stored',$now);
                                  
                         }catch(Exception $e){
+                              
                                 return;
                         }
                 }
