@@ -31,7 +31,7 @@
                 'lib/bootstrap.min',
                 'src/scripts.js',
             );
-            if ($this->name == 'Questions' && $this->action == 'ask') {
+            if (isset($usesAutocomplete) && $usesAutocomplete) {
                   $scriptsToLoad[] = 'lib/jquery-ui';
             }
             echo $this->Html->script(
@@ -198,7 +198,7 @@
                   <footer>
                         <p><?php echo Configure::read('Application.name') ?> </p>
                   </footer>
-
+<?php echo $this->element('sql_dump'); ?>
             </div> <!-- /container -->
 
 

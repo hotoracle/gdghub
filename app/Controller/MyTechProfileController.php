@@ -7,27 +7,69 @@
  */
 class MyTechProfileController extends AppController {
 
-      public $uses = array('Project', 'UsersSkill', 'User', 'Skillset', 'Project', 'Technology', 'Category', 'ProjectsTechnology', 'ProjectPhoto');
+      public $uses = array('Project', 'UsersSkill', 'User', 'Skillset', 'Project', 'Technology', 'Category', 'ProjectsTechnology', 'ProjectPhoto','SkillsetSubmission');
 
       public function index() {
             /** Show the users dashboard the same way the general public sees it */
             $userSkillsets = $this->UsersSkill->getUserSkills($this->_thisUserId);
+            $pendingSkillsets = $this->SkillsetSubmission->getPendingUserSubmissions($this->_thisUserId);
             $myProjects = $this->Project->getUserProjects($this->_thisUserId,1);
-            $this->set(compact('userSkillsets', 'myProjects'));
+            $this->set(compact('userSkillsets', 'myProjects','pendingSkillsets'));
       }
 
       public function editSkills() {
+            $breadcrumbLinks = array(
+                array(
+                    'label' => 'My Dashboard',
+                    'link' => 'index'
+                ),
+                
+                array(
+                    'label' => 'Edit Skills',
+                )
+            );
+             $this->set(compact('breadcrumbLinks'));
+            $this->set('usesAutocomplete',true);
 
-            if (!empty($this->data)) {
+             $rules = array(
+                 'Skills'=>array(
+                     'selSkills'=>array(
+                         FV_REQUIRED=>'You must specify at least one skill here to submit'
+                     )
+                 )
+             )     ;
+             $this->FormValidator->setRules($rules);
+             
+            if (!empty($this->data) && $this->FormValidator->validate()) {
+                  App::uses('Sanitize', 'Utility');
 
+                  
+                  $submittedSkillsets = $this->data['Skills']['selSkills'];
+                  
+                  $skillsProvided = explode(',', $submittedSkillsets);
+                  $skillIds = array();
+                  $selectedSkilllSets  = $unidentifiedSkills = array();
+                  foreach ($skillsProvided as $skill) {
 
-                  $selectedSkilllSets = (isset($this->data['skillset']) && is_array($this->data['skillset'])) ? array_values($this->data['skillset']) : array();
-                  $autoSelectedSkilllSets = (isset($this->data['autoskillset']) && is_array($this->data['autoskillset'])) ? array_values($this->data['autoskillset']) : array();
-                  $mergedSelected = array_unique(array_merge($selectedSkilllSets, $autoSelectedSkilllSets));
+                        $skill = Sanitize::paranoid($skill,array(' ','.','(',')','-','_'));
+                        $skill = trim($skill);
+                        if(!$skill) continue;
+                        $skillId  = $this->Skillset->getSkillId($skill);
+                        if(!$skillId){
+                              $unidentifiedSkills[] = $skill;
+                              $data = array(
+                                  'name'=>$skill,
+                                  'user_id'=>$this->_thisUserId
+                              );
+                              $this->SkillsetSubmission->addSubmission($data);
+                              continue;
+                        }
+                        $selectedSkilllSets[] = $skillId;
+                  }
 
-                  $conditions = array('UsersSkill.user_id' => $this->_thisUserId, 'UsersSkill.skillset_id NOT' => $mergedSelected);
-                  $this->UsersSkill->deleteAll($conditions); //
-                  foreach ($mergedSelected as $skillsetId) {
+                  
+                  
+                  foreach ($selectedSkilllSets as $skillsetId) {
                         if (!$skillsetId)
                               continue;
 
@@ -41,23 +83,37 @@ class MyTechProfileController extends AppController {
                         $this->UsersSkill->create($data);
                         $this->UsersSkill->save($data);
                   }
-                  $this->miniFlash('Skills Updated', 'index');
+                  $message = 'Skills Updated';
+                  if($unidentifiedSkills){
+                        $unidentifiedSkills=join('<br /> - ',$unidentifiedSkills);
+                        $message.="<br />However, the following skills were not recognized and will be reviewed by our team prior to approval: <br /> - $unidentifiedSkills";
+                  }
+                        
+                  $this->miniFlash($message, 'index');
             }
 
-            $skillSets = array(
-                'id' => '0',
-                'name' => '-',
-                'children' => $this->Skillset->getChildrenTree(NULL)
-            );
-            $this->set('skillSets', $skillSets);
-
-            $mySkillSets = $this->UsersSkill->listUserSkillIds($this->_thisUserId);
+            
+            $possibleSkills = $this->Skillset->listSkillsByName();
+            
+            $this->set('possibleSkills',$possibleSkills);
+            
+            $mySkillSets = $this->UsersSkill->getUserSkills($this->_thisUserId);
 
             $this->set('mySkillSets', $mySkillSets);
       }
 
       public function addProject() {
-            
+            $breadcrumbLinks = array(
+                array(
+                    'label' => 'My Dashboard',
+                    'link' => 'index'
+                ),
+             
+                array(
+                    'label' => 'Post New Project',
+                )
+            );
+             $this->set(compact('breadcrumbLinks'));
             
             $totalProjects = $this->Project->countUserProjects($this->_thisUserId);
             if($totalProjects>=cRead('Application.upload.max_projects')){
@@ -250,6 +306,7 @@ class MyTechProfileController extends AppController {
       }
 
       function editProject($projectId = 0) {
+            
             $projectInfo = $this->_getUserProject($projectId);
             $this->set('projectInfo', $projectInfo);
             
@@ -403,5 +460,24 @@ class MyTechProfileController extends AppController {
             $this->ProjectPhoto->delete($photoId);
             $this->miniFlash("Photo Deleted", "viewProject/$projectId", true);
       }
+      
+      public function removeSkill($skillId=0) {
+      
+            if(!$this->Skillset->exists($skillId)){
+                  $this->miniFlash('Not found', 'editSkills');
+            }
+            
+            $this->UsersSkill->removeSkill($this->_thisUserId,$skillId);
+            $this->miniFlash('Skills Updated', 'editSkills');
 
+
+      }
+      public function editProfile() {
+            
+            $userInfo = $this->User->getUserInfo($this->_thisUserId);
+            pr($userInfo);
+
+      }
+
+      
 }

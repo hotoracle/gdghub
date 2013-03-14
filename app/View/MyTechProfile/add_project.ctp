@@ -1,4 +1,6 @@
 <?php
+echo $this->element('breadcrumb');
+
 ?>
 <h4>Post New Project</h4>
 

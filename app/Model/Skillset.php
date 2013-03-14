@@ -78,5 +78,17 @@ class Skillset extends AppModel {
 			'insertQuery' => ''
 		)
 	);
-
+      function listSkillsByName(){
+              return array_values($this->find('list',array('order'=>'Skillset.name')));
+        }
+        function getSkillId($skill=''){
+                $skill = trim($skill);
+                $conditions = array('Skillset.name'=>$skill);
+                $this->recursive = -1;
+                return $this->field('Skillset.id',$conditions);
+                
+        }
+        
 }
+//87c35d8a-23d4-11e2-a5fb-7f3382f33e5b
+//f4a62706-30f0-11e2-9c12-4ad347e9b9e2
