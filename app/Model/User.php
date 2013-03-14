@@ -5,6 +5,8 @@ class User extends AppModel
 {
   public $name = 'User';
   
+  public $hasOne = array('Profile');
+  
   public function beforeSave($options = array()) 
   {
     if (isset($this->data[$this->alias]['password'])) 
@@ -67,5 +69,9 @@ class User extends AppModel
         
         return $this->field("email",array('User.id'=>$userId));
         
+  }
+  
+  function getUserInfo($userId){
+        return $this->read(null,$userId);
   }
 }

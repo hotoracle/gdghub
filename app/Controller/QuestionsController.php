@@ -107,7 +107,7 @@ class QuestionsController extends AppController {
        * @return null
        */
       function ask() {
-
+            $this->set('usesAutocomplete',true);
             $this->_requireAuth();
             $highlighterSettings = cRead('syntaxHighlighter');
             $this->set('codeTypes', $highlighterSettings['supportedTypes']);

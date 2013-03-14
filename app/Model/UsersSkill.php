@@ -46,7 +46,6 @@ class UsersSkill extends AppModel {
 
         function getUserSkills($userId){
                 
-                
                 return $this->find('all',array('conditions'=>array('UsersSkill.user_id'=>$userId)));
                 
         }
@@ -54,5 +53,14 @@ class UsersSkill extends AppModel {
                 
                 return $this->find('list',array('conditions'=>array('UsersSkill.user_id'=>$userId)));
                 
+        }
+        function removeSkill($userId,$skillId){
+              $conditions=  array(
+                  'UsersSkill.skillset_id'=>$skillId,
+                  'UsersSkill.user_id'=>$userId
+              );
+              
+              $this->deleteAll($conditions);
+              
         }
 }
