@@ -74,4 +74,11 @@ class User extends AppModel
   function getUserInfo($userId){
         return $this->read(null,$userId);
   }
+  
+  function updateUser($userId,$userInfo){
+        
+        $this->id = $userId;
+        $this->save($userInfo,false);
+        
+  }
 }

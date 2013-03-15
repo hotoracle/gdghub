@@ -15,5 +15,10 @@
             <?php endif; ?>
             </li>
 <?php endforeach; ?>
+      <?php }else{ ?>
+           <li>
+                 <?php echo $this->Html->link('&laquo;-]','index',array('escape'=>false)); ?>
+           </li> 
+            
       <?php } ?>
 </ul>

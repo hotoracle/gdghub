@@ -133,12 +133,13 @@ footer{
 }
 
 label{
-      font-weight:300;
-
+      font-weight:400;
 }
 label span{
       font-style: italic;
       display:block;
+      font-size:0.9em;
+      font-weight:200;
 }
 
 .fullWidth input,.fullWidth textarea,.fullWidth select{
@@ -465,4 +466,10 @@ input.searchBox:focus{
 .thumbActions{
       font-size:0.7em;
       margin:0;   
+}
+
+
+.profileProp li{
+      list-style:none;
+      margin-bottom:6px;
 }

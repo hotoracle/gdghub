@@ -11,10 +11,12 @@ class MyTechProfileController extends AppController {
 
       public function index() {
             /** Show the users dashboard the same way the general public sees it */
+            $userInfo = $this->User->getUserInfo($this->_thisUserId);
+
             $userSkillsets = $this->UsersSkill->getUserSkills($this->_thisUserId);
             $pendingSkillsets = $this->SkillsetSubmission->getPendingUserSubmissions($this->_thisUserId);
             $myProjects = $this->Project->getUserProjects($this->_thisUserId,1);
-            $this->set(compact('userSkillsets', 'myProjects','pendingSkillsets'));
+            $this->set(compact('userSkillsets', 'myProjects','pendingSkillsets','userInfo'));
       }
 
       public function editSkills() {
@@ -473,9 +475,110 @@ class MyTechProfileController extends AppController {
 
       }
       public function editProfile() {
-            
+             $breadcrumbLinks = array(
+                array(
+                    'label' => 'My Dashboard',
+                    'link' => 'index'
+                ),
+             
+                array(
+                    'label' => 'Update Public Profile',
+                )
+            );
+             
             $userInfo = $this->User->getUserInfo($this->_thisUserId);
-            pr($userInfo);
+            $this->set(compact('breadcrumbLinks','userInfo'));
+
+            $rules = array(
+               'MyProfile'=>array(
+                   'name'=>array(
+                       FV_REQUIRED=>'Your name is required',
+                       FV_MIN_LENGTH=>array('error'=>'Your name cannot be shorter than 3 characters','param'=>3),
+                       FV_MAX_LENGTH=>array('error'=>'Your name cannot be longer than 60 characters','param'=>50),
+                       ),
+                   'public_email'=>array(
+                       FV_EMPTY_OR_EMAIL=>'Invalid Email',
+                       ),
+                   'public_website'=>array(
+                       FV_URL_OR_EMPTY=>'Invalid Website URL. Please include http:// or https:// as appropriate',
+                        ),
+                   'public_gplus'=>array(
+                       FV_NUMERIC_OR_EMPTY=>'Invalid Google ID. It should only contain numbers',
+                        ),
+                   'public_twitter'=>array(
+                       FV_ALPHANUMERIC_OR_EMPTY=>'Invalid Twitter Handle. It should only contain letters and numbers',
+                        ),
+                   'public_skype'=>array(
+                       FV_ALPHANUMERIC_OR_EMPTY=>'Invalid Skype ID. It should only contain letters and numbers',
+                        ),
+                   
+               ) 
+            );
+            
+            $this->FormValidator->setRules($rules);
+            
+            if(!empty($this->data) && $this->FormValidator->validate()){
+                  
+                  $subData = $this->data['MyProfile'];
+                  $expectedFields = array(
+                     'name','public_email','public_website','public_gplus','public_twitter','public_skype','mobiles'
+                  );
+                  $userTbData =array();
+                  foreach($expectedFields as $field){
+                        
+                        $userTbData[$field] = isset($subData[$field])? $subData[$field]:'';
+                        
+                  }
+                  if(isset($subData['profile_summary'])){
+                        $data = array(
+                            'profile_summary'=>$subData['profile_summary']
+                        );
+                        $this->User->Profile->updateUserProfile($this->_thisUserId,$data);
+                  }
+              
+                  $photoField  = isset($subData['photo'])? $subData['photo']:false;
+          
+                  if (is_array($photoField) && $photoField['error'] == 0  && getimagesize($photoField['tmp_name'])){
+                         $fileParts = explode('.', $photoField['name']);
+
+                        if (count($fileParts) >= 2){
+                              $fileExtension = array_pop($fileParts);
+                        }else{
+                              $fileExtension = '.jpg';
+                        }
+
+                        $destinationImg = md5($this->_thisUserId). ".$fileExtension";      
+                        $photoDir = cRead('Application.upload.abs_profile_photos');
+                        if (!file_exists($photoDir)) {
+                              if (!mkdir($photoDir, 0777, true)) {
+                                    $this->sFlash("Insufficient Permissions while trying to create $photoDir", true);
+                                    return;
+                              }
+                        }
+
+                        @move_uploaded_file($photoField['tmp_name'], $photoDir . DS . $destinationImg);
+                        $urlPath = cRead('Application.upload.url_profile_photos').$destinationImg;
+                        $userTbData['image'] = $urlPath;
+                  }elseif($photoField['error']==0){
+
+                              $this->sFlash("Image Processing Error. Please try another image",true);
+                              return;
+                        }
+
+                  $this->User->updateUser($this->_thisUserId,$userTbData);
+                  
+                  $this->_refreshAuthenticatedUser();
+                  
+                  
+                  $this->miniFlash('Profile Updated','editProfile',true);
+                  
+            }elseif(empty($this->data)){
+                  
+                  $this->request->data['MyProfile'] = $userInfo['User'];
+                  $this->request->data['MyProfile']['profile_summary'] = $userInfo['Profile']['profile_summary'];
+                  
+                  
+            }
 
       }
 
