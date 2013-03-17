@@ -19,14 +19,15 @@ echo $this->element('breadcrumb');
                         echo $this->Form->create('MyProfile', array('type' => 'file'));
                         echo $this->element('form_validator');
                         echo $this->Form->input('name', array('label' => 'Display Name'));
-                        echo $this->Form->input('profile_summary', array('label' => 'A quick word about you', 'type' => 'textarea'));
+                        echo $this->Form->input('title', array('label' => 'Very short text about what you do<span>e.g I\'m a Designer, Developer &amp; Creative Writer</span>'));
+                        echo $this->Form->input('profile_summary', array('label' => 'More about you', 'type' => 'textarea'));
                         echo $this->Form->input('public_email', array('label' => 'Email <span>This will be displayed publicly.</span>'));
                         echo $this->Form->input('public_website', array('label' => 'Website'));
                         echo $this->Form->input('public_gplus', array('label' => 'Google+ ID<span>e.g 108000156525307744962</span>'));
                         echo $this->Form->input('public_twitter', array('label' => 'Twitter Handle<span>e.g dftaiwo</span>'));
                         echo $this->Form->input('public_skype', array('label' => 'Skype ID'));
 
-                        echo $this->Form->input('photo', array('type' => 'file', 'label' => 'Upload Photo'));
+                        echo $this->Form->input('photo', array('type' => 'file', 'label' => 'Upload Photo','accept'=>'image/jpeg'));
                         ?>
                         </li>
                         </ul>

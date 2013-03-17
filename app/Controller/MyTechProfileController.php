@@ -7,16 +7,17 @@
  */
 class MyTechProfileController extends AppController {
 
-      public $uses = array('Project', 'UsersSkill', 'User', 'Skillset', 'Project', 'Technology', 'Category', 'ProjectsTechnology', 'ProjectPhoto','SkillsetSubmission');
+      public $uses = array('Project', 'UsersSkill', 'User', 'Skillset', 'Project', 'Technology', 'Category', 'ProjectsTechnology', 'ProjectPhoto', 'SkillsetSubmission');
 
       public function index() {
             /** Show the users dashboard the same way the general public sees it */
             $userInfo = $this->User->getUserInfo($this->_thisUserId);
-
             $userSkillsets = $this->UsersSkill->getUserSkills($this->_thisUserId);
             $pendingSkillsets = $this->SkillsetSubmission->getPendingUserSubmissions($this->_thisUserId);
-            $myProjects = $this->Project->getUserProjects($this->_thisUserId,1);
-            $this->set(compact('userSkillsets', 'myProjects','pendingSkillsets','userInfo'));
+            $myProjects = $this->Project->getUserProjects($this->_thisUserId, 1);
+            $summarizeProfile = true;
+            $this->set(compact('userSkillsets', 'myProjects', 'pendingSkillsets', 'userInfo', 'summarizeProfile'));
+            
       }
 
       public function editSkills() {
@@ -25,43 +26,43 @@ class MyTechProfileController extends AppController {
                     'label' => 'My Dashboard',
                     'link' => 'index'
                 ),
-                
                 array(
                     'label' => 'Edit Skills',
                 )
             );
-             $this->set(compact('breadcrumbLinks'));
-            $this->set('usesAutocomplete',true);
+            $this->set(compact('breadcrumbLinks'));
+            $this->set('usesAutocomplete', true);
 
-             $rules = array(
-                 'Skills'=>array(
-                     'selSkills'=>array(
-                         FV_REQUIRED=>'You must specify at least one skill here to submit'
-                     )
-                 )
-             )     ;
-             $this->FormValidator->setRules($rules);
-             
+            $rules = array(
+                'Skills' => array(
+                    'selSkills' => array(
+                        FV_REQUIRED => 'You must specify at least one skill here to submit'
+                    )
+                )
+                    );
+            $this->FormValidator->setRules($rules);
+
             if (!empty($this->data) && $this->FormValidator->validate()) {
                   App::uses('Sanitize', 'Utility');
 
-                  
+
                   $submittedSkillsets = $this->data['Skills']['selSkills'];
-                  
+
                   $skillsProvided = explode(',', $submittedSkillsets);
                   $skillIds = array();
-                  $selectedSkilllSets  = $unidentifiedSkills = array();
+                  $selectedSkilllSets = $unidentifiedSkills = array();
                   foreach ($skillsProvided as $skill) {
 
-                        $skill = Sanitize::paranoid($skill,array(' ','.','(',')','-','_'));
+                        $skill = Sanitize::paranoid($skill, array(' ', '.', '(', ')', '-', '_'));
                         $skill = trim($skill);
-                        if(!$skill) continue;
-                        $skillId  = $this->Skillset->getSkillId($skill);
-                        if(!$skillId){
+                        if (!$skill)
+                              continue;
+                        $skillId = $this->Skillset->getSkillId($skill);
+                        if (!$skillId) {
                               $unidentifiedSkills[] = $skill;
                               $data = array(
-                                  'name'=>$skill,
-                                  'user_id'=>$this->_thisUserId
+                                  'name' => $skill,
+                                  'user_id' => $this->_thisUserId
                               );
                               $this->SkillsetSubmission->addSubmission($data);
                               continue;
@@ -69,8 +70,8 @@ class MyTechProfileController extends AppController {
                         $selectedSkilllSets[] = $skillId;
                   }
 
-                  
-                  
+
+
                   foreach ($selectedSkilllSets as $skillsetId) {
                         if (!$skillsetId)
                               continue;
@@ -86,19 +87,19 @@ class MyTechProfileController extends AppController {
                         $this->UsersSkill->save($data);
                   }
                   $message = 'Skills Updated';
-                  if($unidentifiedSkills){
-                        $unidentifiedSkills=join('<br /> - ',$unidentifiedSkills);
+                  if ($unidentifiedSkills) {
+                        $unidentifiedSkills = join('<br /> - ', $unidentifiedSkills);
                         $message.="<br />However, the following skills were not recognized and will be reviewed by our team prior to approval: <br /> - $unidentifiedSkills";
                   }
-                        
+
                   $this->miniFlash($message, 'index');
             }
 
-            
+
             $possibleSkills = $this->Skillset->listSkillsByName();
-            
-            $this->set('possibleSkills',$possibleSkills);
-            
+
+            $this->set('possibleSkills', $possibleSkills);
+
             $mySkillSets = $this->UsersSkill->getUserSkills($this->_thisUserId);
 
             $this->set('mySkillSets', $mySkillSets);
@@ -110,18 +111,17 @@ class MyTechProfileController extends AppController {
                     'label' => 'My Dashboard',
                     'link' => 'index'
                 ),
-             
                 array(
                     'label' => 'Post New Project',
                 )
             );
-             $this->set(compact('breadcrumbLinks'));
-            
+            $this->set(compact('breadcrumbLinks'));
+
             $totalProjects = $this->Project->countUserProjects($this->_thisUserId);
-            if($totalProjects>=cRead('Application.upload.max_projects')){
-                  $this->miniFlash("You have already added the maximum of $totalProjects projects on this platform",'index');
+            if ($totalProjects >= cRead('Application.upload.max_projects')) {
+                  $this->miniFlash("You have already added the maximum of $totalProjects projects on this platform", 'index');
             }
-            
+
             $rules = array('Project' => array(
                     'name' => array(
                         FV_REQUIRED => 'Missing Project Name',
@@ -154,15 +154,15 @@ class MyTechProfileController extends AppController {
 
                   $submittedProjectData = $this->data['Project'];
                   $projectUrl = '';
-                        if($submittedProjectData['project_url']){
-                              if (filter_var($submittedProjectData['project_url'], FILTER_VALIDATE_URL) !== false) {
-                                    $projectUrl  = $submittedProjectData['project_url'];
-                              }
+                  if ($submittedProjectData['project_url']) {
+                        if (filter_var($submittedProjectData['project_url'], FILTER_VALIDATE_URL) !== false) {
+                              $projectUrl = $submittedProjectData['project_url'];
                         }
+                  }
                   $projectData = array(
                       'name' => $submittedProjectData['name'],
                       'description' => $submittedProjectData['description'],
-                      'project_url' =>$projectUrl,
+                      'project_url' => $projectUrl,
                       'category_id' => $submittedProjectData['category_id'],
                       'created_by' => $this->_thisUserId,
                   );
@@ -231,7 +231,7 @@ class MyTechProfileController extends AppController {
             $projectInfo = $this->_getUserProject($projectId);
             $projectTechs = $this->ProjectsTechnology->listProjectTech($projectId);
             $projectPhotos = $this->ProjectPhoto->getProjectPhotos($projectId);
-             $breadcrumbLinks = array(
+            $breadcrumbLinks = array(
                 array(
                     'label' => 'My Dashboard',
                     'link' => 'index'
@@ -246,8 +246,8 @@ class MyTechProfileController extends AppController {
                     'link' => 'addProject',
                 )
             );
-             $this->set(compact('projectInfo','projectPhotos','projectTechs','breadcrumbLinks'));
-      
+            $this->set(compact('projectInfo', 'projectPhotos', 'projectTechs', 'breadcrumbLinks'));
+
             if (count($projectPhotos) < cRead('Application.upload.max_project_photos') && !empty($this->data) && isset($this->data['ProjectPhoto']['upload'])) {
                   $imagesSaved = 0;
                   $photoFields = array_key_exists('photos', $this->data) ? $this->data['photos'] : array();
@@ -308,10 +308,10 @@ class MyTechProfileController extends AppController {
       }
 
       function editProject($projectId = 0) {
-            
+
             $projectInfo = $this->_getUserProject($projectId);
             $this->set('projectInfo', $projectInfo);
-            
+
             $breadcrumbLinks = array(
                 array(
                     'label' => 'My Dashboard',
@@ -327,9 +327,9 @@ class MyTechProfileController extends AppController {
                     'link' => 'addProject',
                 )
             );
-            
+
             $this->set(compact('breadcrumbLinks'));
-            
+
             $currentTechs = $this->ProjectsTechnology->getProjectTech($projectId);
 
             $rules = array('Project' => array(
@@ -359,12 +359,12 @@ class MyTechProfileController extends AppController {
 
                         $submittedProjectData = $this->data['Project'];
                         $projectUrl = '';
-                        if($submittedProjectData['project_url']){
+                        if ($submittedProjectData['project_url']) {
                               if (filter_var($submittedProjectData['project_url'], FILTER_VALIDATE_URL) !== false) {
-                                    $projectUrl  = $submittedProjectData['project_url'];
+                                    $projectUrl = $submittedProjectData['project_url'];
                               }
                         }
-                  
+
                         $projectData = array(
                             'name' => $submittedProjectData['name'],
                             'description' => $submittedProjectData['description'],
@@ -462,92 +462,108 @@ class MyTechProfileController extends AppController {
             $this->ProjectPhoto->delete($photoId);
             $this->miniFlash("Photo Deleted", "viewProject/$projectId", true);
       }
-      
-      public function removeSkill($skillId=0) {
-      
-            if(!$this->Skillset->exists($skillId)){
+
+      public function removeSkill($skillId = 0) {
+
+            if (!$this->Skillset->exists($skillId)) {
                   $this->miniFlash('Not found', 'editSkills');
             }
-            
-            $this->UsersSkill->removeSkill($this->_thisUserId,$skillId);
+
+            $this->UsersSkill->removeSkill($this->_thisUserId, $skillId);
             $this->miniFlash('Skills Updated', 'editSkills');
-
-
       }
+
       public function editProfile() {
-             $breadcrumbLinks = array(
+            $breadcrumbLinks = array(
                 array(
                     'label' => 'My Dashboard',
                     'link' => 'index'
                 ),
-             
                 array(
                     'label' => 'Update Public Profile',
                 )
             );
-             
+
             $userInfo = $this->User->getUserInfo($this->_thisUserId);
-            $this->set(compact('breadcrumbLinks','userInfo'));
+            $this->set(compact('breadcrumbLinks', 'userInfo'));
 
             $rules = array(
-               'MyProfile'=>array(
-                   'name'=>array(
-                       FV_REQUIRED=>'Your name is required',
-                       FV_MIN_LENGTH=>array('error'=>'Your name cannot be shorter than 3 characters','param'=>3),
-                       FV_MAX_LENGTH=>array('error'=>'Your name cannot be longer than 60 characters','param'=>50),
-                       ),
-                   'public_email'=>array(
-                       FV_EMPTY_OR_EMAIL=>'Invalid Email',
-                       ),
-                   'public_website'=>array(
-                       FV_URL_OR_EMPTY=>'Invalid Website URL. Please include http:// or https:// as appropriate',
-                        ),
-                   'public_gplus'=>array(
-                       FV_NUMERIC_OR_EMPTY=>'Invalid Google ID. It should only contain numbers',
-                        ),
-                   'public_twitter'=>array(
-                       FV_ALPHANUMERIC_OR_EMPTY=>'Invalid Twitter Handle. It should only contain letters and numbers',
-                        ),
-                   'public_skype'=>array(
-                       FV_ALPHANUMERIC_OR_EMPTY=>'Invalid Skype ID. It should only contain letters and numbers',
-                        ),
-                   
-               ) 
+                'MyProfile' => array(
+                    'name' => array(
+                        FV_REQUIRED => 'Your name is required',
+                        FV_MIN_LENGTH => array('error' => 'Your name cannot be shorter than 3 characters', 'param' => 3),
+                        FV_MAX_LENGTH => array('error' => 'Your name cannot be longer than 60 characters', 'param' => 50),
+                    ),
+                    'title'=>array(
+                       FV_REQUIRED => 'The short text is required',
+                        FV_MIN_LENGTH => array('error' => 'Your short text cannot be shorter than 10 characters', 'param' => 10), 
+                        FV_MAX_LENGTH => array('error' => 'Your short text cannot be longer than 60 characters', 'param' => 60), 
+                    ),
+                    'public_email' => array(
+                        FV_EMPTY_OR_EMAIL => 'Invalid Email',
+                    ),
+                    'public_website' => array(
+                        FV_URL_OR_EMPTY => 'Invalid Website URL. Please include http:// or https:// as appropriate',
+                    ),
+                    'public_gplus' => array(
+                        FV_NUMERIC_OR_EMPTY => 'Invalid Google ID. It should only contain numbers',
+                    ),
+                    'public_twitter' => array(
+                        FV_ALPHANUMERIC_OR_EMPTY => 'Invalid Twitter Handle. It should only contain letters and numbers',
+                    ),
+                    'public_skype' => array(
+                        FV_ALPHANUMERIC_OR_EMPTY => 'Invalid Skype ID. It should only contain letters and numbers',
+                    ),
+                )
             );
-            
-            $this->FormValidator->setRules($rules);
-            
-            if(!empty($this->data) && $this->FormValidator->validate()){
-                  
-                  $subData = $this->data['MyProfile'];
-                  $expectedFields = array(
-                     'name','public_email','public_website','public_gplus','public_twitter','public_skype','mobiles'
-                  );
-                  $userTbData =array();
-                  foreach($expectedFields as $field){
-                        
-                        $userTbData[$field] = isset($subData[$field])? $subData[$field]:'';
-                        
-                  }
-                  if(isset($subData['profile_summary'])){
-                        $data = array(
-                            'profile_summary'=>$subData['profile_summary']
-                        );
-                        $this->User->Profile->updateUserProfile($this->_thisUserId,$data);
-                  }
-              
-                  $photoField  = isset($subData['photo'])? $subData['photo']:false;
-          
-                  if (is_array($photoField) && $photoField['error'] == 0  && getimagesize($photoField['tmp_name'])){
-                         $fileParts = explode('.', $photoField['name']);
 
-                        if (count($fileParts) >= 2){
-                              $fileExtension = array_pop($fileParts);
+            $this->FormValidator->setRules($rules);
+
+            if (!empty($this->data) && $this->FormValidator->validate()) {
+
+                  $subData = $this->data['MyProfile'];
+
+                  $expectedFields = array(
+                      'name', 'public_email', 'public_website', 'public_gplus', 'public_twitter', 'public_skype', 'mobiles'
+                  );
+                  $userTbData = array();
+                  
+                  App::uses('Sanitize', 'Utility'); 
+                  
+                   
+                  foreach ($expectedFields as $field) {
+                        
+                        if($field=='public_website' || $field=='public_email'){
+                              $allowChars = array(':','/','?','=','@',' ', '.', '(', ')', '-', '_');
                         }else{
+                              $allowChars =  array(' ', '.', '(', ')', '-', '_');
+                        }
+                        $userTbData[$field] = isset($subData[$field]) ? Sanitize::paranoid($subData[$field],$allowChars) : '';
+
+                  }
+                  $profileFields = array(
+                      'profile_summary', 'title'
+                  );
+                  $profileTbData = array();
+                  foreach ($profileFields as $field) {
+
+                        $profileTbData[$field] = isset($subData[$field]) ? Sanitize::paranoid($subData[$field], array(' ', '.', '(', ')', '-', '_')) : '';
+                  }
+
+                  $this->User->Profile->updateUserProfile($this->_thisUserId, $profileTbData);
+
+                  $photoField = isset($subData['photo']) ? $subData['photo'] : false;
+
+                  if (is_array($photoField) && $photoField['error'] == 0 && getimagesize($photoField['tmp_name'])) {
+                        $fileParts = explode('.', $photoField['name']);
+
+                        if (count($fileParts) >= 2) {
+                              $fileExtension = array_pop($fileParts);
+                        } else {
                               $fileExtension = '.jpg';
                         }
 
-                        $destinationImg = md5($this->_thisUserId). ".$fileExtension";      
+                        $destinationImg = md5($this->_thisUserId) . ".$fileExtension";
                         $photoDir = cRead('Application.upload.abs_profile_photos');
                         if (!file_exists($photoDir)) {
                               if (!mkdir($photoDir, 0777, true)) {
@@ -557,30 +573,23 @@ class MyTechProfileController extends AppController {
                         }
 
                         @move_uploaded_file($photoField['tmp_name'], $photoDir . DS . $destinationImg);
-                        $urlPath = cRead('Application.upload.url_profile_photos').$destinationImg;
+                        $urlPath = cRead('Application.upload.url_profile_photos') . $destinationImg;
                         $userTbData['image'] = $urlPath;
-                  }elseif($photoField['error']==0){
+                  } elseif ($photoField['error'] == 0) {
 
-                              $this->sFlash("Image Processing Error. Please try another image",true);
-                              return;
-                        }
+                        $this->sFlash("Image Processing Error. Please try another image", true);
+                        return;
+                  }
 
-                  $this->User->updateUser($this->_thisUserId,$userTbData);
-                  
+                  $this->User->updateUser($this->_thisUserId, $userTbData);
+
                   $this->_refreshAuthenticatedUser();
-                  
-                  
-                  $this->miniFlash('Profile Updated','editProfile',true);
-                  
-            }elseif(empty($this->data)){
-                  
-                  $this->request->data['MyProfile'] = $userInfo['User'];
-                  $this->request->data['MyProfile']['profile_summary'] = $userInfo['Profile']['profile_summary'];
-                  
-                  
-            }
 
+                  $this->miniFlash('Profile Updated', 'editProfile', true);
+            } elseif (empty($this->data)) {
+
+                  $this->request->data['MyProfile'] = array_merge($userInfo['User'], $userInfo['Profile']);
+            }
       }
 
-      
 }

@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
+        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/Controller/MyTechProfileController.php</file>
+        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/Controller/DController.php</file>
+        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/View/D/index.ctp</file>
+        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/View/D/v.ctp</file>
+        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/View/MyTechProfile/index.ctp</file>
+        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/webroot/css/style.css</file>
+        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/View/Elements/user/contact_prop.ctp</file>
+        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/View/MyTechProfile/edit_profile.ctp</file>
+        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/View/Elements/user/profile.ctp</file>
+    </open-files>
 </project-private>
