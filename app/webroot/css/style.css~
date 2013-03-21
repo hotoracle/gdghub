@@ -251,7 +251,7 @@ h1.questionTitle{
       margin:6px 0px 6px 10px;
 }
 
-.postedQuestion {
+.postedQuestion .postedJob{
       padding:4px;
       padding-bottom:16px;
       margin:6px 0px 6px 10px;
