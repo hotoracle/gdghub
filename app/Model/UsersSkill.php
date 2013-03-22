@@ -63,4 +63,19 @@ class UsersSkill extends AppModel {
               $this->deleteAll($conditions);
               
         }
+        
+         function listSkillsWithStats(){
+                
+                $this->virtualFields = array('qcount'=>'COUNT(*)');
+                $results = $this->find('all',array(
+                    'fields'=>array('Skillset.id','Skillset.name', 'qcount'),
+                'group'=>array('UsersSkill.skillset_id'),
+                    'order'=>array('qcount'=>'DESC','Skillset.name')
+                        )
+                );
+                
+              return $results;
+                
+                
+        }
 }

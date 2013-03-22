@@ -10,7 +10,7 @@
 <a href="<?php echo $this->Html->url("/Developers/viewProfile/{$user['id']}",true); ?>">
         <?php 
         if(!isset($noPhoto) || (isset($noPhoto) && $noPhoto==false)){
-                $imageUrl = (isset($user['image']) && $user['image'])? $user['image']:'gravatar.gif';
+                $imageUrl = (isset($user['image']) && $user['image'])? $user['image']:cRead('Application.default_avatar');
                 echo $this->Html->image($imageUrl, array('width'=>64,'alt'=>$user['name'],'align'=>'right','class'=>'gravatar-small')); 
         }
         echo $user['name']; ?>

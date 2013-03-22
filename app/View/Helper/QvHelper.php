@@ -20,10 +20,14 @@ class QvHelper extends AppHelper {
       function shortenText($text, $maxLength = 350) {
 
             $text = strip_tags($text);
+            $suffix='';
+            if(strlen($text)>$maxLength){
+                  $suffix=' ...';
+            }
             $text = substr($text, 0, $maxLength);
             $textParts = explode(' ', $text);
             array_pop($textParts);
-            $text = join(' ', $textParts) . ' ...';
+            $text = join(' ', $textParts) .$suffix;
 
             return $text;
       }

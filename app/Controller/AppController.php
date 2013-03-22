@@ -66,6 +66,18 @@ class AppController extends Controller {
         function _getAuthedUser() {
                 return $this->Auth->user();
         }
+        function _refreshAuthenticatedUser() {
+                
+              if(!isset($this->User)){
+                    App::import('Model','User');
+                    $u = new User();
+                    $this->User= $u;
+                    
+              }
+              $userInfo = $this->User->getUserInfo($this->_thisUserId);
+               $this->Auth->login($userInfo);
+              
+        }
 
         //This should ensure that the user is logged in
         function _requireAuth() {

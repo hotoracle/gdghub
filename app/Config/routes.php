@@ -28,6 +28,7 @@
  */
 //Router::connect('/', array('controller' => 'pages', 'action' => 'home'));
 Router::connect('/', array('controller' => 'Dashboard', 'action' => 'index'));
+Router::connect('/Developers/viewProfile/*', array('controller' => 'D','action'=>'v'));
 
 /* Route example */
 //Router::connect('/home', array('controller' => 'users', 'action' => 'home'));

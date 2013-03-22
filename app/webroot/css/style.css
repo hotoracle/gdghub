@@ -133,12 +133,13 @@ footer{
 }
 
 label{
-      font-weight:300;
-
+      font-weight:400;
 }
 label span{
       font-style: italic;
       display:block;
+      font-size:0.9em;
+      font-weight:200;
 }
 
 .fullWidth input,.fullWidth textarea,.fullWidth select{
@@ -184,7 +185,7 @@ h1.questionTitle{
       box-shadow: 1px 1px 2px #eee;
 
 }
-.clear{
+.clear,.clearDiv{
       clear:both;
 }
 
@@ -241,7 +242,7 @@ h1.questionTitle{
       font-weight:bold;
 }
 
-.postedAnswers .postedAnswer:nth-of-type(even), .postedQuestions .postedQuestion:nth-of-type(even) {
+.postedAnswers .postedAnswer:nth-of-type(even), .postedQuestions .postedQuestion:nth-of-type(even), .postedJobs .postedJobs:nth-of-type(even) {
       background:#f9f9f9;  
 }
 
@@ -251,14 +252,14 @@ h1.questionTitle{
       margin:6px 0px 6px 10px;
 }
 
-.postedQuestion{
+.postedQuestion {
       padding:4px;
       padding-bottom:16px;
       margin:6px 0px 6px 10px;
       border:1px solid #eee;
 
 }
-.postedQuestion .questionTitle{
+.postedQuestion .questionTitle .postedJob{
       font-weight:500;
       font-size:1.1em;
       display:block;
@@ -423,6 +424,10 @@ input.searchBox:focus{
       margin:4px;
 
 }
+.userSkills span em{
+ vertical-align: super;
+ font-size:0.8em;
+}
 .pendingUserSkills span{
       padding:2px;
       background:#9955ff;
@@ -465,4 +470,33 @@ input.searchBox:focus{
 .thumbActions{
       font-size:0.7em;
       margin:0;   
+}
+
+
+.profileProp li{
+      list-style:none;
+      margin-bottom:6px;
+}
+
+.bold{
+      font-weight:400;
+}
+.profileThumbs img{
+
+}
+.profileThumbs a:hover{
+      text-decoration: none;
+}
+.profileThumbs span.title{
+      color:#888;
+      font-style: italic;
+}
+.profileThumbs span.name{
+      font-weight:300;
+}
+
+.profileThumbs li{
+            box-shadow: 0px 0px 4px #ccc;
+            padding:4px;
+            border-radius: 2px;
 }
