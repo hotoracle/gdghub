@@ -424,6 +424,10 @@ input.searchBox:focus{
       margin:4px;
 
 }
+.userSkills span em{
+ vertical-align: super;
+ font-size:0.8em;
+}
 .pendingUserSkills span{
       padding:2px;
       background:#9955ff;

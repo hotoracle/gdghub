@@ -10,6 +10,7 @@
         <file>file:/Library/WebServer/Documents/gdg/gdghub/app/webroot/css/style.css</file>
         <file>file:/Library/WebServer/Documents/gdg/gdghub/app/View/Elements/user/contact_prop.ctp</file>
         <file>file:/Library/WebServer/Documents/gdg/gdghub/app/View/MyTechProfile/edit_profile.ctp</file>
-        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/View/Elements/user/profile.ctp</file>
+        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/Controller/MyProfileController.php</file>
+        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/View/Elements/paginator.ctp</file>
     </open-files>
 </project-private>

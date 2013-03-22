@@ -8,9 +8,12 @@ echo $this->element('breadcrumb');
 ?>
 <div class="row">
       <div class="span3">
-            <div class="bordered">
+            <div class="bordered userSkills">
+                  <?php foreach($skillsStats as $skillStat){ ?>
+                  <a href="#"><span>&Because; <?php echo $skillStat['Skillset']['name']; ?><em> x <?php echo $skillStat['UsersSkill']['qcount']; ?></em>                                     </span></a>
 
-
+                  <?php } ?>
+                  <div class="clearDiv"></div>
             </div>
       </div>
       <div class="span9">

@@ -27,7 +27,10 @@ class DController extends AppController{
             //@dft
             $users = $this->paginate('User');
             $this->set('users',$users);
-            
+            $skillsStats  = $this->UsersSkill->listSkillsWithStats();
+            $this->set('skillsStats',$skillsStats);
+
+//            pr($skillsStats);
             
       }
       
