@@ -1,51 +1,49 @@
 <?php
-
 /**
-  Filename: edit_skills.ctp 
+  Filename: ask.ctp
   @author: Femi TAIWO [dftaiwo@gmail.com]
-  Created: Mar 12, 2013  7:20:31 PM
+  Created: Feb 12, 2013  6:43:00 PM
  */
-echo $this->element('breadcrumb');
 ?>
+<div>
 
-<div class="row">
+      <h1>Post A Job</h1>
+      <div class="floatRight"><?php echo $this->Html->link('Browse Jobs', 'index'); ?></div>
+      <p>
+            This portion should explain the rules and provide tips for posting jobs.
+      </p>
+      <div class="row">
+            <div class="span7 bordered shadowed fullWidth">        
 
-        <div class="span9">
-                <div class="alert alert-info">
-                      <h4>Specify your skills below</h4>
-                      
-                </div>
-              <p>There's a comprehensive list of relevant tech skills in our database, but it is not exhaustive. <br />
-                            If you specify a skill/knowledge area that we do not yet have, we will save it but it  will only be displayed on your profile and on the platform after we verify that such a skill exists. <br /> We are doing this to make sure the platform is as clean and usable as possible.
-                      </p>
-<?php echo $this->Form->create('Skills'); ?>
-                      <?php echo $this->element('form_validator'); ?>
+                  <?php echo $this->Form->create('Post'); ?>
+                  <?php echo $this->element('form_validator'); ?>
+                  <?php echo $this->Form->input('title'); ?>
+
+                  <?php echo $this->Form->input('description', array('type' => 'textarea', 'rows' => 10, 'required')); ?>
               <div class="fullWidth">
-<?php echo $this->Form->input('selSkills',array('id'=>'selSkills','label'=>'Enter Skills Below','required')); ?>
+<?php echo $this->Form->input('selSkills',array('id'=>'selSkills','label'=>'Enter Required Skills Below','required')); ?>
               </div>
                <span id="searchLog"></span>
-                <div id="selectedSkills" class="userSkills">
-                      <div class="userSkills">
-                        <?php
-                        foreach ($mySkillSets as $skillRow) {
-                              ?><span>&Because;<?php echo $skillRow['Skillset']['name']; ?>
-                              <?php echo $this->Html->link('[x]',"removeSkill/{$skillRow['Skillset']['id']}"); ?>
-                              </span>
-                                    <?php
-                              }
-                              ?></div>
-
-                        <div class="clear"></div>
-                        <p>&nbsp;</p>
-                       
-                </div>
-                <div class="clear"></div>
-<?php echo $this->Form->submit('Update',array('div'=>false,'class'=>'btn wideBtn')); ?>&nbsp;<?php
-                echo $this->Html->link('Cancel & Return','index',array('class'=>'btn wideBtn')); 
-?>
-<?php echo $this->Form->end(); ?>
+<!--
+                  <div class="ui-widget">
+                <?php echo $this->Form->input('tags', array('id' => 'tags', 'label' => 'Tags <span class="smaller">Used to identity technologies, platforms and products. Separate different tags using commas</span>')); ?> 
         </div>
+-->
+                  <?php echo $this->Form->submit('Submit'); ?>
+                  <?php echo $this->Form->end(); ?>
+            </div>
+            <div class="span4 bordered shadowed">
+
+                  Provide context sensitive help/tips here
+
+            </div>
+      </div>
 </div>
+
+<?php echo $this->element("questions/insert_code"); ?>
+<script>
+
+</script>
 
 <script>
         $(function() {
