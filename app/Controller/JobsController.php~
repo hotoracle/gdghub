@@ -259,13 +259,17 @@ class JobsController extends AppController {
 
             $this->set(compact('jobId', 'jobSlug', 'job'));
 
-            if (!$this->_thisUserId)
-                  return;
+  //          if (!$this->_thisUserId)
+    //              return;
            // if ($question['Question']['flag'] == 0) {
            //       $this->postResponse($questionId, $questionSlug); //To set values into form
            // }
             $highlighterSettings = cRead('syntaxHighlighter');
             $this->set('codeTypes', $highlighterSettings['supportedTypes']);
+
+	  $jobSkillSets = $this->JobsSkillsets->getJobSkills($jobId);
+ 
+          $this->set('jobSkillSets', $jobSkillSets);
       }
 
 }

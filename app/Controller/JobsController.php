@@ -259,8 +259,6 @@ class JobsController extends AppController {
 
             $this->set(compact('jobId', 'jobSlug', 'job'));
 
-            if (!$this->_thisUserId)
-                  return;
            // if ($question['Question']['flag'] == 0) {
            //       $this->postResponse($questionId, $questionSlug); //To set values into form
            // }
