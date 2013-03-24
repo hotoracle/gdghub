@@ -6,4 +6,5 @@ app/[Cc]onfig/core.php
 app/[Cc]onfig/database.php
 app/[Cc]onfig/email.php
 app/webroot/uploads/*
+app/webroot/cache/*
 !empty

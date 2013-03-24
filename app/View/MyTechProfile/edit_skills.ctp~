@@ -27,7 +27,7 @@ echo $this->element('breadcrumb');
                 <div id="selectedSkills" class="userSkills">
                       <div class="userSkills">
                         <?php
-                        foreach ($mySkillSets as $skillRow) {
+                        foreach ($mySkillSetsd as $skillRow) {
                               ?><span>&Because;<?php echo $skillRow['Skillset']['name']; ?>
                               <?php echo $this->Html->link('[x]',"removeSkill/{$skillRow['Skillset']['id']}"); ?>
                               </span>

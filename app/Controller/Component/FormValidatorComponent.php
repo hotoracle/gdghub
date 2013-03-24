@@ -12,13 +12,16 @@ define('FV_EMAIL', 'email');
 define('FV_EMPTY_OR_EMAIL', 'empty_or_email');
 define('FV_DATE', 'date');
 define('FV_NUMERIC', 'numeric');
+define('FV_NUMERIC_OR_EMPTY', 'numeric_or_empty');
 define('FV_ALPHANUMERIC', 'alphanum');
+define('FV_ALPHANUMERIC_OR_EMPTY', 'alphanum_or_empty');
 define('FV_DOUBLE', 'double');
 define('FV_ALPHA', 'alpha');
 define('FV_RANGE', 'range');
 define('FV_MIN_LENGTH', 'minlength');
 define('FV_MAX_LENGTH', 'maxlength');
 define('FV_URL', 'website');
+define('FV_URL_OR_EMPTY', 'website_or_empty');
 
 class FormValidatorComponent extends Component {
 
@@ -137,6 +140,12 @@ class FormValidatorComponent extends Component {
                                                                                                         $continueValidation = $this->_testEmail($elementValue);
                                                                                                 }
                                                                                                 break;
+                                                                                        case FV_NUMERIC_OR_EMPTY:
+                                                                                                $continueValidation = true;
+                                                                                                if ($elementValue) {
+                                                                                                        $continueValidation = $this->_testNumeric($elementValue);
+                                                                                                }
+                                                                                                break;
 
                                                                                         case FV_NUMERIC:
 
@@ -149,11 +158,19 @@ class FormValidatorComponent extends Component {
                                                                                                 $continueValidation = $this->_testAlphaNumeric($elementValue);
 
                                                                                                 break;
+                                                                                           case FV_ALPHANUMERIC_OR_EMPTY:
+                                                                                                //strictly alphabets+-numbers or empty!
+                                                                                               $continueValidation = true;
+                                                                                                if ($elementValue) {
+                                                                                                      $continueValidation = $this->_testAlphaNumeric($elementValue);
+                                                                                                }
+                                                                                                break;
                                                                                         case FV_ALPHA:
                                                                                                 //strictly alphabets!
                                                                                                 $continueValidation = $this->_testAlpha($elementValue);
 
                                                                                                 break;
+                                                                                       
                                                                                         case FV_MIN_LENGTH:
                                                                                                 //for tihs rule, we need a param that would tell us the expected minimum length
                                                                                                 if (is_array($errMessage)) {
@@ -209,6 +226,12 @@ class FormValidatorComponent extends Component {
                                                                                                 break;
                                                                                         case FV_URL:
                                                                                                 $continueValidation = $this->_testUrl($elementValue);
+                                                                                                break;
+                                                                                        case FV_URL_OR_EMPTY:
+                                                                                              $continueValidation = true;
+                                                                                              if($elementValue){
+                                                                                                $continueValidation = $this->_testUrl($elementValue);
+                                                                                              }
                                                                                                 break;
                                                                                         default:
                                                                                                 $continueValidation = false;
@@ -375,9 +398,11 @@ class FormValidatorComponent extends Component {
         }
 
         function _testUrl($value) {
-
-
-                return true;
+              
+              return filter_var($value, FILTER_VALIDATE_URL);
+              
+            //  $v = "/^(http|https|ftp):\/\/([A-Z0-9][A-Z0-9_-]*(?:\.[A-Z0-9][A-Z0-9_-]*)+):?(\d+)?\/?/i";
+            //return (bool)preg_match($v, $URL);
         }
 
 }

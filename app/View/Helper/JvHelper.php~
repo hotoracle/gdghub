@@ -5,7 +5,7 @@
   @author: Femi TAIWO [dftaiwo@gmail.com]
   Created: Feb 14, 2013  5:54:54 PM
  */
-class QvHelper extends AppHelper {
+class JvHelper extends AppHelper {
 
       /**
        * Return a human-friendly time
@@ -20,24 +20,21 @@ class QvHelper extends AppHelper {
       function shortenText($text, $maxLength = 350) {
 
             $text = strip_tags($text);
-            $suffix='';
-            if(strlen($text)>$maxLength){
-                  $suffix=' ...';
-            }
             $text = substr($text, 0, $maxLength);
             $textParts = explode(' ', $text);
             array_pop($textParts);
-            $text = join(' ', $textParts) .$suffix;
+            $text = join(' ', $textParts) . ' ...';
 
             return $text;
       }
-
+/*
       function highlight($rawHtml='') {
             require_once(APP.'Vendor/simple_html_dom.php');
             $r = str_get_html($rawHtml);
-            $r->set_callback('highlightSnippets');
+       //     $r->set_callback('highlightSnippets');
             return $r;
       }
+*/
       function highlightSnippets($rawHtml='') {
             return $this->highlight($rawHtml);
       }

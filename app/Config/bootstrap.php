@@ -295,10 +295,15 @@ Configure::write('Application.MailConfig',array(
     
 ));
 
+Configure::write('Application.upload.abs_profile_photos',APP.'webroot'.DS.'uploads'.DS.'profiles');
+Configure::write('Application.upload.url_profile_photos','/uploads/profiles/');
+
 Configure::write('Application.upload.abs_projects',APP.'webroot'.DS.'uploads'.DS.'projects');
 Configure::write('Application.upload.url_projects','/uploads/projects/');
 Configure::write('Application.upload.max_project_photos',4);
 Configure::write('Application.upload.max_projects',25);
+Configure::write('Application.default_avatar','gravatar.gif');
+Configure::write('Application.default_avatar_large','/img/gravatar_256.jpg');
     
 //CakePlugin::load('DebugKit');
 /**

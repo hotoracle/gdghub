@@ -24,11 +24,43 @@
       <p class="lead"><a href="<?php echo $this->Html->url('/Questions'); ?>">Do you have a question?<br />Get answers from Experts in the Community.</a></p>
       
 </div>
-<div class="bordered alignCenter" id="sideProfiles">
-      <h3>Tech Profiles</h3>
-      <p class="lead">
-            <a class="textLikeLink" href="<?php echo $this->Html->url('/MyTechProfile'); ?>">Are you listed?</a></p>
-      
+<div class="bordered bordered-light alignCenter">
+      <div class="" id="listedQuestion">
+            <?php echo $this->Html->link('Are you listed?','/MyTechProfile',array('id'=>'textLikeLink')); ?>
+            
+      </div>
+      <?php if(isset($randomSkills) && $randomSkills){ ?>
+            <?php foreach($randomSkills as $row){ ?>
+            <div class="bordered">
+                  <span class="skillItem"><?php echo $this->Html->link($row['Skillset']['name'],'/D/index/skill:'.$row['Skillset']['id'],array('class'=>'white')); ?></span>
+                  
+                        <ul class="thumbnails">
+
+            <?php foreach($row['Users'] as $user){ ?>
+            
+            <li class="thumbnail">
+                        <?php echo $this->element('user/basic', array('user' => $user['User'])); ?>
+            </li>
+            <?php } ?>
+                  </ul>
+            </div>
+            <?php } ?>
+                        <?php echo $this->Html->link('View All',"/D") ;?>
+
+      <?php } ?>
+      <hr />
+      <?php if(isset($skillsStats) && $skillsStats){ ?>
+      <div class="userSkills">
+                  <?php foreach($skillsStats as $skillStat){ 
+                        
+                        $rLink = $this->Html->url("index/skill:{$skillStat['Skillset']['id']}");
+                        ?>
+                  <a href="<?php echo $rLink; ?>"><span>&Because; <?php echo $skillStat['Skillset']['name']; ?><em> x <?php echo $skillStat['UsersSkill']['qcount']; ?></em></span></a>
+                  <?php } ?>
+                  <div class="clearDiv"></div>
+            </div>
+                  <?php } ?>
+
 </div>
 
 <div id="gplusActivities" class="bordered">
