@@ -9,7 +9,6 @@
 class DController extends AppController{
       
       
-      
        public $uses = array('Project', 'UsersSkill', 'User', 'Skillset', 'Project', 'Technology', 'Category', 'ProjectsTechnology', 'ProjectPhoto');
       
       function beforeFilter(){
@@ -25,7 +24,19 @@ class DController extends AppController{
             $this->set(compact('breadcrumbLinks'));
             //I have to find a smart way to do this 16-03-2013
             //@dft
-            $users = $this->paginate('User');
+            $conditions = array();
+            if(isset($this->params['named']['skill'])){
+                  
+                  $skillId = $this->params['named']['skill'];
+                  
+                  $skillSet  = $this->Skillset->read(array('Skillset.id','Skillset.name'),$skillId);
+                  $this->set('chosenSkillSet',$skillSet) ;     
+                  if($skillSet){
+                        $conditions['User.id'] = $this->UsersSkill->listUserIds($skillId);     
+                  }
+                  
+            }
+            $users = $this->paginate('User',$conditions);
             $this->set('users',$users);
             $skillsStats  = $this->UsersSkill->listSkillsWithStats();
             $this->set('skillsStats',$skillsStats);

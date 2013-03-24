@@ -9,15 +9,26 @@ echo $this->element('breadcrumb');
 <div class="row">
       <div class="span3">
             <div class="bordered userSkills">
-                  <?php foreach($skillsStats as $skillStat){ ?>
-                  <a href="#"><span>&Because; <?php echo $skillStat['Skillset']['name']; ?><em> x <?php echo $skillStat['UsersSkill']['qcount']; ?></em>                                     </span></a>
-
+                  <?php foreach($skillsStats as $skillStat){ 
+                        
+                        $rLink = $this->Html->url("index/skill:{$skillStat['Skillset']['id']}");
+                        ?>
+                  <a href="<?php echo $rLink; ?>"><span>&Because; <?php echo $skillStat['Skillset']['name']; ?><em> x <?php echo $skillStat['UsersSkill']['qcount']; ?></em></span></a>
                   <?php } ?>
                   <div class="clearDiv"></div>
             </div>
       </div>
       <div class="span9">
             <div class="bordered">
+                  <?php if(isset($chosenSkillSet) && $chosenSkillSet){ ?>
+                  <div class="bordered userSkills">
+                        <a href=""><span>&Because; <?php echo $chosenSkillSet['Skillset']['name']; ?></span></a> |                                     <?php echo $this->Html->link('Remove Filter','index',array('class'=>'btn')); ?>
+
+                  <div class="clearDiv"></div>
+
+                  </div>
+                  <?php } ?>
+
                   <ul class="profileThumbs thumbnails">
                         <?php for ($i = 0; $i < 4; $i++) { ?>
                               <?php

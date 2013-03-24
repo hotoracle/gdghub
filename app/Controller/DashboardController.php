@@ -11,7 +11,7 @@
 
 class DashboardController extends AppController{
         
-        public $uses = array('Article');
+        public $uses = array('Article','UsersSkill');
         public $paginate =array(
            'Article'=>array(
                'order'=>array('Article.sort_order'=>'ASC','Article.id'=>'DESC'),
@@ -31,7 +31,18 @@ class DashboardController extends AppController{
         function index(){
                 
                 $publishedArticles = $this->paginate('Article',array('Article.published'=>1));
-                $this->set(compact('publishedArticles'));
+                $skillsStats  = $this->UsersSkill->listSkillsWithStats();
+                $randomEntries = array_rand($skillsStats,2);
+                
+                $randomSkills = array();
+                $i= 0;
+                foreach($randomEntries as $index){
+                      $randomSkills[$i]['Skillset'] = $skillsStats[$index]['Skillset'];
+                      $randomSkills[$i]['Users']= $this->UsersSkill->getRandomUsers('6d3c3ea0-23d4-11e2-a5fb-7f3382f33e5b',2);
+                      $i++;
+                }
+                
+                $this->set(compact('publishedArticles','randomSkills'));
         }
         
         function getFeed($feedId=0){
@@ -59,7 +70,7 @@ class DashboardController extends AppController{
                 $now = time();
                 if($gplusActivity){
                         $storedAt  = $this->Session->read('page_gplus_stored');
-                        if($storedAt+900<$now){
+                        if($storedAt+1800<$now){
                                 $gplusActivity=false;
                         }
                 }

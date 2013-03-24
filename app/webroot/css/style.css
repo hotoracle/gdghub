@@ -324,6 +324,25 @@ h3 span{
 .bigger{
       font-size:1.2em;
 }
+.larger{
+      font-size:1.8em;
+      font-weight:bold;
+      padding:4px;
+}
+
+#listedQuestion{
+   background:#ff8833;
+   color:#fff;
+   font-size:1.8em;
+   padding:8px;
+   margin-bottom: 5px;
+   
+}
+#listedQuestion a{
+ color:#fff;
+ display:block;
+ text-shadow: 1px 1px 2px #555;
+}
 
 .miniPosted{
       color:#999;
@@ -380,7 +399,7 @@ input.searchBox:focus{
       display:block;
 }
 #sideProfiles{
-      background:#a6c18a;
+      background:#000;
       margin-bottom:10px;
       border:0px ;
       text-shadow: 1px 1px 2px #333;
@@ -424,9 +443,29 @@ input.searchBox:focus{
       margin:4px;
 
 }
+.skillItem{
+      padding:2px;
+      background:#3388ff;
+      font-weight:300;
+      font-size:0.8em;
+      color:#fff;
+      border:1px solid #888;
+      text-shadow: 1px 1px 1px #555;
+      border-radius: 2px;
+      display:block;
+      margin:4px;
+
+}
+.skillItem a{
+ color:#fff;     
+ display:block;
+}
+.skillItem a:hover{
+ color:#fff;     
+}
 .userSkills span em{
- vertical-align: super;
- font-size:0.8em;
+      vertical-align: super;
+      font-size:0.8em;
 }
 .pendingUserSkills span{
       padding:2px;
@@ -496,7 +535,13 @@ input.searchBox:focus{
 }
 
 .profileThumbs li{
-            box-shadow: 0px 0px 4px #ccc;
-            padding:4px;
-            border-radius: 2px;
+      box-shadow: 0px 0px 4px #ccc;
+      padding:4px;
+      border-radius: 2px;
 }
+
+.noFloat{
+      float:none;
+      clear:both;
+}
+
