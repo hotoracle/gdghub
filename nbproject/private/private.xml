@@ -12,5 +12,7 @@
         <file>file:/Library/WebServer/Documents/gdg/gdghub/app/View/MyTechProfile/edit_profile.ctp</file>
         <file>file:/Library/WebServer/Documents/gdg/gdghub/app/Controller/MyProfileController.php</file>
         <file>file:/Library/WebServer/Documents/gdg/gdghub/app/View/Elements/paginator.ctp</file>
+        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/Controller/JobsController.php</file>
+        <file>file:/Library/WebServer/Documents/gdg/gdghub/app/Controller/ResourcesController.php</file>
     </open-files>
 </project-private>
