@@ -1,13 +1,8 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Filename: JobsController.php
- * @author: Damilare Fagbemi <your.name at your.org> [damilarefagbemi@gmail.com]
+ * @author: Damilare Fagbemi [damilarefagbemi@gmail.com]
  * Created: Mar 15, 2013  11:25:29 AM 
  */
 
@@ -27,8 +22,7 @@ class JobsController extends AppController {
 
       /**
        * Landing Page for Jobs Section
-       * It should display tags, newest/hottest/popular questions
-       * If user is authenticated, it should display relevant questions
+       * It should display newest/popular jobs
        * 
        */
       function index($sortBy = 'hottest') {
@@ -44,20 +38,7 @@ class JobsController extends AppController {
             $conditions = array(
                 'Job.published' => 1
             );
-		
-	/*
-            if (isset($this->params['named'])) {
 
-                  $namedParams = $this->params['named'];
-
-                  $tagId = isset($namedParams['tag']) ? $namedParams['tag'] + 0 : false; //+0 to force to numeric
-
-                  if ($tagId) {
-
-                        $conditions[] = "Question.id IN (SELECT question_id FROM questions_tags WHERE tag_id='$tagId')";
-                  }
-            }
-	*/
 
             if (!empty($this->data) && isset($this->data['Search']['keywords'])) {
 
@@ -231,8 +212,8 @@ class JobsController extends AppController {
 
 
       /**
-       * Show details of a question and comments and comments form
-       * @param string $questionSlug
+       * Show details of a job
+       * @param string $jobId, $jobSlug
        */
       public function viewJob($jobId = '', $jobSlug = '') {
 
