@@ -5,7 +5,7 @@
   @author: Femi TAIWO [dftaiwo@gmail.com]
   Created: Feb 14, 2013  6:02:19 PM
  */
-
+if(isset($user) && isset($user['id']) && $user['id']){
 ?>
 <a href="<?php echo $this->Html->url("/Developers/viewProfile/{$user['id']}",true); ?>">
         <?php 
@@ -16,3 +16,4 @@
         echo $user['name']; ?>
 </a>
         
+<?php } ?>

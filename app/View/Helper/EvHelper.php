@@ -1,11 +1,11 @@
 <?php
 
 /**
-  Filename: JvHelper.php
+  Filename: EvHelper.php
   @author: Damilare Fagbemi [damilarefagbemi@gmail.com]
-  Created: Mar 18, 2013  10:20:54 AM
+  Created: Mar 22, 2013  11:20:54 AM
  */
-class JvHelper extends AppHelper {
+class EvHelper extends AppHelper {
 
       /**
        * Return a human-friendly time
