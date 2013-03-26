@@ -95,7 +95,7 @@
                                                 <?php echo $this->Html->link('Jobs', "/Jobs/index"); ?>
                                           </li>
                                           <li>
-                                                <?php echo $this->Html->link('Technology', "/Dashboard/help"); ?>
+                                                <?php echo $this->Html->link('Tech Events', "/Events"); ?>
                                           </li>
                                           <li class="dropdown">
                                                 <?php echo $this->Html->link('I Want To', "#", array('class' => 'dropdown-toggle', 'data-toggle' => 'dropdown')); ?>
@@ -110,7 +110,7 @@
                                                 </ul>
                                           </li>
                                     </ul>
-
+<!--
                                     <ul class="nav pull-left">
                                           <li id="fat-menu" class="dropdown">
                                                 <a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown">
@@ -139,6 +139,7 @@
                                                 </ul>
                                           </li>
                                     </ul>  
+                                    -->
                                     <?php if (isset($_userInfo) && $_userInfo) { ?>
                                           <ul class="nav pull-right">
                                                 <li id="fat-menu" class="dropdown">
