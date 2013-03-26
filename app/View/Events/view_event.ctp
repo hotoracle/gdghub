@@ -1,48 +1,36 @@
 <?php
 /**
-  Filename: view_question.ctp
-  @author: Femi TAIWO [dftaiwo@gmail.com]
-  Created: Feb 14, 2013  6:42:47 AM
- */
-//$isAnswerable = ($question['Question']['flag'] == 0);
-//echo $_thisUserId;
-//echo '<br />';
-//echo $question['Question']['user_id'];
+  Filename: view_event.ctp
+  @author: Damilare Fagbemi [damilarefagbemi@gmail.com]
+  Created: Mar 22, 2013  8:42:47 AM
+
+*/
 ?>
 <div class="row">
       <div class="span9">
             <div class="bordered">
                   <h1 class="questionTitle">
-                        <?php echo $job['Job']['name']; ?>
+                        <?php echo $event['Event']['name']; ?>
                   </h1>
                   <div class="questionQuestion">
                         <?php
-                        $fullDescription = $job['Job']['description'];
+                        $fullDescription = $event['Event']['description'];
 
-                        echo $this->Jv->highlight($fullDescription);
+                        echo $this->Ev->highlight($fullDescription);
                         ?>
                   </div>
 
-
-                  <div class="floatRight posterInfo">
-                        <?php echo $this->element('user/basic', array('user' => $job['User'])); ?>
-                        <br />Posted @ <?php echo $this->JV->longTime($job['Job']['created']); ?>
+		<div class="floatRight posterInfo">
+                        <?php echo $this->element('user/basic', array('user' => $event['User'])); ?>
+                        <br />Posted @ <?php echo $this->Ev->longTime($event['Event']['created']); ?>
                   </div>
-                
+                 <div><br />
+		<strong>Venue:</strong>  <?php echo $event['Event']['venue']; ?><br />
+		<strong>Starts:</strong>  &nbsp;<?php echo $this->Ev->longTime($event['Event']['start']); ?><br />
+		<strong>Ends:</strong> &nbsp;&nbsp;<?php echo $this->Ev->longTime($event['Event']['end']); ?>
+		</div>
                   <hr />
-		<strong>Required Skills:</strong>
-                  <div id="selectedSkills" class="userSkills">
-	            <div class="userSkills">
-                         <?php
-                        foreach ($jobSkillSets as $skillRow) {
-                              ?><span><?php echo $skillRow['Skillset']['name']; ?>
-                              </span>
-                                    <?php
-                              }
-                              ?></div>
 
-                       <div class="clear"></div>
-                </div>
 		 <!--
                   <div class="tags">
                         Tags: <?php foreach ($questionTags as $tag) { ?>
@@ -191,4 +179,3 @@
       </div>
 </div>
 
-<?php echo $this->element('syntax_highlighter'); ?>

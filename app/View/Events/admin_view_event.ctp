@@ -1,48 +1,49 @@
 <?php
 /**
-  Filename: view_question.ctp
-  @author: Femi TAIWO [dftaiwo@gmail.com]
-  Created: Feb 14, 2013  6:42:47 AM
- */
-//$isAnswerable = ($question['Question']['flag'] == 0);
-//echo $_thisUserId;
-//echo '<br />';
-//echo $question['Question']['user_id'];
+  Filename: admin_view_event.ctp
+  @author: Damilare Fagbemi [damilarefagbemi@gmail.com]
+  Created: Mar 24, 2013  05:42:47 AM
+
+*/
 ?>
 <div class="row">
+<div class="floatRight"><?php echo $this->Html->link('Browse Events', 'index'); ?></div>
       <div class="span9">
             <div class="bordered">
                   <h1 class="questionTitle">
-                        <?php echo $job['Job']['name']; ?>
+                        <?php echo $event['Event']['name']; ?>
                   </h1>
                   <div class="questionQuestion">
                         <?php
-                        $fullDescription = $job['Job']['description'];
-
-                        echo $this->Jv->highlight($fullDescription);
+                        $fullDescription = $event['Event']['description'];
+			$published = $event['Event']['published'];
+                        echo $this->Ev->highlight($fullDescription);
                         ?>
                   </div>
-
-
-                  <div class="floatRight posterInfo">
-                        <?php echo $this->element('user/basic', array('user' => $job['User'])); ?>
-                        <br />Posted @ <?php echo $this->JV->longTime($job['Job']['created']); ?>
+		<div class="floatRight posterInfo">
+                        <?php echo $this->element('user/basic', array('user' => $event['User'])); ?>
+                        <br />Submitted @ <?php echo $this->Ev->longTime($event['Event']['created']); ?>
                   </div>
-                
+                 <div><br />
+		<strong>Venue:</strong>  <?php echo $event['Event']['venue']; ?><br />
+		<strong>Starts:</strong>  &nbsp;<?php echo $this->Ev->longTime($event['Event']['start']); ?><br />
+		<strong>Ends:</strong> &nbsp;&nbsp;<?php echo $this->Ev->longTime($event['Event']['end']); ?>
+		</div>
                   <hr />
-		<strong>Required Skills:</strong>
-                  <div id="selectedSkills" class="userSkills">
-	            <div class="userSkills">
-                         <?php
-                        foreach ($jobSkillSets as $skillRow) {
-                              ?><span><?php echo $skillRow['Skillset']['name']; ?>
-                              </span>
-                                    <?php
-                              }
-                              ?></div>
-
-                       <div class="clear"></div>
-                </div>
+		<span class="floatLeft">
+			<?php   
+				$publish_btn = "";	
+				if($published) 
+				{$publish_btn = "Unpublish";}
+				else{ $publish_btn = "Publish";}
+				echo $this->Html->link($publish_btn, "#", array('class' => 'btn btn-mini btn-success', 'data-toggle' => 'modal', 'data-target' => '#publishModal', 'data-remote' => $this->Html->url("publish/$eventId/{$event['Event']['slug']}")));
+				echo ' ';
+				/*echo $this->Html->link('Edit', "#", array('class' => 'btn btn-mini btn-success', 'data-toggle' => 'modal', 'data-target' => '#editModal', 'data-remote' => $this->Html->url("edit/{$event['Event']['id']}/{$event['Event']['slug']}")));*/
+				echo $this->Html->link('Edit', "edit/{$event['Event']['id']}/{$event['Event']['slug']}", array('class' => 'btn btn-mini btn-primary'));
+				echo ' | ';
+			        echo $this->Html->link('Delete', "#", array('class' => 'btn btn-mini btn-danger', 'data-toggle' => 'modal', 'data-target' => '#deleteModal', 'data-remote' => $this->Html->url("delete/{$event['Event']['id']}/{$event['Event']['slug']}")));
+			?>
+				        </span>
 		 <!--
                   <div class="tags">
                         Tags: <?php foreach ($questionTags as $tag) { ?>
@@ -179,7 +180,7 @@
       </div>
 </div>
 -->
-<div class="modal hide custom-width-modal" id="myCommentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal hide custom-width-modal" id="publishModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       </div>
@@ -190,5 +191,49 @@
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       </div>
 </div>
+<div class="modal hide custom-width-modal" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Cancel</button>
+      </div>
+      <div class="modal-body">
+            <!-- content will be loaded here -->
+      </div>
+      <div class="modal-footer">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Cancel</button>
+      </div>
+</div>
+<div class="modal hide custom-width-modal" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Cancel</button>
+      </div>
+      <div class="modal-body">
+            <!-- content will be loaded here -->
+      </div>
+      <div class="modal-footer">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Cancel</button>
+      </div>
+</div>
+    <!--
+        <div class="span3">
+                <div class="bordered minH600">
+                        <h4>Tags</h4>
+                        <?php //foreach ($storedTags as $tag) { ?>
+                                <span class="badge badge-success">
+                                        <?php //echo $this->Html->link($tag['Tag']['name'], "index/tag:{$tag['Tag']['id']}", array('escape' => false)); ?>
+                                </span><span class="qCount"> x <?php //echo $tag['QTag']['qcount']; ?> </span> &nbsp;     
+                        <? //} ?>
+                </div>
+        </div>
+    -->
+</div>
+<script type="text/javascript">
+$('#publishModal').on('hidden',function(){
+	$(this).data('modal').$element.removeData();
+})
+</script>
+<script type="text/javascript">
+$('#deleteModal').on('hidden',function(){
+	$(this).data('modal').$element.removeData();
+})
+</script>
 
-<?php echo $this->element('syntax_highlighter'); ?>
