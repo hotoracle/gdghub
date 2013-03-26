@@ -8,3 +8,4 @@ app/[Cc]onfig/email.php
 app/webroot/uploads/*
 app/webroot/cache/*
 !empty
+private.xml
