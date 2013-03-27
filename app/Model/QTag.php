@@ -72,8 +72,13 @@ class QTag extends AppModel {
                 
         }
         
+        function clearTags($questionId=0){
+               $conditions = array('question_id'=>$questionId);
+               $this->deleteAll($conditions,false);
+        }
+        
         function questionTags($questionId){
-                
+
                 return $this->find('all',array('conditions'=>array('QTag.question_id'=>$questionId)));
                 
         }

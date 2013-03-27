@@ -262,6 +262,7 @@ h1.questionTitle{
       padding-bottom:16px;
       margin:6px 0px 6px 10px;
       border:1px solid #eee;
+      border-radius: 3px;
 
 }
 .postedQuestion .questionTitle .postedJob{
