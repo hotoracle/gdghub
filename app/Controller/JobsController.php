@@ -62,7 +62,7 @@ class JobsController extends AppController {
                   }
 
                   if (!$usableKeywords) {
-                        $this->sFlash('Please use longer words for your search criteria');
+                        $this->sFlash('Please use longer words for your search criteria',true);
                   }
             }
 
@@ -157,7 +157,7 @@ class JobsController extends AppController {
 
                   $jobId = $this->Job->addJob($jobData);
                   if (!$jobId) {
-                        $this->sFlash("An unexpected error occurred while saving this job. Please try again later");
+                        $this->sFlash("An unexpected error occurred while saving this job. Please try again later",true);
                         return;
                   }
 

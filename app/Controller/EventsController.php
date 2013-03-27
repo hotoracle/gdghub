@@ -63,7 +63,7 @@ class EventsController extends AppController {
                   }
 
                   if (!$usableKeywords) {
-                        $this->sFlash('Please use longer words for your search criteria');
+                        $this->sFlash('Please use longer words for your search criteria',true);
                   }
             }
 
@@ -132,10 +132,16 @@ class EventsController extends AppController {
                       'end' => Sanitize::stripAll($subData['end']),
                   );
 
+		  //validate that end date does not precede end date
+		  if (strtotime($subData['start']) >= strtotime($subData['end'])) {
+                        $this->sFlash("The start date/time must precede the end date/time.",true);
+                        return;
+                  } 
 
+		 
                   $eventId = $this->Event->addEvent($eventData);
                   if (!$eventId) {
-                        $this->sFlash("An unexpected error occurred while saving this event. Please try again later");
+                        $this->sFlash("An unexpected error occurred while saving this event. Please try again later",true);
                         return;
                   }
 
@@ -160,7 +166,7 @@ class EventsController extends AppController {
                   $this->miniFlash('Unable to find selected event. Try searching instead', 'index');
             }
             if (!$eventInfo['Event']['published']) {
-                  $this->miniFlash('The entered event requires approval by an Administrator.', 'index');
+                  $this->miniFlash('Your event has been saved. However to prevent people from spamming this events section and to ensure that only tech events are posted, an administrator will need to approve your event before it becomes publicly accessible.', 'index');
             }
             return $eventInfo;
       }
@@ -241,7 +247,7 @@ class EventsController extends AppController {
                   }
 
                   if (!$usableKeywords) {
-                        $this->sFlash('Please use longer words for your search criteria');
+                        $this->sFlash('Please use longer words for your search criteria',true);
                   }
             }
 
@@ -310,10 +316,15 @@ class EventsController extends AppController {
                       'end' => Sanitize::stripAll($subData['end']),
                   );
 
+		  //validate that end date does not precede end date
+		  if (strtotime($subData['start']) >= strtotime($subData['end'])) {
+                        $this->sFlash("The start date/time must precede the end date/time.",true); 
+                        return;
+                  } 
 
                   $eventId = $this->Event->addEvent($eventData);
                   if (!$eventId) {
-                        $this->sFlash("An unexpected error occurred while saving this event. Please try again later");
+                        $this->sFlash("An unexpected error occurred while saving this event. Please try again later",true);
                         return;
                   }
 
@@ -456,7 +467,7 @@ class EventsController extends AppController {
 			
                  if(!$this->Event->delete($eventId))
 		 {
-			$this->sFlash("An unexpected error occurred while deleting the event. Please try again later");
+			$this->sFlash("An unexpected error occurred while deleting the event. Please try again later",true);
                         return;
 		 }
 
