@@ -17,7 +17,7 @@ class QuestionsController extends AppController {
       function beforeFilter() {
             parent::beforeFilter();
             $this->Auth->allow(array('index', 'viewQuestion'));
-            $this->Auth->deny(array('ask'));
+            $this->Auth->deny(array('ask','mine','editQuestion'));
       }
 
       /**
@@ -524,6 +524,103 @@ class QuestionsController extends AppController {
             }
 
             $this->layout = 'Emails/html/default';
+      }
+
+      
+      public function mine() {
+            $conditions = array(
+                'Question.user_id' => $this->_thisUserId
+            );
+            
+            $questions = $this->paginate('Question',$conditions);
+            $this->set('questions',$questions);
+            
+      }
+      
+      public function editQuestion($questionId=0,$questionSlug='') {
+             $question = $this->_getQuestion($questionId);
+
+            if ($this->_thisUserId != $question['Question']['user_id']) {
+                  $this->miniFlash("I'm not sure this question belongs to you :( - so you cannot edit it", "viewQuestion/$questionId/$questionSlug");
+            }
+
+            if ($question['Question']['flag'] != 0) {
+                  $this->miniFlash('This question is no longer open for comments or answers or choices', "viewQuestion/$questionId/$questionSlug");
+            }
+            
+            
+             $this->pageTitle='Edit Question';
+
+            $this->set('usesAutocomplete',true);
+            $this->_requireAuth();
+            $highlighterSettings = cRead('syntaxHighlighter');
+            $this->set('codeTypes', $highlighterSettings['supportedTypes']);
+            $rules = array(
+                'Ask' => array(
+                    'title' => array(
+                        FV_REQUIRED => 'Please provide a title for this question',
+                        FV_MIN_LENGTH => array('param' => 20, 'error' => 'The title provided is too short'),
+                        FV_MAX_LENGTH => array('param' => 200, 'error' => 'The title provided is too long')
+                    ),
+                    'description' => array(
+                        FV_REQUIRED => 'Please provide details for this question, share your research or errors encountered',
+                        FV_MIN_LENGTH => array('param' => 50, 'error' => 'The description provided is too short'),
+                        FV_MAX_LENGTH => array('param' => 5000, 'error' => 'The title provided is too long')
+                    ),
+                )
+            );
+
+            $this->FormValidator->setRules($rules);
+
+            if (!empty($this->data) && $this->FormValidator->validate()) {
+
+                  App::uses('Sanitize', 'Utility');
+
+                  $subData = $this->data['Ask'];
+
+
+                  $tagsProvided = str_replace(' ', ',', $subData['tags']);
+                  $tagsProvided = explode(',', $tagsProvided);
+                  $tagIds = array();
+                  
+                  foreach ($tagsProvided as $tag) {
+
+                        $tag = Sanitize::paranoid($tag);
+                        //@TODO we should remove whitespaces too...
+                        $tagIds[] = $this->Tag->getOrCreateTagId($tag);
+                  }
+
+                  $questionData = array(
+                      'name' => Sanitize::stripAll($subData['title']),
+                      'description' => Sanitize::stripAll($subData['description'])
+                  );
+
+                    
+                  if (!$this->Question->updateQuestion($questionId,$questionData)) {
+                        $this->miniFlash("An unexpected error occurred while saving this question. Please try again later","viewQuestion/$questionId/$questionSlug");
+                        return;
+                  }
+                  $this->QTag->clearTags($questionId);
+                  $tagIds = array_unique($tagIds);
+                  
+                  foreach ($tagIds as $tagId) {
+                        $this->QTag->addTag($questionId, $tagId);
+                  }
+
+                  $this->miniFlash("Question Updated", "viewQuestion/$questionId/$questionSlug");
+            }elseif(empty($this->data)){
+                  $this->request->data['Ask'] = $question['Question'];
+                  $this->request->data['Ask']['title'] = $question['Question']['name'];
+                  
+                  $fullQuestionTags = $this->QTag->questionTags($questionId);
+                  $questionTags = array();
+                  foreach($fullQuestionTags as $tag){
+                        $questionTags[] = $tag['Tag']['name'];
+                  }
+                  $this->request->data['Ask']['tags'] = join(', ',$questionTags);
+            }
+            $possibleTags = $this->Tag->listTagsByName();
+            $this->set(compact('possibleTags','questionId','questionSlug'));
       }
 
 }

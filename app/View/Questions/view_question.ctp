@@ -13,8 +13,11 @@ $isAnswerable = ($question['Question']['flag'] == 0);
       <div class="span9">
             <div class="bordered">
                   <h1 class="questionTitle">
-                        <?php echo $question['Question']['name']; ?>
+                        <?php echo $question['Question']['name']; ?> <?php if(isset($_thisUserId) && $_thisUserId==$question['Question']['user_id']){ 
+                     echo $this->Html->link('Edit Question',"editQuestion/$questionId/$questionSlug",array('class'=>'btn btn-mini wideBtn floatRight'));
+                        } ?>
                   </h1>
+                  
                   <div class="questionQuestion">
                         <?php
                         $fullDescription = $question['Question']['description'];

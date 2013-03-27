@@ -142,6 +142,16 @@
                                                                   ?>
                                                             </li>
                                                             <li>
+                                                                  <?php
+                                                                  echo $this->Html->link(
+                                                                          '<i class="icon-black icon-tag"></i>My Questions', '/Questions/mine', array(
+                                                                      'tabindex' => '-1',
+                                                                      'escape' => false
+                                                                          )
+                                                                  );
+                                                                  ?>
+                                                            </li>
+                                                            <li>
       <?php
       echo $this->Html->link(
               '<i class="icon-black icon-off"></i> Logout', '/users/logout', array(

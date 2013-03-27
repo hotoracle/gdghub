@@ -1,28 +1,13 @@
 <?php
-/**
-  Filename: index.ctp
-  @author: Femi TAIWO [dftaiwo@gmail.com]
-  Created: Feb 12, 2013  6:41:06 PM
- */
 
+/**
+  Filename: mine.ctp 
+  @author: Femi TAIWO [dftaiwo@gmail.com]
+  Created: Mar 27, 2013  6:28:37 PM
+ */
 ?>
-<div class="row">
-        <div class="span9">
-                <div class="bordered minH600">
-                        <div class="floatRight questionPanel">
-                                <?php echo $this->Form->create('Search',array('url'=>'index')); ?>
-                                        
-                                        <?php echo $this->Html->link('Ask a Question', 'ask', array('class' => 'btn btn-success strong')); ?>
-                                        <?php echo $this->Html->link('Newest Questions', 'index/newest'); ?> | 
-                                        <?php echo $this->Html->link('Popular Questions', 'index/popular'); ?> | 
-                                        <?php echo $this->Form->input('keywords',array('label'=>false,'div'=>false,'size'=>5,'class'=>'searchBox','placeholder'=>'Search')); ?>
-                                        <?php echo $this->Form->end(); ?>
-                                </div>
-                        <h1 class="questionH1">Questions
-                                
-                        </h1>
-                        <div class="clear"></div>
-                        <?php if (!$questions) { ?>
+<h2>Questions Posted By Me</h2>
+<?php if (!$questions) { ?>
                                 <div class="alert alert-danger">
                                        There are no questions here.
                                 </div>
@@ -33,6 +18,7 @@
                                         <?php
                                         foreach ($questions as $question) {
                                                 $questionId = $question['Question']['id'];
+                                                $questionSlug =$question['Question']['slug'];
                                                 ?>
                                                 <div class="postedQuestion">
 
@@ -55,7 +41,8 @@
                                                                 <?php } ?>
                                                         <?php } ?>
                                                         <div class="clear"></div>
-
+                                                            <?php echo $this->Html->link('Edit',"editQuestion/$questionId/$questionSlug",array('class'=>'btn btn-mini wideBtn')); ?>
+                                                            <?php echo $this->Html->link('Delete Question',"deleteQuestion/$questionId",array('class'=>'btn btn-mini wideBtn btn-danger','confirm'=>'Are you really sure you want to do this?')); ?>
                                                 </div>
 
                                         <?php } ?>
@@ -67,15 +54,3 @@
                         <?php echo $this->element('paginator'); ?>
 
                 </div>
-        </div>
-        <div class="span3">
-                <div class="bordered minH600">
-                        <h4>Tags</h4>
-                        <?php foreach ($storedTags as $tag) { ?>
-                                <span class="badge badge-success">
-                                        <?php echo $this->Html->link($tag['Tag']['name'], "index/tag:{$tag['Tag']['id']}", array('escape' => false)); ?>
-                                </span><span class="qCount"> x <?php echo $tag['QTag']['qcount']; ?> </span> &nbsp;     
-                        <? } ?>
-                </div>
-        </div>
-</div>
