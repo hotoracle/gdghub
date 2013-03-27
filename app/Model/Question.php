@@ -113,6 +113,10 @@ class Question extends AppModel {
               return $this->save($questionData);
               
         }
+        function unpublishQuestion($questionId){
+              $questionData = array('published'=>0);
+              return $this->updateQuestion($questionId, $questionData);
+        }
         function increaseViewCount($questionId){
                 
                 $query="UPDATE questions set views=views+1 where id='$questionId'";

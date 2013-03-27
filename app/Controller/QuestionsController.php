@@ -529,7 +529,9 @@ class QuestionsController extends AppController {
       
       public function mine() {
             $conditions = array(
-                'Question.user_id' => $this->_thisUserId
+                'Question.user_id' => $this->_thisUserId,
+                                    'Question.published' => 1
+
             );
             
             $questions = $this->paginate('Question',$conditions);
@@ -623,4 +625,18 @@ class QuestionsController extends AppController {
             $this->set(compact('possibleTags','questionId','questionSlug'));
       }
 
+      public function deleteQuestion($questionId=0) {
+              $question = $this->_getQuestion($questionId);
+
+            if ($this->_thisUserId != $question['Question']['user_id']) {
+                  $this->miniFlash("I'm not sure this question belongs to you :( - so you cannot edit or delete it", "viewQuestion/$questionId");
+            }
+
+            if ($question['Question']['flag'] != 0) {
+                  $this->miniFlash('This question is no longer open for comments or answers or choices', "viewQuestion/$questionId");
+            }
+            $this->Question->unpublishQuestion($questionId);
+            $this->miniFlash('This question has been removed', "mine");
+
+      }
 }
