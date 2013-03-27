@@ -27,6 +27,8 @@ class QuestionsController extends AppController {
        * 
        */
       function index($sortBy = 'hottest') {
+            
+            $this->pageTitle='Questions';
 
             switch ($sortBy) {
                   case 'newest':
@@ -71,6 +73,8 @@ class QuestionsController extends AppController {
                         }
                         $usableKeywords = true;
                         $conditions[] = "( Question.name LIKE '%$keyword%' OR Question.description LIKE '%$keyword%') ";
+                        $this->pageTitle='Search Questions';
+
                   }
 
                   if (!$usableKeywords) {
@@ -107,6 +111,8 @@ class QuestionsController extends AppController {
        * @return null
        */
       function ask() {
+            $this->pageTitle='Ask a Question';
+
             $this->set('usesAutocomplete',true);
             $this->_requireAuth();
             $highlighterSettings = cRead('syntaxHighlighter');
@@ -195,6 +201,8 @@ class QuestionsController extends AppController {
       public function viewQuestion($questionId = '', $questionSlug = '') {
 
             $question = $this->_getQuestion($questionId);
+            $this->pageTitle=$question['Question']['name'];
+
             $questionTags = $this->QTag->questionTags($questionId);
 
             $directComments = $this->QuestionComment->getDirectComments($questionId);
@@ -234,6 +242,8 @@ class QuestionsController extends AppController {
       public function postResponse($questionId, $questionSlug) {
 
             $question = $this->_getQuestion($questionId);
+            $this->pageTitle='Post Response to - '.$question['Question']['name'];
+
             if ($question['Question']['flag'] != 0) {
                   $this->miniFlash('This question is no longer open for comments or answers', "viewQuestion/$questionId/$questionSlug");
             }
@@ -304,7 +314,10 @@ class QuestionsController extends AppController {
        * @param type $responseId
        */
       public function postComment($questionId, $questionSlug, $relCommentId = 0) {
+
             $question = $this->_getQuestion($questionId);
+            $this->pageTitle='Post Comment to - '.$question['Question']['name'];
+
             if ($question['Question']['flag'] != 0) {
                   $this->miniFlash('This question is no longer open for comments or answers', "viewQuestion/$questionId/$questionSlug");
             }
@@ -383,6 +396,9 @@ class QuestionsController extends AppController {
       }
 
       public function chooseAnswer($questionId, $questionSlug, $relCommentId = 0) {
+            
+            $this->pageTitle='Choose Answer to - '.$question['Question']['name'];
+
             $question = $this->_getQuestion($questionId);
 
             if ($this->_thisUserId != $question['Question']['user_id']) {
@@ -427,6 +443,8 @@ class QuestionsController extends AppController {
       public function voteForAnswer($questionId, $questionSlug, $relCommentId = 0, $voteUp = 0) {
 
             $question = $this->_getQuestion($questionId);
+            
+            $this->pageTitle='Vote Answer - '.$question['Question']['name'];
 
             if (!$this->QuestionComment->exists($relCommentId)) {
                   $this->miniFlash('Invalid answer selected', "viewQuestion/$questionId/$questionSlug");
@@ -509,4 +527,3 @@ class QuestionsController extends AppController {
       }
 
 }
-

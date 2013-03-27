@@ -48,7 +48,6 @@
         </div>
         <div class="span4">
                 <?php echo $this->element('sidebar'); ?>
-                
         </div>
 
 </div>

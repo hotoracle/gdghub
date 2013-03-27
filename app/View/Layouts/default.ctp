@@ -17,6 +17,14 @@
                   if (isset($question)) {
                         echo ' - ' . $question['Question']['name'];
                   }
+                  
+                  if (isset($userInfo)) {
+                        echo ' - ' . $userInfo['User']['name'];
+                  }
+                  if (isset($title_for_layout)) {
+                        echo ' - '.$title_for_layout;
+                  }
+                  
                   ?></title>
             <meta name="description" content="">
             <meta name="viewport" content="width=device-width">
@@ -85,15 +93,19 @@
                                           <li>
                                                 <?php echo $this->Html->link('Want to Help?', "/Dashboard/help"); ?>
                                           </li>
+
                                           <li>
-                                                <?php echo $this->Html->link('Blog', "/Dashboard/help"); ?>
+                                                <?php echo $this->Html->link('Tech Profiles', "/D"); ?>
                                           </li>
                                           <li>
                                                 <?php echo $this->Html->link('Resources', "/Resources/index"); ?>
                                           </li>
+
                                           <li>
                                                 <?php echo $this->Html->link('Jobs', "/Jobs/index"); ?>
                                           </li>
+                                          <li><?php echo $this->Html->link('Tech Questions', '/Questions'); ?></li>
+
                                           <li>
                                                 <?php echo $this->Html->link('Tech Events', "/Events"); ?>
                                           </li>
@@ -102,44 +114,16 @@
                                                 <ul class="dropdown-menu ucwords" role="menu" aria-labelledby="dLabel">
                                                       <li><?php echo $this->Html->link('ask a question', '/Questions/ask'); ?></li>
                                                       <li><?php echo $this->Html->link('contribute answers', '/Questions'); ?></li>
-                                                      <li><?php echo $this->Html->link('contribute code', '#'); ?></li>
-
-                                                      <li><?php echo $this->Html->link('learn how to design', '#'); ?></li>
-                                                      <li><?php echo $this->Html->link('learn how to build mobile apps', '#'); ?></li>
-                                                      <li><?php echo $this->Html->link('learn how to build websites', '#'); ?></li>
+                                                      <li><?php echo $this->Html->link('contribute code', '/Dashboard/help'); ?></li>
+                                                      <!--
+                                                                                                            <li><?php echo $this->Html->link('learn how to design', '#'); ?></li>
+                                                                                                            <li><?php echo $this->Html->link('learn how to build mobile apps', '#'); ?></li>
+                                                                                                            <li><?php echo $this->Html->link('learn how to build websites', '#'); ?></li>
+                                                      -->
                                                 </ul>
                                           </li>
                                     </ul>
-<!--
-                                    <ul class="nav pull-left">
-                                          <li id="fat-menu" class="dropdown">
-                                                <a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown">
-                                                      <i class="icon-black icon-user"></i>Member Center<b class="caret"></b></a>
-                                                <ul class="dropdown-menu" role="menu" aria-labelledby="drop3">
-                                                      <li>
-                                                            <?php
-                                                            echo $this->Html->link(
-                                                                    '<i class="icon-black icon-fire"></i>Forum', '#', array(
-                                                                'tabindex' => '-1',
-                                                                'escape' => false
-                                                                    )
-                                                            )
-                                                            ?>
-                                                      </li>
-                                                      <li>
-                                                            <?php
-                                                            echo $this->Html->link(
-                                                                    '<i class="icon-black icon-bullhorn"></i>Events', '#', array(
-                                                                'tabindex' => '-1',
-                                                                'escape' => false
-                                                                    )
-                                                            )
-                                                            ?>
-                                                      </li>
-                                                </ul>
-                                          </li>
-                                    </ul>  
-                                    -->
+                                   
                                     <?php if (isset($_userInfo) && $_userInfo) { ?>
                                           <ul class="nav pull-right">
                                                 <li id="fat-menu" class="dropdown">
@@ -150,15 +134,7 @@
                                                             <li>
                                                                   <?php
                                                                   echo $this->Html->link(
-                                                                          '<i class="icon-black icon-suitcase"></i>My Account', '/users/user_profile/', //i don't a clean way of fetching just the logged in user....moh
-                                                                          array(
-                                                                      'tabindex' => '-1',
-                                                                      'escape' => false
-                                                                          )
-                                                                  );
-                                                                  echo $this->Html->link(
-                                                                          '<i class="icon-black icon-suitcase"></i>My Work Profile', '/MyProfile/', //i don't a clean way of fetching just the logged in user....moh
-                                                                          array(
+                                                                          '<i class="icon-black icon-suitcase"></i>My Tech Profile', '/MyTechProfile/', array(
                                                                       'tabindex' => '-1',
                                                                       'escape' => false
                                                                           )
@@ -166,20 +142,20 @@
                                                                   ?>
                                                             </li>
                                                             <li>
-                                                                  <?php
-                                                                  echo $this->Html->link(
-                                                                          '<i class="icon-black icon-off"></i> Logout', '/users/logout', array(
-                                                                      'tabindex' => '-1',
-                                                                      'escape' => false
-                                                                          )
-                                                                  );
-                                                                  ?>
+      <?php
+      echo $this->Html->link(
+              '<i class="icon-black icon-off"></i> Logout', '/users/logout', array(
+          'tabindex' => '-1',
+          'escape' => false
+              )
+      );
+      ?>
 
                                                             </li>
                                                       </ul>
                                                 </li>
                                           </ul>   
-                                    <?php } ?>
+<?php } ?>
                                     </li>
                                     </ul>
                                     </li>
@@ -193,9 +169,9 @@
 
             <div class="container" >
                   <div role="main" id="main">
-                        <?php
-                        echo $this->Session->flash();
-                        ?>
+<?php
+echo $this->Session->flash();
+?>
                         <?php echo $this->fetch('content'); ?>
                   </div>
                   <hr>

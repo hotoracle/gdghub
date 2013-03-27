@@ -46,13 +46,13 @@ class DController extends AppController{
       }
       
       function v($userId=0){
-            $user = $this->User->getUserInfo($userId);
+            $userInfo = $user = $this->User->getUserInfo($userId);
             if(!$user){
                   $this->miniFlash('We were unable to locate the selected profile','index');
             }
             $userSkillsets = $this->UsersSkill->getUserSkills($userId);
             $userProjects = $this->Project->getUserProjects($userId, 1);
-            $this->set(compact('userSkillsets', 'userProjects', 'user','userId'));
+            $this->set(compact('userSkillsets', 'userProjects', 'user','userId','userInfo'));
             
             
       }

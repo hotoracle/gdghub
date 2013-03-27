@@ -57,4 +57,3 @@ class ResourcesController extends AppController {
     
  
 }
-?>

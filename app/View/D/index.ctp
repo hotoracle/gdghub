@@ -17,6 +17,10 @@ echo $this->element('breadcrumb');
                   <?php } ?>
                   <div class="clearDiv"></div>
             </div>
+            <div class="alignCenter" id="smallListedQuestion">
+            <?php echo $this->Html->link('Are you listed? Create yours','/MyTechProfile',array('id'=>'textLikeLink')); ?>
+            
+      </div>
       </div>
       <div class="span9">
             <div class="bordered">
