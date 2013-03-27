@@ -25,6 +25,7 @@ class JobsController extends AppController {
        * It should display newest/popular jobs
        * 
        */
+       
       function index($sortBy = 'newest') {
 
             switch ($sortBy) {
@@ -66,7 +67,7 @@ class JobsController extends AppController {
                   }
 
                   if (!$usableKeywords) {
-                        $this->sFlash('Please use longer words for your search criteria');
+                        $this->sFlash('Please use longer words for your search criteria',true);
                         
                   }else{
                         $this->pageTitle='Search Jobs';
@@ -167,7 +168,7 @@ class JobsController extends AppController {
 
                   $jobId = $this->Job->addJob($jobData);
                   if (!$jobId) {
-                        $this->sFlash("An unexpected error occurred while saving this job. Please try again later");
+                        $this->sFlash("An unexpected error occurred while saving this job. Please try again later",true);
                         return;
                   }
 
