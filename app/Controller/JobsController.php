@@ -25,14 +25,18 @@ class JobsController extends AppController {
        * It should display newest/popular jobs
        * 
        */
-      function index($sortBy = 'hottest') {
+      function index($sortBy = 'newest') {
 
             switch ($sortBy) {
                   case 'newest':
                         $orderBy = array('Job.created' => 'DESC'); //Is this the best ?
+                        $this->pageTitle = 'Newest Jobs on ∫ dev';
+
                         break;
                   default:
                         $orderBy = array('Job.views' => 'DESC'); //Is this the best ?
+                        $this->pageTitle = 'Hottest Jobs on ∫ dev';
+
             }
 
             $conditions = array(
@@ -54,7 +58,7 @@ class JobsController extends AppController {
 
                         $keyword = trim($keyword);
                         if (strlen($keyword) < 3) {
-                              $this->sFlash('');
+//                              $this->sFlash('');
                               continue;
                         }
                         $usableKeywords = true;
@@ -63,6 +67,9 @@ class JobsController extends AppController {
 
                   if (!$usableKeywords) {
                         $this->sFlash('Please use longer words for your search criteria');
+                        
+                  }else{
+                        $this->pageTitle='Search Jobs';
                   }
             }
 
@@ -92,6 +99,9 @@ class JobsController extends AppController {
             //$this->set('storedTags', $storedTags);
       }
       function post() { //post a job
+            
+            $this->pageTitle='Post A Job';
+
             $this->set('usesAutocomplete',true);
             $this->set(compact('breadcrumbLinks'));
             $this->_requireAuth();
@@ -237,6 +247,7 @@ class JobsController extends AppController {
                   $this->Session->write('jobsViewed', $jobsViewed);
                   $this->Job->increaseViewCount($jobId);
             }
+            $this->pageTitle=$job['Job']['name'];
 
             $this->set(compact('jobId', 'jobSlug', 'job'));
 
@@ -252,4 +263,3 @@ class JobsController extends AppController {
       }
 
 }
-?>

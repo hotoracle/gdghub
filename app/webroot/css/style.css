@@ -71,6 +71,7 @@ a:focus{
       line-height:20px;
       margin-bottom:10px;
 }
+
 .welcome h1{
       margin-bottom:10;font-size:30px;line-height:1.2;color:inherit;letter-spacing:-1px;
 }
@@ -100,6 +101,7 @@ a:focus{
 
 .bordered{
       border:1px solid #ccc;
+      border-radius: 3px;
       padding:8px;
       margin-bottom:8px;
 }
@@ -117,6 +119,9 @@ a:focus{
 }
 .maroon{
       color:maroon;
+}
+.blue{
+      color:#3388ff;
 }
 
 .ucwords{
@@ -331,17 +336,31 @@ h3 span{
 }
 
 #listedQuestion{
-   background:#ff8833;
-   color:#fff;
-   font-size:1.8em;
-   padding:8px;
-   margin-bottom: 5px;
-   
+      background:#ff8833;
+      color:#fff;
+      font-size:1.8em;
+      padding:8px;
+      margin-bottom: 5px;
+
 }
 #listedQuestion a{
- color:#fff;
- display:block;
- text-shadow: 1px 1px 2px #555;
+      color:#fff;
+      display:block;
+      text-shadow: 1px 1px 2px #555;
+}
+#smallListedQuestion{
+      background:#000;
+      border-radius: 2px;
+      color:#fff;
+      font-size:1.4em;
+      padding:8px;
+      margin-bottom: 5px;
+
+}
+#smallListedQuestion a{
+      color:#fff;
+      display:block;
+      text-shadow: 1px 1px 2px #555;
 }
 
 .miniPosted{
@@ -457,11 +476,11 @@ input.searchBox:focus{
 
 }
 .skillItem a{
- color:#fff;     
- display:block;
+      color:#fff;     
+      display:block;
 }
 .skillItem a:hover{
- color:#fff;     
+      color:#fff;     
 }
 .userSkills span em{
       vertical-align: super;

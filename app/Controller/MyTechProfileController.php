@@ -10,6 +10,8 @@ class MyTechProfileController extends AppController {
       public $uses = array('Project', 'UsersSkill', 'User', 'Skillset', 'Project', 'Technology', 'Category', 'ProjectsTechnology', 'ProjectPhoto', 'SkillsetSubmission');
 
       public function index() {
+            $this->pageTitle='My Tech Profile';
+
             /** Show the users dashboard the same way the general public sees it */
             $userInfo = $this->User->getUserInfo($this->_thisUserId);
             $userSkillsets = $this->UsersSkill->getUserSkills($this->_thisUserId);
@@ -21,6 +23,8 @@ class MyTechProfileController extends AppController {
       }
 
       public function editSkills() {
+            $this->pageTitle='Edit Skills';
+
             $breadcrumbLinks = array(
                 array(
                     'label' => 'My Dashboard',
@@ -106,6 +110,8 @@ class MyTechProfileController extends AppController {
       }
 
       public function addProject() {
+            $this->pageTitle='Add Project';
+
             $breadcrumbLinks = array(
                 array(
                     'label' => 'My Dashboard',
@@ -228,7 +234,9 @@ class MyTechProfileController extends AppController {
       }
 
       function viewProject($projectId = 0) {
+            
             $projectInfo = $this->_getUserProject($projectId);
+            $this->pageTitle='View Project - '.$projectInfo['Project']['name'];
             $projectTechs = $this->ProjectsTechnology->listProjectTech($projectId);
             $projectPhotos = $this->ProjectPhoto->getProjectPhotos($projectId);
             $breadcrumbLinks = array(
@@ -310,6 +318,8 @@ class MyTechProfileController extends AppController {
       function editProject($projectId = 0) {
 
             $projectInfo = $this->_getUserProject($projectId);
+            $this->pageTitle='Edit Project - '.$projectInfo['Project']['name'];
+
             $this->set('projectInfo', $projectInfo);
 
             $breadcrumbLinks = array(
@@ -474,6 +484,8 @@ class MyTechProfileController extends AppController {
       }
 
       public function editProfile() {
+            $this->pageTitle='Edit My Tech Profile';
+
             $breadcrumbLinks = array(
                 array(
                     'label' => 'My Dashboard',
