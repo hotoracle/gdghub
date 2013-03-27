@@ -233,10 +233,37 @@ class UsersController extends AppController {
                                     )
                                 );
                 }
-//                exit;
-//            
-                
-                
+      
+                //This was added because remote images are not always good
+                if(isset($data['User']['image']) && $data['User']['image']){
+                      
+                      $imageBlob = @file_get_contents($data['User']['image']);
+                      $f = md5($data['User']['username']);
+                      $destinationImg = time().'_'. $f. ".jpg";
+                      $tempFile = APP.'/tmp/'.$destinationImg;
+                      file_put_contents($tempFile,$imageBlob);
+                      $data['User']['image']='';
+                      $validImage = getimagesize($tempFile);
+                      @unlink($tempFile);
+                      if($validImage){
+                            $photoDir = cRead('Application.upload.abs_profile_photos');
+                            $continuePhotoWrite = true;
+                              if (!file_exists($photoDir)) {
+                                    $continuePhotoWrite = false;
+
+                                    if (mkdir($photoDir, 0777, true)) {
+                                          $continuePhotoWrite = true;
+                                    }
+                              }
+                              
+                              if($continuePhotoWrite){
+                                    file_put_contents($photoDir . DS . $destinationImg,$imageBlob);
+                                    $urlPath = cRead('Application.upload.url_profile_photos') . $destinationImg;
+                                    $data['User']['image'] = $urlPath;  
+                              }
+
+                      }
+                }
                 $this->User->save($data);
                 $fields = null;
                 $conditions = array('User.username' => $data['User']['username']); //How does this work ?
