@@ -5,21 +5,14 @@
   Created: Feb 8, 2013  7:54:22 AM
  */
 ?>
+<?php if($this->name=='Dashboard' && $this->action=='index') { ?>
 <div class="well welcome">
         <h1>Welcome!</h1>
         <p>
-                <span class="smaller">The Google Developers Group [GDG] Lagos is a group for those who are interested in learning about and using Google technologies.</span>
+                <span class="smaller">The <span class="blue">DevHub</span> is a community-driven platform to <a href="<?php echo $this->Html->url('/D'); ?>" ><span class="maroon">connect with &amp; find</span></a> Developers, Designers and Serious Tech Enthusiasts</span>
         </p>
-        <p>
-                <strong>Mailing List</strong>
-                <br />
-                <span class="smaller">You can follow our <?php echo $this->Html->link("G+ Page","https://plus.google.com/".Configure::read('Application.gplus_page_id'),array('class'=>'maroon')); ?> below or enter your email address to join the mailing list and get updates on events, tools, apis and useful links</span>
-        <form action="http://groups.google.com/group/lagos-gtug/boxsubscribe" target="_blank">
-                <label for="subscribeEmail"></label> <input placeholder="Your Email Address" id="subscribeEmail" type=email name=email required>
-                <input type=submit name="sub" value="Subscribe" class="btn btn-primary">
-        </form>
-</p>
 </div>
+<?php } ?>
 <div class="bordered alignCenter" id="sideAskQuestion">
       <p class="lead"><a href="<?php echo $this->Html->url('/Questions'); ?>">Do you have a question?<br />Get answers from Experts in the Community.</a></p>
       
@@ -32,7 +25,7 @@
       <?php if(isset($randomSkills) && $randomSkills){ ?>
             <?php foreach($randomSkills as $row){ ?>
             <div class="bordered">
-                  <span class="skillItem"><?php echo $this->Html->link($row['Skillset']['name'],'/D/index/skill:'.$row['Skillset']['id'],array('class'=>'white')); ?></span>
+                  <span class="skillItem"><?php echo $this->Html->link($row['Skillset']['name']. ' | More Like This ','/D/index/skill:'.$row['Skillset']['id'],array('class'=>'white')); ?></span>
                   
                         <ul class="thumbnails">
 

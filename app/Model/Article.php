@@ -87,4 +87,11 @@ class Article extends AppModel {
                 $this->save($data);
         }
 
+        function deleteOldArticles(){
+                  $now = date('H:i:s');
+                $lastWeek = date("Y-m-d $now",strtotime('last week'));
+//                  $this->query("DELETE FROM articles WHERE published=0 AND created < '$lastWeek' ");
+                  $conditions = array('Article.created <'=>$lastWeek,'Article.published'=>0);
+                  $this->deleteAll($conditions,false);
+        }
 }

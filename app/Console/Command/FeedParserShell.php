@@ -18,7 +18,7 @@ class FeedParserShell extends AppShell {
                 $feedInfo = $this->Feed->getActiveFeeds();
                 $this->out("Feeds Found: ".count($feedInfo));
                 $freshArticles  = array();
-//                $this->Article->query("Truncate articles");
+                $this->Article->deleteOldArticles();
                 foreach ($feedInfo as $feed) {
                         $feedId = $feed['Feed']['id'];
                         
