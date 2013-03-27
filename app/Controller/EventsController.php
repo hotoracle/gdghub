@@ -390,6 +390,12 @@ class EventsController extends AppController {
                       'end' => Sanitize::stripAll($subData['end'])
                   );
 
+		  //validate that end date does not precede end date
+		  if (strtotime($subData['start']) >= strtotime($subData['end'])) {
+                        $this->sFlash("The start date/time must precede the end date/time.",true); 
+			$this->set(compact('eventId', 'eventSlug', 'event'));
+                        return;
+                  } 
 
                   $this->Event->editEvent($eventData,$eventId);
                 /*  if (!$this->Event->editEvent($eventData,$eventId)) {
