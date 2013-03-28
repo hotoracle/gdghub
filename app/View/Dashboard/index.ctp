@@ -8,11 +8,12 @@
 
 <div class="row">
         <div class="span8">
-           <div>
-            <h1><?php echo cRead('Application.name'); ?></h1>   
+           <div  >
+            <h1 class="hidden-phone"><?php echo cRead('Application.name'); ?></h1>   
             <p class="lead">Technologies, Developers and Solutions, Learning and Development, APIs and Tools </p>	
-                <hr>
             </div>
+                            <hr>
+
                 <ul class="threadList">
                         <?php
                         if (!isset($lead))
@@ -25,6 +26,7 @@
                                 <li>
                                         <div class="threadBody">
                                                 <span class="threadName <?php if ($lead && !$articlesDisplayed) echo 'leadArticle'; ?>"><?php echo $this->Html->link($article['Article']['name'], "viewArticle/{$article['Article']['slug']}"); ?> <em><?php echo date('h:ia D F j, Y', strtotime($article['Article']['date_published'])); ?></em></span>
+                                                <div class="hidden-phone">
                                                 <?php
                                                 if ($lead && $articlesDisplayed) {
                                                         echo substr(strip_tags($article['Article']['description']), 0, 400) . '...';
@@ -35,7 +37,8 @@
                                                 }
                                                 ?>
                                         </div>
-                                        <span class="threadLink">
+                                        </div>
+                                        <span class="threadLink hidden-phone">
                                                 <?php echo $this->Html->link('More', "viewArticle/{$article['Article']['slug']}"); ?>
                                         </span>
                                 </li>

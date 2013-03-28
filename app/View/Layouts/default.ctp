@@ -91,7 +91,7 @@
                                           <g:plusone></g:plusone>
                                           </li>
                                           <li>
-                                                <?php echo $this->Html->link('Want to Help?', "/Dashboard/help"); ?>
+                                                <?php echo $this->Html->link('Want to Help?', "/Dashboard/help",array('id'=>'helpBuild')); ?>
                                           </li>
 
                                           <li>
