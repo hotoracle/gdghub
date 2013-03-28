@@ -36,7 +36,7 @@ class DashboardController extends AppController {
             $i = 0;
             foreach ($randomEntries as $index) {
                   $randomSkills[$i]['Skillset'] = $skillsStats[$index]['Skillset'];
-                  $randomSkills[$i]['Users'] = $this->UsersSkill->getRandomUsers('6d3c3ea0-23d4-11e2-a5fb-7f3382f33e5b', 2);
+                  $randomSkills[$i]['Users'] = $this->UsersSkill->getRandomUsers( $skillsStats[$index]['Skillset']['id'], 2);
                   $i++;
             }
 
