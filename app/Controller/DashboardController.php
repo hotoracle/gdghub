@@ -30,16 +30,21 @@ class DashboardController extends AppController {
 
             $publishedArticles = $this->paginate('Article', array('Article.published' => 1));
             $skillsStats = $this->UsersSkill->listSkillsWithStats();
-            $randomEntries = array_rand($skillsStats, 2);
-
+            
             $randomSkills = array();
+            $shuffledStats = $skillsStats;
+            shuffle($shuffledStats);
+            
             $i = 0;
-            foreach ($randomEntries as $index) {
-                  $randomSkills[$i]['Skillset'] = $skillsStats[$index]['Skillset'];
-                  $randomSkills[$i]['Users'] = $this->UsersSkill->getRandomUsers( $skillsStats[$index]['Skillset']['id'], 2);
+            foreach ($shuffledStats as $index=>$stat) {
+  
+                  $users =  $this->UsersSkill->getRandomUsers($stat['Skillset']['id'],2);
+                  if(!$users) continue;
+                  $randomSkills[] = array('Users'=>$users,'Skillset'=>$stat['Skillset']);
                   $i++;
+                  if($i>=2) break;
             }
-
+ 
             $this->set(compact('publishedArticles', 'randomSkills'));
       }
 

@@ -114,15 +114,7 @@ a:focus{
       padding-top:7px;
       min-width:120px; /* to prevent the menu from shifting */
 }
-.red{
-      color:red;
-}
-.maroon{
-      color:maroon;
-}
-.blue{
-      color:#3388ff;
-}
+
 
 .ucwords{
       text-transform: capitalize;
@@ -148,6 +140,9 @@ label span{
 }
 
 .fullWidth input,.fullWidth textarea,.fullWidth select{
+      width:98%;
+}
+.fillWidth{
       width:98%;
 }
 .fullWidth input[type="submit"]{
@@ -445,6 +440,10 @@ input.searchBox:focus{
 .noListMarker{
       list-style:none;    
 }
+.noMargin{
+      margin:0;
+      padding:0;
+}
 
 .userSkills a{
       color:#000;
@@ -480,7 +479,7 @@ input.searchBox:focus{
       color:#fff;     
       display:block;
 }
-.skillItem a:hover{
+.skillItem a:hover,a.skillItem{
       color:#fff;     
 }
 .userSkills span em{
@@ -565,3 +564,16 @@ input.searchBox:focus{
       clear:both;
 }
 
+
+.blockLink a:link{
+      display:block;
+}
+.red{
+      color:red;
+}
+.maroon{
+      color:maroon;
+}
+.blue{
+      color:#3388ff;
+}
