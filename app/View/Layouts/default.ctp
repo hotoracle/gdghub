@@ -212,7 +212,7 @@ if (is_file(WWW_ROOT . 'js' . DS . $this->params->controller . DS . $this->param
               s.parentNode.insertBefore(g,s)}(document,'script'));
             </script>
             -->
-<?php if (!$isLocalhost) { ?>
+<?php if (!$isLocalhost || isset($_GET['dev'])) { ?>
 
                   <script type="text/javascript">
                                 (function() {
