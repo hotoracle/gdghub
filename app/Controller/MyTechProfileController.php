@@ -239,6 +239,8 @@ class MyTechProfileController extends AppController {
             $this->pageTitle='View Project - '.$projectInfo['Project']['name'];
             $projectTechs = $this->ProjectsTechnology->listProjectTech($projectId);
             $projectPhotos = $this->ProjectPhoto->getProjectPhotos($projectId);
+            $this->set('usesLightBox',true);
+
             $breadcrumbLinks = array(
                 array(
                     'label' => 'My Dashboard',

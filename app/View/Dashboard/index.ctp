@@ -12,7 +12,7 @@
             <h1 class="hidden-phone"><?php echo cRead('Application.name'); ?></h1>   
             <p class="lead">Technologies, Developers and Solutions, Learning and Development, APIs and Tools </p>	
             </div>
-                            <hr>
+            <hr>
 
                 <ul class="threadList">
                         <?php

@@ -17,14 +17,13 @@
                   if (isset($question)) {
                         echo ' - ' . $question['Question']['name'];
                   }
-                  
+
                   if (isset($userInfo)) {
                         echo ' - ' . $userInfo['User']['name'];
                   }
                   if (isset($title_for_layout)) {
-                        echo ' - '.$title_for_layout;
+                        echo ' - ' . $title_for_layout;
                   }
-                  
                   ?></title>
             <meta name="description" content="">
             <meta name="viewport" content="width=device-width">
@@ -42,6 +41,10 @@
             );
             if (isset($usesAutocomplete) && $usesAutocomplete) {
                   $scriptsToLoad[] = 'lib/jquery-ui';
+            }
+            if (isset($usesLightBox) && $usesLightBox) {
+                  $scriptsToLoad[] = 'lib/jquery.lightbox.0.5.js';
+                  echo $this->Html->css('jquery.lightbox.css');
             }
             echo $this->Html->script(
                     $scriptsToLoad);
@@ -91,7 +94,7 @@
                                           <g:plusone></g:plusone>
                                           </li>
                                           <li>
-                                                <?php echo $this->Html->link('Want to Help?', "/Dashboard/help",array('id'=>'helpBuild')); ?>
+                                                <?php echo $this->Html->link('Want to Help?', "/Dashboard/help", array('id' => 'helpBuild')); ?>
                                           </li>
 
                                           <li>
@@ -123,7 +126,7 @@
                                                 </ul>
                                           </li>
                                     </ul>
-                                   
+
                                     <?php if (isset($_userInfo) && $_userInfo) { ?>
                                           <ul class="nav pull-right">
                                                 <li id="fat-menu" class="dropdown">
@@ -152,20 +155,20 @@
                                                                   ?>
                                                             </li>
                                                             <li>
-      <?php
-      echo $this->Html->link(
-              '<i class="icon-black icon-off"></i> Logout', '/users/logout', array(
-          'tabindex' => '-1',
-          'escape' => false
-              )
-      );
-      ?>
+                                                                  <?php
+                                                                  echo $this->Html->link(
+                                                                          '<i class="icon-black icon-off"></i> Logout', '/users/logout', array(
+                                                                      'tabindex' => '-1',
+                                                                      'escape' => false
+                                                                          )
+                                                                  );
+                                                                  ?>
 
                                                             </li>
                                                       </ul>
                                                 </li>
                                           </ul>   
-<?php } ?>
+                                    <?php } ?>
                                     </li>
                                     </ul>
                                     </li>
@@ -179,9 +182,9 @@
 
             <div class="container" >
                   <div role="main" id="main">
-<?php
-echo $this->Session->flash();
-?>
+                        <?php
+                        echo $this->Session->flash();
+                        ?>
                         <?php echo $this->fetch('content'); ?>
                   </div>
                   <hr>
@@ -189,18 +192,18 @@ echo $this->Session->flash();
                   <footer>
                         <p><?php echo Configure::read('Application.name') ?> </p>
                   </footer>
-<?php echo $this->element('sql_dump'); ?>
+                  <?php echo $this->element('sql_dump'); ?>
             </div> <!-- /container -->
 
 
-<?php
-if (is_file(WWW_ROOT . 'js' . DS . $this->params->controller . '.js')) {
-      echo $this->Html->script($this->params->controller);
-}
-if (is_file(WWW_ROOT . 'js' . DS . $this->params->controller . DS . $this->params->action . '.js')) {
-      echo $this->Html->script($this->params->controller . '/' . $this->params->action);
-}
-?>
+            <?php
+            if (is_file(WWW_ROOT . 'js' . DS . $this->params->controller . '.js')) {
+                  echo $this->Html->script($this->params->controller);
+            }
+            if (is_file(WWW_ROOT . 'js' . DS . $this->params->controller . DS . $this->params->action . '.js')) {
+                  echo $this->Html->script($this->params->controller . '/' . $this->params->action);
+            }
+            ?>
 
 
 
@@ -212,7 +215,7 @@ if (is_file(WWW_ROOT . 'js' . DS . $this->params->controller . DS . $this->param
               s.parentNode.insertBefore(g,s)}(document,'script'));
             </script>
             -->
-<?php if (!$isLocalhost || isset($_GET['dev'])) { ?>
+            <?php if (!$isLocalhost || isset($_GET['dev'])) { ?>
 
                   <script type="text/javascript">
                                 (function() {
@@ -233,6 +236,28 @@ if (is_file(WWW_ROOT . 'js' . DS . $this->params->controller . DS . $this->param
                                     fjs.parentNode.insertBefore(js, fjs);
                               }
                         }(document, "script", "twitter-wjs");</script>
-<?php } ?>
+            <?php } ?>
+
+            <?php
+            if (isset($usesLightBox) && $usesLightBox) {
+                  ?>
+                  <script>
+                        $().ready(function() {
+
+                              $('.lightboxGallery a').lightBox(
+                                      {
+                                            imageLoading: '<?php echo $this->Html->url('/img/lightbox/loading.gif'); ?>',
+                                            imageBtnClose: '<?php echo $this->Html->url('/img/lightbox/close.gif'); ?>',
+                                            imageBtnPrev: '<?php echo $this->Html->url('/img/lightbox/prev.gif'); ?>',
+                                            imageBtnNext: '<?php echo $this->Html->url('/img/lightbox/next.gif'); ?>'
+                                      }
+                              );
+
+                        });
+
+                  </script>
+                  <?php
+            }
+            ?>
       </body>
 </html>

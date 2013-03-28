@@ -9,7 +9,7 @@ if(isset($userInfo)) $user  = $userInfo;
 <ul class="profileProp">
       <?php if ($user['User']['public_website']) { ?>
             <li>
-                  <span class=""><span class="icon-link"></span>&nbsp;Url :<?php echo $this->Html->link($user['User']['public_website'], $user['User']['public_website']); ?></span>
+                  <span class=""><span class="icon-link"></span>&nbsp;Url :<?php echo $this->Html->link($user['User']['public_website'], $user['User']['public_website'],array('target'=>'_blank')); ?></span>
             </li>
       <?php } ?>
       <?php if ($user['User']['public_email']) { ?>
