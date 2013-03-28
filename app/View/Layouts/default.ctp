@@ -91,7 +91,7 @@
                                           <g:plusone></g:plusone>
                                           </li>
                                           <li>
-                                                <?php echo $this->Html->link('Want to Help?', "/Dashboard/help"); ?>
+                                                <?php echo $this->Html->link('Want to Help?', "/Dashboard/help",array('id'=>'helpBuild')); ?>
                                           </li>
 
                                           <li>
@@ -212,7 +212,7 @@ if (is_file(WWW_ROOT . 'js' . DS . $this->params->controller . DS . $this->param
               s.parentNode.insertBefore(g,s)}(document,'script'));
             </script>
             -->
-<?php if (!$isLocalhost) { ?>
+<?php if (!$isLocalhost || isset($_GET['dev'])) { ?>
 
                   <script type="text/javascript">
                                 (function() {

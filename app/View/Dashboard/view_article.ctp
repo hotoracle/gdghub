@@ -13,8 +13,7 @@
                 <p>&nbsp;</p>
 
                 <p>        
-                        <a href="https://twitter.com/share" class="twitter-share-button" data-via="gtuglagos" data-lang="en">Tweet</a>
-                        <span class="g-plus" data-action="share"></span>
+                        <?php echo $this->element('social_share'); ?>
 
                 </p>
                 <p>

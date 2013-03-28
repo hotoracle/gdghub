@@ -49,8 +49,11 @@ class QuestionsController extends AppController {
                   $tagId = isset($namedParams['tag']) ? $namedParams['tag'] + 0 : false; //+0 to force to numeric
 
                   if ($tagId) {
-
-                        $conditions[] = "Question.id IN (SELECT question_id FROM questions_tags WHERE tag_id='$tagId')";
+                        $tagInfo = $this->Tag->read(null,$tagId);
+                        if($tagInfo){
+                              $conditions[] = "Question.id IN (SELECT question_id FROM questions_tags WHERE tag_id='$tagId')";
+                              $this->set('tagInfo',$tagInfo);
+                        }
                   }
             }
 

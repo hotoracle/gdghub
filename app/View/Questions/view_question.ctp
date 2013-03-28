@@ -43,10 +43,7 @@ $isAnswerable = ($question['Question']['flag'] == 0);
                   <?php echo $this->element('questions/comments', array('comments' => $directComments)); ?>
                   <div class="clear"></div>
 
-                  &nbsp;
-
-                  <div class="alignRight">
-                        <?php echo $this->Html->link('Share', "#", array('class' => 'btn btn-mini')); ?>
+                  <div class="floatRight">
                         <?php
                         if ($isAnswerable) {
                               ?>
@@ -62,6 +59,10 @@ $isAnswerable = ($question['Question']['flag'] == 0);
                               }
                               ?>
                         </div>
+                   <div class="floatLeft">
+                        <?php echo $this->element('social_share'); ?>
+                  </div>
+                  <div class="clearDiv"></div>
                   <?php } ?>
             </div>
             <div class="postedAnswers">
