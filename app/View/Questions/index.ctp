@@ -21,6 +21,17 @@
                         <h1 class="questionH1">Questions
                                 
                         </h1>
+                      <?php if(isset($tagInfo) && $tagInfo) { ?>
+                      <h3>
+                             
+                               Questions Tagged <span class="maroon"><i><?php echo $tagInfo['Tag']['name']; ?></i></span>
+                               
+                      </h3>
+                     <div class="alignRight">
+                                                                 <?php echo $this->Html->link('Remove Tag Filter','index',array('class'=>'btn btn-mini')); ?>
+
+                      </div>
+                                <?php } ?>
                         <div class="clear"></div>
                         <?php if (!$questions) { ?>
                                 <div class="alert alert-danger">
