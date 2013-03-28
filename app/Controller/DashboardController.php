@@ -9,11 +9,11 @@
  */
 class DashboardController extends AppController {
 
-      public $uses = array('Article', 'UsersSkill');
+      public $uses = array('Article', 'UsersSkill','Question','Job','Event');
       public $paginate = array(
           'Article' => array(
               'order' => array('Article.sort_order' => 'DESC', 'Article.id' => 'DESC'),
-              'limit' => 10
+              'limit' => 4
           )
       );
       var $pageTitle = 'Welcome to DevHub';
@@ -30,17 +30,24 @@ class DashboardController extends AppController {
 
             $publishedArticles = $this->paginate('Article', array('Article.published' => 1));
             $skillsStats = $this->UsersSkill->listSkillsWithStats();
-            $randomEntries = array_rand($skillsStats, 2);
-
-            $randomSkills = array();
+            
+            $showcaseSkills = array();
+            $shuffledStats = $skillsStats;
+            shuffle($shuffledStats);
+            
             $i = 0;
-            foreach ($randomEntries as $index) {
-                  $randomSkills[$i]['Skillset'] = $skillsStats[$index]['Skillset'];
-                  $randomSkills[$i]['Users'] = $this->UsersSkill->getRandomUsers( $skillsStats[$index]['Skillset']['id'], 2);
+            foreach ($shuffledStats as $index=>$stat) {
+  
+                  $users =  $this->UsersSkill->getRandomUsers($stat['Skillset']['id'],2);
+                  if(!$users) continue;
+                  $showcaseSkills[] = array('Users'=>$users,'Skillset'=>$stat['Skillset']);
                   $i++;
+                  if($i>=2) break;
             }
-
-            $this->set(compact('publishedArticles', 'randomSkills'));
+ 
+            $unansweredQuestions = $this->Question->getRandomQuestions(3);
+            $upcomingEvents = $this->Event->getUpcomingEvents(3);
+            $this->set(compact('publishedArticles', 'showcaseSkills','unansweredQuestions','upcomingEvents'));
       }
 
       function getFeed($feedId = 0) {

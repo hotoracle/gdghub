@@ -133,4 +133,15 @@ class Question extends AppModel {
               $this->save($data);
               
         }
+        
+        function getRandomQuestions($limit=5){
+              
+              $conditions = array('Question.flag'=>0);
+              $recursive = 0;
+              $fields = array('Question.name','Question.id','Question.slug','Question.description','Question.created','User.id','User.name','User.image');
+              $order = array('RAND()');
+              return $this->find('all',compact('conditions','fields','order','recursive','limit'));
+              
+              
+        }
 }

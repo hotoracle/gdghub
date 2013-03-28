@@ -17,8 +17,8 @@ class UsersSkill extends AppModel {
        *
        * @var string
        */
-      public $primaryKey = 'skillset_id';
-      public $displayField = 'skillset_id';
+//      public $primaryKey = 'skillset_id';
+//      public $displayField = 'skillset_id';
 
 
       //The Associations below have been created with all possible keys, those that are not needed can be removed
@@ -34,6 +34,12 @@ class UsersSkill extends AppModel {
                 'foreignKey' => 'user_id',
                 'conditions' => '',
                 'fields' => array('User.id','User.username','User.name','User.image'),
+                'order' => ''
+            ),
+            'Profile' => array(
+                'className' => 'Profile',
+                'foreignKey' => 'user_id',
+                'conditions' => '',
                 'order' => ''
             ),
           'Skillset' => array(
@@ -66,7 +72,9 @@ class UsersSkill extends AppModel {
 
       function getRandomUsers($skillId,$limit=2){
             $conditions = array('UsersSkill.skillset_id' => $skillId);
-            return $this->find('all',compact('conditions','limit'));
+            $order=  array('RAND()');
+            $fields = array('User.username','User.name','User.id','User.image');
+            return $this->find('all',compact('conditions','limit','order','fields'));
       }
       
       function listUserIds($skillId) {
@@ -96,7 +104,7 @@ class UsersSkill extends AppModel {
                 'order' => array('qcount' => 'DESC', 'Skillset.name')
                     )
             );
-            
+            $this->virtualFields   =NULL;
             return $results;
             
       }

@@ -45,6 +45,49 @@
                         ?>
                 </ul>
                 <?php echo $this->element('paginator'); ?>
+              <hr />
+              <div class="row-fluid">
+                    <div class="span6">
+                          <div class="bordered">
+                                <h4>Questions</h4>
+                                
+                                <?php foreach($unansweredQuestions as $question){ $questionId = $question['Question']['id'];
+                                                ?>
+                                                <div>
+                                                        <span class="questionTitle"><?php echo $this->Html->link($question['Question']['name'], "/Questions/viewQuestion/{$question['Question']['id']}/{$question['Question']['slug']}"); ?></span><br />
+                                                        <?php echo $this->Html->link($this->Qv->shortenText($question['Question']['description'],160),"/Questions/viewQuestion/{$question['Question']['id']}/{$question['Question']['slug']}",array('escape'=>false,'class' => 'textLikeLink')); ?>
+                                                        <div class="clear"></div>
+                                                        <span class="badge badge-info floatRight">
+                                                                posted by <?php echo $this->element('user/basic', array('user' => $question['User'], 'noPhoto' => true)); ?> </span>
+                                                        <div class="clear"></div>
+                                                </div>
+                                <hr />
+                                <?php } ?>
+                          </div>
+                    </div>
+                    <div class="span6">
+                          <div class="bordered">
+                                    <h4>Upcoming Tech-Related Events</h4>
+                                    <?php foreach($upcomingEvents as $event){ 
+                                          $eventId = $event['Event']['id'];
+                                                ?>
+                                                <div>
+                                                        <span class="questionTitle"><?php echo $this->Html->link($event['Event']['name'], "/Events/viewEvent/{$event['Event']['id']}/{$event['Event']['slug']}"); ?></span><br />
+                                                        <?php echo $this->Html->link($this->Qv->shortenText($event['Event']['description'],160),"/Events/viewEvent/{$event['Event']['id']}/{$event['Event']['slug']}",array('escape'=>false,'class' => 'textLikeLink')); ?>
+                                                        <div class="clear"></div>
+                                                        <span class="label label-info">
+                                                        <?php echo $event['Event']['start']; ?>        
+                                                        </span>
+                                                        <div class="clear"></div>
+                                                </div>
+                                <hr />
+                                <?php } ?>
+                          </div>
+                    </div>
+                    
+                    
+                    
+              </div>
         </div>
         <div class="span4">
                 <?php echo $this->element('sidebar'); ?>
