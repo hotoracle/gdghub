@@ -5,90 +5,95 @@
  * @author: Damilare Fagbemi [damilarefagbemi@gmail.com]
  * Created: Mar 21, 2013  11:32:25 AM 
  */
-
 class Event extends AppModel {
 
-        /**
-         * Display field
-         *
-         * @var string
-         */
-        public $displayField = 'name';
+      /**
+       * Display field
+       *
+       * @var string
+       */
+      public $displayField = 'name';
+      public $actsAs = array('Sluggable' => array('label' => 'name', 'overwrite' => true));
+      //Overwrite set to false because if the event is edited, the links indexed by search engines will be broken
+      //The alternative is to always pass the id which I find uninteresting
+      //The second alternative is to create a permalinks tag for search engines...is that possible?
+      //The Associations below have been created with all possible keys, those that are not needed can be removed
 
-        public $actsAs = array('Sluggable' => array('label' => 'name', 'overwrite' =>true));
-        //Overwrite set to false because if the event is edited, the links indexed by search engines will be broken
-        //The alternative is to always pass the id which I find uninteresting
-        //The second alternative is to create a permalinks tag for search engines...is that possible?
+      /**
+       * belongsTo associations
+       *
+       * @var array
+       */
+      public $belongsTo = array(
+          'User' => array(
+              'className' => 'User',
+              'foreignKey' => 'user_id',
+              'conditions' => '',
+              'fields' => array('User.id', 'User.name', 'User.image'),
+              'order' => ''
+          )
+      );
 
-        //The Associations below have been created with all possible keys, those that are not needed can be removed
+      function addEvent($eventData) {
 
-        /**
-         * belongsTo associations
-         *
-         * @var array
-         */
-        public $belongsTo = array(
-            'User' => array(
-                'className' => 'User',
-                'foreignKey' => 'user_id',
-                'conditions' => '',
-                'fields' => array('User.id','User.name','User.image'),
-                'order' => ''
-            )
-        );
+            $this->create($eventData);
 
-	function addEvent($eventData){
-                
-                $this->create($eventData);
-                
-                if(!$this->save($eventData)){
-                        return false;
-                }
-                
-                return $this->id;
-        }
+            if (!$this->save($eventData)) {
+                  return false;
+            }
 
-	function setEventStatus($eventData,$eventId){
-	       $this->read(null,$eventId);
-	       $this->set('published',$eventData);
-	       $this->save();
-        }
+            return $this->id;
+      }
 
-	function editEvent($eventData,$eventId){
-	      
- 	       $this->read(null,$eventId);
-	       $this->set( array(
-			'name' => $eventData['name'],
-			'description' => $eventData['description'],
-			'venue' => $eventData['venue'],
-			'start' => $eventData['start'],
-			'end' => $eventData['end'],
+      function setEventStatus($eventData, $eventId) {
+            $this->read(null, $eventId);
+            $this->set('published', $eventData);
+            $this->save();
+      }
 
-	       ));
-	       $this->save();
+      function editEvent($eventData, $eventId) {
+
+            $this->read(null, $eventId);
+            $this->set(array(
+                'name' => $eventData['name'],
+                'description' => $eventData['description'],
+                'venue' => $eventData['venue'],
+                'start' => $eventData['start'],
+                'end' => $eventData['end'],
+            ));
+            $this->save();
 //               $query="UPDATE events set published=$eventData where id='$eventId'";
-  //             $this->query($query);
-        }
+            //             $this->query($query);
+      }
 
-	function getSlug($eventId=0){
-                
-                $conditions = array('Event.id'=>$eventId);
-                return $this->field('slug',$conditions);
-                
-        }
+      function getSlug($eventId = 0) {
 
-        function getEvent($eventId=0){
-                
-                return $this->read(null,$eventId);
-                
-        }
-        
-        function increaseViewCount($eventId){
-                
-                $query="UPDATE events set views=views+1 where id='$eventId'";
-                $this->query($query);
-                
-        }
+            $conditions = array('Event.id' => $eventId);
+            return $this->field('slug', $conditions);
+      }
 
+      function getEvent($eventId = 0) {
+
+            return $this->read(null, $eventId);
+      }
+
+      function increaseViewCount($eventId) {
+
+            $query = "UPDATE events set views=views+1 where id='$eventId'";
+            $this->query($query);
+      }
+
+      
+      function getUpcomingEvents($limit=6){
+            
+            $yesterdaysDate = date('Y-m-d 23:59:59',strtotime("yesterday"));
+            $conditions = array('Event.start >'=>$yesterdaysDate,'Event.published'=>1);
+            $order=  array('RAND()');
+            return $this->find('all',compact('conditions','limit','order'));
+            
+            
+            
+      }
 }
+
 ?>

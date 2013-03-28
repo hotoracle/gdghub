@@ -22,10 +22,10 @@
             <?php echo $this->Html->link('Are you listed?', '/MyTechProfile', array('id' => 'textLikeLink')); ?>
 
       </div>
-      <?php if (isset($randomSkills) && $randomSkills) { ?>
+      <?php if (isset($showcaseSkills) && $showcaseSkills) { ?>
 
             <div class="accordion" id="skillsAccordion">
-                  <?php foreach ($randomSkills as $index=>$row) { ?>
+                  <?php foreach ($showcaseSkills as $index=>$row) { ?>
                         <div class="accordion-group">
                               <div class="accordion-heading">
                                     <a class="accordion-toggle" data-toggle="collapse" data-parent="#skillsAccordion" href="#<?php echo "tab" . Inflector::slug($row['Skillset']['name']); ?>">
@@ -51,8 +51,7 @@
                                                       </li>
                                                 <?php } ?>
                                           </ul>
-                                          <div class="clearDiv"></div>
-                                          <?php echo $this->Html->link($row['Skillset']['name'] . ' | More Like This ', '/D/index/skill:' . $row['Skillset']['id'], array('class' => 'skillItem')); ?> 
+                                          <?php echo $this->Html->link($row['Skillset']['name'] . ' | More Like This ', '/D/index/skill:' . $row['Skillset']['id'], array('class' => 'smaller maroon floatRight')); ?> 
                                     </div>
                               </div>
                         </div>
