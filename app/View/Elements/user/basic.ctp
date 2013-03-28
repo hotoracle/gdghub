@@ -11,7 +11,8 @@ if(isset($user) && isset($user['id']) && $user['id']){
         <?php 
         if(!isset($noPhoto) || (isset($noPhoto) && $noPhoto==false)){
                 $imageUrl = (isset($user['image']) && $user['image'])? $user['image']:cRead('Application.default_avatar');
-                echo $this->Html->image($imageUrl, array('width'=>64,'alt'=>$user['name'],'align'=>'right','class'=>'gravatar-small')); 
+                $imageUrl = '/r.php'.'?src='.$imageUrl.'&w=300&h=300';
+                echo $this->Html->image($imageUrl, array('width'=>isset($imgW)? $imgW:64,'alt'=>$user['name'],'align'=>'right','class'=>'gravatar-small')); 
         }
         echo $user['name']; ?>
 </a>

@@ -16,10 +16,12 @@ class DController extends AppController{
       }
       
       function index(){
-            $breadcrumbLinks = array(
+  $breadcrumbLinks = array(
                 array(
-                    'label' => 'Profiles',
-                )
+                    'label' => 'Tech Profiles',
+                    'link' => 'index',
+                  'separator' => '&raquo;'
+                ),
             );
             $this->set(compact('breadcrumbLinks'));
             //I have to find a smart way to do this 16-03-2013
@@ -47,16 +49,72 @@ class DController extends AppController{
       
       function v($userId=0){
             $userInfo = $user = $this->User->getUserInfo($userId);
-            if(!$user){
+            if(!$userInfo){
                   $this->miniFlash('We were unable to locate the selected profile','index');
             }
+            
+            $breadcrumbLinks = array(
+                array(
+                    'label' => 'Tech Profiles',
+                    'link' => 'index',
+                  'separator' => '&raquo;'
+
+                ),
+                array(
+                    'label' => $userInfo['User']['name'],
+                    'link' => "v/{$userInfo['User']['id']}",
+                    'separator' => '&raquo;'
+                ),
+            );
+            
             $userSkillsets = $this->UsersSkill->getUserSkills($userId);
             $userProjects = $this->Project->getUserProjects($userId, 1);
-            $this->set(compact('userSkillsets', 'userProjects', 'user','userId','userInfo'));
+            $this->set(compact('userSkillsets', 'userProjects', 'user','userId','userInfo','breadcrumbLinks'));
             
             
       }
-      
+      function viewProject($userId=0,$projectId = 0) {
+            
+            $projectInfo = $this->Project->read(null,$projectId);
+            
+            if(!$projectInfo){
+                  $this->miniFlash("Project not found",'index');
+            }
+            $userInfo = $user = $this->User->getUserInfo($userId);
+            if(!$userInfo){
+                  $this->miniFlash('We were unable to locate the selected profile','index');
+            }
+            if($userId!=$projectInfo['Project']['created_by']){
+                  $this->miniFlash("I didn't think about everything, but I thought about this. The selected project is owned by another user",'index');
+            }
+            
+            $this->pageTitle='View Project - '.$projectInfo['Project']['name'];
+            $projectTechs = $this->ProjectsTechnology->listProjectTech($projectId);
+            $projectPhotos = $this->ProjectPhoto->getProjectPhotos($projectId);
+            $breadcrumbLinks = array(
+                array(
+                    'label' => 'Tech Profiles',
+                    'link' => 'index',
+                  'separator' => '&raquo;'
+
+                ),
+                array(
+                    'label' => $userInfo['User']['name'],
+                    'link' => "v/{$userInfo['User']['id']}",
+                    'separator' => '&raquo;'
+                ),
+                array(
+                    'label' => $projectInfo['Project']['name'],
+                    'link' => "viewProject/$projectId",
+                    'separator'=>'|',
+                ),
+                
+            );
+            $userProjects = $this->Project->getUserProjects($userId);
+                    
+            $this->set(compact('projectInfo', 'projectPhotos', 'projectTechs', 'breadcrumbLinks','userInfo','userProjects','userId','projectId'));
+            $this->set('usesLightBox',true);
+      }
       
       
 }

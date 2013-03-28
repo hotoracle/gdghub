@@ -81,7 +81,7 @@ if (!defined('PNG_IS_TRANSPARENT'))
 if (!defined('DEFAULT_Q'))
       define('DEFAULT_Q', 90);         // Default image quality. Allows overrid in timthumb-config.php
 if (!defined('DEFAULT_ZC'))
-      define('DEFAULT_ZC', 1);         // Default zoom/crop setting. Allows overrid in timthumb-config.php
+      define('DEFAULT_ZC', 3);         // Default zoom/crop setting. Allows overrid in timthumb-config.php
 if (!defined('DEFAULT_F'))
       define('DEFAULT_F', '');         // Default image filters. Allows overrid in timthumb-config.php
 if (!defined('DEFAULT_S'))

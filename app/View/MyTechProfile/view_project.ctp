@@ -44,24 +44,26 @@ echo $this->element('breadcrumb');
       <div class="span4">
             <div class="bordered">
             <ul class="thumbnails">
-                  <?php 
-                  $photosPath = cRead('Application.upload.url_projects');
+                  <?php
+                        $photosPath = cRead('Application.upload.url_projects');
 
-                  foreach ($projectPhotos as $photo) { ?>
-                        <li>
-                              
-
-                              <a href="#" class="thumbImg thumbnail">
-                                    <?php echo $this->Html->image( $photosPath. $photo['ProjectPhoto']['pic_url'], array('width' => 135)); ?>
-                                    <?php echo $photo['ProjectPhoto']['description']; ?>
-                              </a>
-                              <div class="thumbActions center">
+                        foreach ($projectPhotos as $photo) {
+                              $fullImagePath = $photosPath . $photo['ProjectPhoto']['pic_url'];
+                               $imageUrl = $fullImagePath;     
+                              $imageUrl = '/r.php'.'?src='.$imageUrl.'&w=235';
+                              ?>
+                              <li class="span6 lightboxGallery" >
+                                    <a href="<?php echo $this->Html->url($fullImagePath); ?>" class="thumbImg thumbnail">
+                                          <?php echo $this->Html->image($imageUrl); ?>
+                                          <?php echo $photo['ProjectPhoto']['description']; ?>
+                                    </a>
+                                    <div class="thumbActions center">
                               <?php
                               echo $this->Html->link('Delete Photo',"deleteProjectPhoto/$projectId/{$photo['ProjectPhoto']['id']}",array('confirm'=>'Delete this photo?','class'=>'red'));
                               ?>
                               </div>
-                        </li>
-                  <?php } ?>
+                              </li>
+                        <?php } ?>
             </ul>  
             <div class="clearDiv"></div>
             <hr />

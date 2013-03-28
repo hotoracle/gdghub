@@ -64,7 +64,7 @@ echo $this->element('breadcrumb');
                                                 $photosPath = cRead('Application.upload.url_projects');
                                                 ?>
                                                 <li>
-                                                      <a href="#" class="thumbImg thumbnail">
+                                                      <a href="<?php echo $this->Html->url("viewProject/$userId/$projectId"); ?>" class="thumbImg thumbnail">
                                                             <?php echo $this->Html->image($photosPath . $projectPhoto['pic_url']); ?>
                                                             <?php echo $projectPhoto['description']; ?>
                                                       </a>
@@ -73,7 +73,7 @@ echo $this->element('breadcrumb');
                                     </div>
                               <?php } ?>
                               <div class="<?php if ($project['ProjectPhoto']) echo 'span8'; ?>">
-                                    <h3><?php echo $this->Html->link($project['Project']['name'], "viewProject/$projectId"); ?></h3>
+                                    <h3><?php echo $this->Html->link($project['Project']['name'], "viewProject/$userId/$projectId"); ?></h3>
                                     <p><?php echo $project['Project']['description']; ?></p>
                                     <p>&nbsp;</p>
                                     <p></p>
