@@ -6,7 +6,7 @@
  */
 class ResourcesController extends AppController {
     
-    public $uses = array('Article','Category');
+    public $uses = array('Article','ArticleCategory');
     
     function index() {
         
@@ -14,14 +14,14 @@ class ResourcesController extends AppController {
     
     function articles(){
         
-          $myCategories = $this->Article->Category->find(
+          $myCategories = $this->Article->ArticleCategory->find(
             'all',
             array(
                 'fields' => array(
-                    'Category.id',
-                    'Category.name'
+                    'ArticleCategory.id',
+                    'ArticleCategory.name'
                 ),
-                'order' => 'Category.id DESC',
+                'order' => 'ArticleCategory.id DESC',
                 'recursive' => 1
             )
         );
@@ -30,17 +30,19 @@ class ResourcesController extends AppController {
         
     }
     
-    function getRelatedArticles($id = null){   
+    function getRelatedArticles($id = null, $categoryID = null){   
 
-        $RelatedArticles = $this->Category->Article->find(
+        $RelatedArticles = $this->ArticleCategory->Article->find(
             'all',
             array(
                 'fields' => array(
                     'Article.name',
-                    'Article.id'
+                    'Article.id',
+                    'Article.article_category_id'
                 ),
                 'conditions' => array(
-                    'Article.category_id =' => $id,
+                    'Article.article_category_id =' => $id,
+                    //'ArticleCategory.id =' => $categoryID
                 ),
                 'limit' => 5,
                 'order' => 'Article.id DESC'            
@@ -49,11 +51,37 @@ class ResourcesController extends AppController {
         if (!empty($this->params['requested'])) {
             return $RelatedArticles;
         }else{
-            $this->set('RelatedArticles');
+            $this->set('RelatedArticles', $RelatedArticles);
         }
+        
+        $myCategories = $this->Article->ArticleCategory->find(
+            'all',
+            array(
+                'fields' => array(
+                    'ArticleCategory.id',
+                    'ArticleCategory.name'
+                ),
+                'order' => 'ArticleCategory.id DESC',
+                'recursive' => 1
+            )
+        );
+
+    $this->set('myCategories',$myCategories);
+    
+   // $categoryID = $this->ArticleCategory->findAll();
+   // $this->paginate = array('Question' => array(
+   //                 'order' => $orderBy,
+   //                'limit' => 25,
+    //            )
+      //      );
+
+        //    $questions = $this->paginate('Question', $conditions);
+
+            $categoryID = $this->ArticleCategory->extractKeys($myCategories);
         
     
     }
     
  
 }
+?>

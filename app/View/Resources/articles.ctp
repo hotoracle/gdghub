@@ -6,14 +6,14 @@
 ?>
 <div>
     <div>
-        <?php echo $myCategory['Category']['name'];?>
+        <?php echo $myCategory['ArticleCategory']['name'];?>
     </div>
     <div>
         <?php
             echo $this->element(
-                '/categories/category_relatedarticles',
+                '/article_categories/category_relatedarticles',
             array(
-            'categoryID' => $myCategory['Category']['id']
+            'categoryID' => $myCategory['ArticleCategory']['id']
             )
         );
         ?>
@@ -28,7 +28,7 @@
     
 <div class="span4">
         
-                <?php echo $this->element('categories/category_sidebar'); ?>
+                <?php echo $this->element('article_categories/category_sidebar'); ?>
                 
 </div>
 </div>

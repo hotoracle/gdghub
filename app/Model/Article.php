@@ -33,6 +33,13 @@ class Article extends AppModel {
                 'fields' => '',
                 'order' => ''
             ),
+            'ArticleCategory' => array(
+                'className' => 'ArticleCategory',
+                'foreignKey' => 'article_category_id',
+                'conditions' => '',
+                'fields' => '',
+                'order' => ''
+            ),
         );
 
         function createArticle($feedId, $feedInfo) {

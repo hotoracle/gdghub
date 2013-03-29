@@ -100,10 +100,14 @@
                                           <li>
                                                 <?php echo $this->Html->link('Tech Profiles', "/D"); ?>
                                           </li>
-                                          <li>
-                                                <?php echo $this->Html->link('Resources', "/Resources/index"); ?>
+                                         <li class="dropdown">
+                                                <?php echo $this->Html->link('Resources', "#", array('class' => 'dropdown-toggle', 'data-toggle' => 'dropdown')); ?>
+                                                <ul class="dropdown-menu ucwords" role="menu" aria-labelledby="dLabel">
+                                                      <li><?php echo $this->Html->link('Articles', '/Resources/articles'); ?></li>
+                                                      <li><?php echo $this->Html->link('Topics', '#'); ?></li>
+                                                      <li><?php echo $this->Html->link('Tutorials', '#'); ?></li>
+                                                </ul>
                                           </li>
-
                                           <li>
                                                 <?php echo $this->Html->link('Jobs', "/Jobs/index"); ?>
                                           </li>
