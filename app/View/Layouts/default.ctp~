@@ -17,6 +17,13 @@
                   if (isset($question)) {
                         echo ' - ' . $question['Question']['name'];
                   }
+
+                  if (isset($userInfo)) {
+                        echo ' - ' . $userInfo['User']['name'];
+                  }
+                  if (isset($title_for_layout)) {
+                        echo ' - ' . $title_for_layout;
+                  }
                   ?></title>
             <meta name="description" content="">
             <meta name="viewport" content="width=device-width">
@@ -34,6 +41,10 @@
             );
             if (isset($usesAutocomplete) && $usesAutocomplete) {
                   $scriptsToLoad[] = 'lib/jquery-ui';
+            }
+            if (isset($usesLightBox) && $usesLightBox) {
+                  $scriptsToLoad[] = 'lib/jquery.lightbox.0.5.js';
+                  echo $this->Html->css('jquery.lightbox.css');
             }
             echo $this->Html->script(
                     $scriptsToLoad);
@@ -83,62 +94,39 @@
                                           <g:plusone></g:plusone>
                                           </li>
                                           <li>
-                                                <?php echo $this->Html->link('Want to Help?', "/Dashboard/help"); ?>
+                                                <?php echo $this->Html->link('Want to Help?', "/Dashboard/help", array('id' => 'helpBuild')); ?>
                                           </li>
+
                                           <li>
-                                                <?php echo $this->Html->link('Blog', "/Dashboard/help"); ?>
+                                                <?php echo $this->Html->link('Tech Profiles', "/D"); ?>
                                           </li>
                                           <li>
                                                 <?php echo $this->Html->link('Resources', "/Resources/index"); ?>
                                           </li>
+
                                           <li>
                                                 <?php echo $this->Html->link('Jobs', "/Jobs/index"); ?>
                                           </li>
+                                          <li><?php echo $this->Html->link('Tech Questions', '/Questions'); ?></li>
+
                                           <li>
-                                                <?php echo $this->Html->link('Technology', "/Dashboard/help"); ?>
+                                                <?php echo $this->Html->link('Tech Events', "/Events"); ?>
                                           </li>
                                           <li class="dropdown">
                                                 <?php echo $this->Html->link('I Want To', "#", array('class' => 'dropdown-toggle', 'data-toggle' => 'dropdown')); ?>
                                                 <ul class="dropdown-menu ucwords" role="menu" aria-labelledby="dLabel">
                                                       <li><?php echo $this->Html->link('ask a question', '/Questions/ask'); ?></li>
-                                                      <li><?php echo $this->Html->link('contribute answers', '/Questions1'); ?></li>
-                                                      <li><?php echo $this->Html->link('contribute code', '#'); ?></li>
-
-                                                      <li><?php echo $this->Html->link('learn how to design', '#'); ?></li>
-                                                      <li><?php echo $this->Html->link('learn how to build mobile apps', '#'); ?></li>
-                                                      <li><?php echo $this->Html->link('learn how to build websites', '#'); ?></li>
+                                                      <li><?php echo $this->Html->link('contribute answers', '/Questions'); ?></li>
+                                                      <li><?php echo $this->Html->link('contribute code', '/Dashboard/help'); ?></li>
+                                                      <!--
+                                                                                                            <li><?php echo $this->Html->link('learn how to design', '#'); ?></li>
+                                                                                                            <li><?php echo $this->Html->link('learn how to build mobile apps', '#'); ?></li>
+                                                                                                            <li><?php echo $this->Html->link('learn how to build websites', '#'); ?></li>
+                                                      -->
                                                 </ul>
                                           </li>
                                     </ul>
 
-                                    <ul class="nav pull-left">
-                                          <li id="fat-menu" class="dropdown">
-                                                <a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown">
-                                                      <i class="icon-black icon-user"></i>Member Center<b class="caret"></b></a>
-                                                <ul class="dropdown-menu" role="menu" aria-labelledby="drop3">
-                                                      <li>
-                                                            <?php
-                                                            echo $this->Html->link(
-                                                                    '<i class="icon-black icon-fire"></i>Forum', '#', array(
-                                                                'tabindex' => '-1',
-                                                                'escape' => false
-                                                                    )
-                                                            )
-                                                            ?>
-                                                      </li>
-                                                      <li>
-                                                            <?php
-                                                            echo $this->Html->link(
-                                                                    '<i class="icon-black icon-bullhorn"></i>Events', '#', array(
-                                                                'tabindex' => '-1',
-                                                                'escape' => false
-                                                                    )
-                                                            )
-                                                            ?>
-                                                      </li>
-                                                </ul>
-                                          </li>
-                                    </ul>  
                                     <?php if (isset($_userInfo) && $_userInfo) { ?>
                                           <ul class="nav pull-right">
                                                 <li id="fat-menu" class="dropdown">
@@ -149,15 +137,17 @@
                                                             <li>
                                                                   <?php
                                                                   echo $this->Html->link(
-                                                                          '<i class="icon-black icon-suitcase"></i>My Account', '/users/user_profile/', //i don't a clean way of fetching just the logged in user....moh
-                                                                          array(
+                                                                          '<i class="icon-black icon-suitcase"></i>My Tech Profile', '/MyTechProfile/', array(
                                                                       'tabindex' => '-1',
                                                                       'escape' => false
                                                                           )
                                                                   );
+                                                                  ?>
+                                                            </li>
+                                                            <li>
+                                                                  <?php
                                                                   echo $this->Html->link(
-                                                                          '<i class="icon-black icon-suitcase"></i>My Work Profile', '/MyProfile/', //i don't a clean way of fetching just the logged in user....moh
-                                                                          array(
+                                                                          '<i class="icon-black icon-tag"></i>My Questions', '/Questions/mine', array(
                                                                       'tabindex' => '-1',
                                                                       'escape' => false
                                                                           )
@@ -202,18 +192,18 @@
                   <footer>
                         <p><?php echo Configure::read('Application.name') ?> </p>
                   </footer>
-<?php echo $this->element('sql_dump'); ?>
+                  <?php echo $this->element('sql_dump'); ?>
             </div> <!-- /container -->
 
 
-<?php
-if (is_file(WWW_ROOT . 'js' . DS . $this->params->controller . '.js')) {
-      echo $this->Html->script($this->params->controller);
-}
-if (is_file(WWW_ROOT . 'js' . DS . $this->params->controller . DS . $this->params->action . '.js')) {
-      echo $this->Html->script($this->params->controller . '/' . $this->params->action);
-}
-?>
+            <?php
+            if (is_file(WWW_ROOT . 'js' . DS . $this->params->controller . '.js')) {
+                  echo $this->Html->script($this->params->controller);
+            }
+            if (is_file(WWW_ROOT . 'js' . DS . $this->params->controller . DS . $this->params->action . '.js')) {
+                  echo $this->Html->script($this->params->controller . '/' . $this->params->action);
+            }
+            ?>
 
 
 
@@ -225,7 +215,7 @@ if (is_file(WWW_ROOT . 'js' . DS . $this->params->controller . DS . $this->param
               s.parentNode.insertBefore(g,s)}(document,'script'));
             </script>
             -->
-<?php if (!$isLocalhost) { ?>
+            <?php if (!$isLocalhost || isset($_GET['dev'])) { ?>
 
                   <script type="text/javascript">
                                 (function() {
@@ -246,6 +236,28 @@ if (is_file(WWW_ROOT . 'js' . DS . $this->params->controller . DS . $this->param
                                     fjs.parentNode.insertBefore(js, fjs);
                               }
                         }(document, "script", "twitter-wjs");</script>
-<?php } ?>
+            <?php } ?>
+
+            <?php
+            if (isset($usesLightBox) && $usesLightBox) {
+                  ?>
+                  <script>
+                        $().ready(function() {
+
+                              $('.lightboxGallery a').lightBox(
+                                      {
+                                            imageLoading: '<?php echo $this->Html->url('/img/lightbox/loading.gif'); ?>',
+                                            imageBtnClose: '<?php echo $this->Html->url('/img/lightbox/close.gif'); ?>',
+                                            imageBtnPrev: '<?php echo $this->Html->url('/img/lightbox/prev.gif'); ?>',
+                                            imageBtnNext: '<?php echo $this->Html->url('/img/lightbox/next.gif'); ?>'
+                                      }
+                              );
+
+                        });
+
+                  </script>
+                  <?php
+            }
+            ?>
       </body>
 </html>

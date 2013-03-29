@@ -5,8 +5,10 @@
     foreach ($myCategories as $myCategory){
 ?>
 <div>
-    <div>
-        <?php echo $myCategory['ArticleCategory']['name'];?>
+    <div class="bordered bordered-light alixgnCenter">
+      <div class="" id="listedQuestion">
+         <?php echo $myCategory['ArticleCategory']['name'];?>
+      </div>
     </div>
     <div>
         <?php

@@ -38,7 +38,10 @@ class ResourcesController extends AppController {
                 'fields' => array(
                     'Article.name',
                     'Article.id',
-                    'Article.article_category_id'
+                    'Article.article_category_id',
+                    'Article.description',
+                    'Article.date_published',
+                    'Article.slug'
                 ),
                 'conditions' => array(
                     'Article.article_category_id =' => $id,
