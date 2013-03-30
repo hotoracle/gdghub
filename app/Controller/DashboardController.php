@@ -66,6 +66,20 @@ class DashboardController extends AppController {
             shuffle($latestArticles);
             $this->set(compact('articleInfo', 'latestArticles'));
             $this->pageTitle = $articleInfo['Article']['name'];
+            
+               $myCategories = $this->Article->ArticleCategory->find(
+            'all',
+            array(
+                'fields' => array(
+                    'ArticleCategory.id',
+                    'ArticleCategory.name'
+                ),
+                'order' => 'ArticleCategory.id ASC',
+                'recursive' => 1
+            )
+        );
+
+    $this->set('myCategories',$myCategories);
       }
 
       function _setGPlusActivities() {

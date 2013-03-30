@@ -4,9 +4,6 @@
 
 <div>
      <div>
-    <?php
- //   $RelatedArticles = $this->requestAction('/resources/getRelatedArticles/'.$myCategory['ArticleCategory']['id']);
-    ?>
     <ul class="threadList">
         <?php
         foreach($RelatedArticles as $RelatedArticle){
@@ -31,6 +28,7 @@
         }
         ?>
     </ul>
+         <?php echo $this->element('paginator'); ?>
 </div>
 </div>
     
@@ -39,7 +37,7 @@
     </div>
     
     
-<div class="span4">
+<div class="span3">
         
                 <?php echo $this->element('article_categories/category_sidebar'); ?>
                 

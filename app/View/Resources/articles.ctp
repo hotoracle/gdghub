@@ -9,7 +9,7 @@
       <div class="" id="listedQuestion">
          <?php echo $myCategory['ArticleCategory']['name'];?>
       </div>
-    </div>
+    
     <div>
         <?php
             echo $this->element(
@@ -20,6 +20,7 @@
         );
         ?>
     </div>
+        </div>
 </div>
     
 <?php
@@ -28,7 +29,7 @@
 </div>
 </div>
     
-<div class="span4">
+<div class="span3">
         
                 <?php echo $this->element('article_categories/category_sidebar'); ?>
                 

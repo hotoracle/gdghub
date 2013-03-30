@@ -7,6 +7,12 @@
 class ResourcesController extends AppController {
     
     public $uses = array('Article','ArticleCategory');
+     public $paginate = array(
+          'Article' => array(
+              'order' => array('Article.sort_order' => 'DESC', 'Article.id' => 'DESC'),
+              'limit' => 4
+          )
+      );
     
     function index() {
         
@@ -21,7 +27,7 @@ class ResourcesController extends AppController {
                     'ArticleCategory.id',
                     'ArticleCategory.name'
                 ),
-                'order' => 'ArticleCategory.id DESC',
+                'order' => 'ArticleCategory.id ASC',
                 'recursive' => 1
             )
         );
@@ -47,8 +53,8 @@ class ResourcesController extends AppController {
                     'Article.article_category_id =' => $id,
                     //'ArticleCategory.id =' => $categoryID
                 ),
-                'limit' => 5,
-                'order' => 'Article.id DESC'            
+                'limit' => 10,
+                'order' => 'Article.date_published DESC'            
             )
         );
         if (!empty($this->params['requested'])) {
@@ -64,21 +70,12 @@ class ResourcesController extends AppController {
                     'ArticleCategory.id',
                     'ArticleCategory.name'
                 ),
-                'order' => 'ArticleCategory.id DESC',
+                'order' => 'ArticleCategory.id ASC',
                 'recursive' => 1
             )
         );
 
     $this->set('myCategories',$myCategories);
-    
-   // $categoryID = $this->ArticleCategory->findAll();
-   // $this->paginate = array('Question' => array(
-   //                 'order' => $orderBy,
-   //                'limit' => 25,
-    //            )
-      //      );
-
-        //    $questions = $this->paginate('Question', $conditions);
 
             $categoryID = $this->ArticleCategory->extractKeys($myCategories);
         

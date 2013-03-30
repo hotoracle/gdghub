@@ -38,6 +38,9 @@
 
         </div>
         </div>
+        <div class="span3">
+                <?php echo $this->element('article_categories/category_sidebar'); ?>        
+        </div>
         <div class="span4">
                 <?php echo $this->element('sidebar'); ?>
         </div>
