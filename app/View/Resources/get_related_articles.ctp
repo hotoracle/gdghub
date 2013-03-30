@@ -28,7 +28,6 @@
         }
         ?>
     </ul>
-         <?php echo $this->element('paginator'); ?>
 </div>
 </div>
     
