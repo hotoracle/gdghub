@@ -116,6 +116,9 @@
                                           <li>
                                                 <?php echo $this->Html->link('Tech Events', "/Events"); ?>
                                           </li>
+                                          <li>
+                                                <?php echo $this->Html->link('Tech News', "#"); ?>
+                                          </li>
                                           <li class="dropdown">
                                                 <?php echo $this->Html->link('I Want To', "#", array('class' => 'dropdown-toggle', 'data-toggle' => 'dropdown')); ?>
                                                 <ul class="dropdown-menu ucwords" role="menu" aria-labelledby="dLabel">
