@@ -13,6 +13,13 @@ class ResourcesController extends AppController {
               'limit' => 4
           )
       );
+     
+     function beforeFilter() {
+
+
+            parent::beforeFilter();
+            $this->Auth->allow('*');
+      }
     
     function index() {
         
