@@ -15,7 +15,21 @@
 <?php } ?>
 <div class="bordered alignCenter" id="sideAskQuestion">
       <p class="lead"><a href="<?php echo $this->Html->url('/Questions'); ?>">Do you have a question?<br />Get answers from Experts in the Community.</a></p>
-
+</div>
+<div>
+<script>
+  (function() {
+    var cx = '004868489248418757804:p0o_-czs1x8';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
 </div>
 <div class="bordered bordered-light alixgnCenter">
       <div class="" id="listedQuestion">
